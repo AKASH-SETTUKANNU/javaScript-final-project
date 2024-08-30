@@ -1,0 +1,90 @@
+*{
+    box-sizing: border-box;
+    font-family:'Times New Roman', Times, serif;
+    font-size: large;
+}
+body {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    background-image: url(./images/background.avif);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   background-color: rgb(181, 220, 250);
+   border-radius: 5px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(5, 52, 209);
+    background-color: rgb(252, 204, 164);
+    border-radius: 5px;
+    padding: 30px;
+}
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.heading h1{
+    font-size: 30px;
+    color: rgb(253, 109, 57);
+    padding: 0;
+    margin: 0;
+}
+.input-element {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-element label {
+    margin-bottom:5px;
+    margin-top: 5px;
+}
+
+.input-element input {
+    height: 30px;
+    width: 350px;
+    padding:20px;
+    margin-bottom: 20px;
+    border-radius: 3px;
+    border: none;
+}
+.input-element input:focus {
+    border: 1px solid orange; 
+    box-shadow: 0 0 5px rgba(255, 165, 0, 0.5); 
+    outline: none;
+}
+section{
+    border: 1px solid rgb(8, 28, 138);
+    padding: 5px;
+}
+
+#password-error{
+    display: none;
+    color: red
+   
+}
+#email-error{
+    display: none;
+    color: red
+   
+}
+.input-element a{
+   text-decoration: none;
+   color: orangered;
+   font-weight: bolder;
+   font-size: 20px;
+}

@@ -5,55 +5,152 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./index.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
   </head>
   <body>
     <section>
-      <header>
-
-        <div class="logo">
-          <h1>Logo</h1>
-        </div>
-
-        <div class="search-profile">
-          <div class="search-bar">
-            <i class="search-icon" class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="search..." />
+      <div class="main-container">
+        <header>
+          <div class="logo">
+            <h1>Logo</h1>
           </div>
-
-          <div class="event-add-profile">
-            <div class="event-add-btn">
-              <button type="button">+</button>
+          <div class="search-profile">
+            <div class="search-bar">
+              <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="search..." />
             </div>
-
-            <div class="notification-bell">
-              <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
-            </div>
-
-            <div class="profile">
-              <img src="./images/profile.jpg" alt="" class="profile-icon" />
-              <div class="profile-deitals">
-                <p id="profile-name">Akash</p>
-                <p id="profile-about">Dharmapuri</p>
+            <div class="event-add-profile">
+              <div class="event-add-btn">
+                <button type="button">+</button>
               </div>
-              <i id="profile-edit-icon" class="fa-solid fa-angle-down"></i>
+              <div class="notification-bell">
+                <p id="notification-dot">.</p>
+                <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
+              </div>
+              <div class="profile">
+                <img src="./images/profile.jpg" alt="" class="profile-icon" />
+                <div class="profile-details">
+                  <p id="profile-name">Akash</p>
+                  <p id="profile-about">coimbatore</p>
+                </div>
+                <i id="profile-edit-icon" class="fa-solid fa-angle-down"></i>
+              </div>
             </div>
           </div>
+        </header>
+        <menu>
+          <nav>
+            <ul class="menu-list">
+              <li>
+                <div class="icon"><i class="fa-solid fa-house"></i></div>
+                Home
+              </li>
+              <li>
+                <div class="icon">
+                  <i class="fa-solid fa-calendar-days"></i>
+                </div>
+                Events
+              </li>
+              <li>
+                <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                Guests
+              </li>
+              <li>
+                <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                Agenda
+              </li>
+            </ul>
+          </nav>
+        </menu>
+        <main>
+          <div class="home-page-content">
+            
+            <h1 id="Special-day-heading">Special Days</h1>
+            <div class="important-days">
+              <div class="important-day">
+                <div class="event-images">
+                  <img src="./images/birthday.avif" alt="birthday" />
+                </div>
+                <div id="birthday-description">
+                  <h3>birthday</h3>
+                  <h5>27/2/2004</h5>
+                  <p>
+                    Make your birthday extraordinary with our expert event
+                    planning! We create personalized, memorable celebrations
+                    tailored to your unique style.
+                  </p>
+                </div>
+              </div>
+              <div class="important-day">
+                <div class="event-images">
+                <img src="./images/marrage.jpg" alt="marrage" />
+              </div>
+              </div>
+              <div class="important-day">
+                <div class="event-images">
+                <img src="./images/conference.avif" alt="conference" />
+                </div>
+              </div>
+            </div>
+            
+            <h1 id="completed-event-heading">Completed Events</h1>
+            <div class="completed-events">
+              <div class="completed-event">
+                <div class="event-images">
+                  <img src="./images/birthday.avif" alt="birthday" />
+                </div>
+                <div id="event-description">
+                  <h3>birthday</h3>
+                  <h5>27/2/2004</h5>
+                  <p>
+                    Make your birthday extraordinary with our expert event
+                    planning! We create personalized, memorable celebrations
+                    tailored to your unique style.
+                  </p>
+                </div>
+              </div>
+              <div class="completed-event">
+                <div class="event-images">
+                <img src="./images/marrage.jpg" alt="marrage" />
+              </div>
+              </div>
+              <div class="completed-event">
+                <div class="event-images">
+                <img src="./images/conference.avif" alt="conference" />
+                </div>
+              </div>
+            </div>
+           
 
-        </div>
-      </header>
-      <menu>
-        <nav>
-          <ul>
-            <li>Home</li>
-            <li>Events</li>
-            <li>Guests</li>
-            <li>Agenda</li>
-          </ul>
-        </nav>
-      </menu>
-
-      <main></main>
+            <h1 id="upcoming-event-heading">Upcoming Events</h1>
+            <div class="upcoming-events">
+              <div class="upcoming-event">
+                <div class="event-images">
+                  <img src="./images/birthday.avif" alt="birthday" />
+                </div>
+                <div id="birthday-description">
+                  <h3>birthday</h3>
+                  <h5>27/2/2004</h5>
+                  <p>
+                    Make your birthday extraordinary with our expert event
+                    planning! We create personalized, memorable celebrations
+                    tailored to your unique style.
+                  </p>
+                </div>
+              </div>
+              <div class="event-images">
+                <img src="./images/marrage.jpg" alt="marrage" />
+              </div>
+              <div class="event-images">
+                <img src="./images/conference.avif" alt="conference" />
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
     </section>
   </body>
 </html>
