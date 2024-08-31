@@ -10,7 +10,7 @@ body {
     margin: 0;
     overflow: hidden;
     position: relative;
-    height: 100vh;
+    height: 100%;
 }
 
 .background-image{
@@ -55,7 +55,7 @@ form {
     border: 1px solid rgb(5, 52, 209);
     background-color: rgb(252, 204, 164);
     border-radius: 5px;
-    padding: 30px; 
+    padding: 20px; 
     width: 100%;
 }
 
@@ -76,7 +76,8 @@ form {
 .input-element {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
+    margin-left: 50px
 }
 
 .input-element label {
@@ -84,7 +85,7 @@ form {
 }
 
 .input-element input {
-    height: 40px;
+    height: 30px;
     width: 100%;
     max-width: 350px;
     border-radius: 3px;
@@ -98,10 +99,25 @@ form {
     outline: none;
 }
 
-#password-error, #email-error {
+#password-error{
     display: block;
     color: red;
-    margin-top: 5px;
+}
+
+#name-error{
+    display: block;
+    color: red;
+}
+
+#email-error
+{
+    display: block;
+    color: red;
+}
+
+#date-error{
+    display: block;
+    color: red;
 }
 
 .input-element a {
@@ -109,4 +125,17 @@ form {
     color: orangered;
     font-weight: bolder;
     font-size: 20px;
+}
+.signup-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.signup-btn button{
+    height: 40px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: rgb(58, 58, 218);
+    color: white;
+    border: 1px solid blue;
 }
