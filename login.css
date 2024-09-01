@@ -110,3 +110,17 @@ form {
     font-weight: bolder;
     font-size: 20px;
 }
+.login-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom:25px;
+}
+.login-btn button{
+    height: 40px;
+    width: 90px;
+    border-radius: 5px;
+    background-color: rgb(16, 182, 58);
+    color: white;
+    border: 1px solid rgb(26, 136, 16);
+}

@@ -16,17 +16,21 @@
           </div>
           <div class="input-element">
             <label for="user-mail">Email:</label>
-            <input type="email" id="user-mail" name="email" />
+            <input type="email" id="user-mail" name="email" onblur="emailErrorHandel()"/>
             <p id="email-error"></p>
           </div>
           <div class="input-element">
             <label for="user-password">Password:</label>
-            <input type="password" id="user-password" name="password" />
+            <input type="password" id="user-password" name="password"  onblur="passwordErrorHandel()"/>
             <p id="password-error"></p>
           </div>
+          <div class="login-btn">
+            <button type="submit" onclick="loginUser(event)">Login</button>
+        </div>
           <div class="input-element">
             <p>Don't have an account? <a href="./signup.html">Sign up</a></p>
           </div>
+         
         </form>
       </section>
     </main>

@@ -139,3 +139,10 @@ form {
     color: white;
     border: 1px solid blue;
 }
+
+@media only screen and (max-width:500px)
+{
+    .input-element{
+        margin-left: 0;
+    }
+}
