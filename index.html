@@ -59,46 +59,57 @@
               <div class="notification-bell" onclick="displayNotification()">
                 <p id="notification-dot">.</p>
                 <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
-            </div>
-            
-            <div class="notification-display" id="notification-display">
+              </div>
+
+              <div class="notification-display" id="notification-display">
                 <div class="notification">
-                    <div class="notification-profile">
-                        <img src="./images/profile.jpg" alt="profile" />
-                    </div>
-                    <div class="notification-content">
-                        <h3>Koushikk</h3>
-                        <p class="notification-message">Inviting for his marriage</p>
-                    </div>
+                  <div class="notification-profile">
+                    <img src="./images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
                 </div>
-            
+
                 <div class="notification">
-                    <div class="notification-profile">
-                        <img src="./images/profile.jpg" alt="profile" />
-                    </div>
-                    <div class="notification-content">
-                        <h3>Koushikk</h3>
-                        <p class="notification-message">Inviting for his marriage</p>
-                    </div>
+                  <div class="notification-profile">
+                    <img src="./images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
                 </div>
-            </div>
-            
+              </div>
 
               <!-- profile display area -->
               <div class="profile">
                 <img src="./images/profile.jpg" alt="" class="profile-icon" />
                 <div class="profile-details">
-                    <p id="profile-name">Akash</p>
-                    <p id="profile-about">coimbatore</p>
+                  <p id="profile-name">Akash</p>
+                  <p id="profile-about">coimbatore</p>
                 </div>
-                <div id="profile-edit-icon" class="profile-edit-icon" onclick="displayLogout()">
-                    <i class="fa-solid fa-angle-down"></i>
+                <div
+                  id="profile-edit-icon"
+                  class="profile-edit-icon"
+                  onclick="displayLogout()"
+                >
+                  <i class="fa-solid fa-angle-down"></i>
                 </div>
                 <div class="profile-edit-area" id="profile-edit-area">
-                    <button id="logout-btn"><a href="./login.html">Log Out</a></button>
-                    <button id="profile-edit-btn"><a href="#">Edit Profile</a></button>
+                  <button id="logout-btn">
+                    <a href="./login.html">Log Out</a>
+                  </button>
+                  <button id="profile-edit-btn">
+                    <a href="#">Edit Profile</a>
+                  </button>
                 </div>
-            </div>
+              </div>
             </div>
           </div>
         </header>
@@ -106,22 +117,41 @@
           <nav>
             <ul class="menu-list">
               <li>
-                <div class="icon"><i class="fa-solid fa-house"></i></div>
-                Home
+                <a href="./index.html">
+                  <div class="icon"><i class="fa-solid fa-house"></i></div>
+                  <p id="menu-name">
+                  Home
+                </p>
+                </a>
+              </li>
+
+              <li>
+                <a href="./events.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                  </div>
+                  <p id="menu-name">
+                  Events
+                </p>
+                </a>
               </li>
               <li>
-                <div class="icon">
-                  <i class="fa-solid fa-calendar-days"></i>
-                </div>
-                Events
+                <a href="./guest.html">
+                  <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                  <p id="menu-name">
+                  Guests
+                </p>
+                </a>
               </li>
               <li>
-                <div class="icon"><i class="fa-solid fa-user-group"></i></div>
-                Guests
-              </li>
-              <li>
-                <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
-                Agenda
+                <a href="./agenda.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <p id="menu-name">
+                  Agenda
+                  </p>
+                </a>
               </li>
             </ul>
           </nav>
