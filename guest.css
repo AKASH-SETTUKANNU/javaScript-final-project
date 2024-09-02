@@ -359,7 +359,7 @@ menu ul li a {
 .guest-main-container {
     display: grid;
     grid-template-columns: auto;  
-    grid-template-rows: 1fr 0.3fr 0.5fr 9fr;  
+    grid-template-rows: 1.8fr 0.3fr 0.5fr 9fr;  
     grid-template-areas:
         "add-guest "
         "find-guest "
@@ -386,7 +386,7 @@ menu ul li a {
    display: flex;
    /* flex-wrap: wrap; */
    flex-direction:row; 
-   gap:15px;
+   gap:25px;
    margin-left: 10px;
 }
 
@@ -396,7 +396,7 @@ menu ul li a {
     justify-content:center;
 }
 .input-user-data input{
-    width: 200px;
+    width: 250px;
     height: 30px;
     border-radius: 3px;
     border: 1px solid orange;
@@ -453,30 +453,36 @@ menu ul li a {
 /* display search guest */
 .display-search-guest{
     grid-area: result-guest;
-    display: flex;
+    display: none;
     background-color:rgb(252, 242, 228);
     padding: 10px;
     border-radius: 3px;
 }
 .display-search-guest table{
     border-collapse: collapse;
-    border: 1px solid orange;
+    border: 1px solid rgb(226, 226, 226);
     width: 100%;
 }
 .display-search-guest table thead th{
     padding:10px;
-    border-left:1px solid orange;
-    border-bottom:1px solid orange;
+    border-left: 1px solid rgb(226, 226, 226);
+    border-bottom: 1px solid rgb(226, 226, 226);
 }
 .display-search-guest table  tr td{
     padding:10px;
-    border-left:1px solid orange;
-    border-bottom:1px solid orange;
+    border-left: 1px solid rgb(226, 226, 226);
+    border-bottom: 1px solid rgb(226, 226, 226);
     text-align: center;
 }
 
+#result-guest-error{
+    display: block;
+    grid-area: result-guest;
+    color: rgb(219, 153, 9);
+    margin-left: 20px;
+}
 
-/* display guest design area */
+/* display guest  */
 .display-guest {
     grid-area: guest-list;
     background-color:rgb(252, 242, 228);
@@ -505,23 +511,49 @@ menu ul li a {
 error handel for input */
 
 #name-error{
+    position: fixed;
     color: red;
+    margin-top: 70px;
 }
 #email-error{
+    position: fixed;
     color: red;
+    margin-top: 70px;
 }
 #location-error{
+    position: fixed;
     color: red;
+    margin-top: 70px;
 }
 #number-error{
+    position: fixed;
     color: red;
+    margin-top: 70px;
 }
 #success-message{
+    position: fixed;
     color: green;
+    margin-top: 70px;
 }
 
+/* invite button and delete button */
+#invite-btn button{
+    background-color: rgb(74, 247, 83);
+    border: 1px solid rgb(120, 233, 44);
+    color: white;
+    padding: 5px;
+    width:70px;
+    border-radius: 3px;
+}
 
-
+#delete-btn button{
+    background-color: rgb(248, 60, 60);
+    border: 1px solid red;
+    color: white;
+    padding: 5px;
+    width:70px;
+    border-radius: 3px
+}
 
 
 @media only screen and (max-width: 800px) {

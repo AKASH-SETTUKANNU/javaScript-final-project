@@ -148,7 +148,7 @@
                   <label for="guest-name">Name</label>
                   <input type="text" class="guest-name" id="guest-name" onblur="guestNameCheck()"/>
                   <p id="name-error"></p>
-                  <p id="success=message"></p>
+                  <p id="success-message"></p>
                 </div>
                 <div class="input-user-data">
                   <label for="guest-email">Email</label>
@@ -165,25 +165,26 @@
                   />
                   <p id="location-error"></p>
                 </div>
-                <div class="input-user-data">
+                <!-- <div class="input-user-data">
                   <label for="guest-number">Contact Number</label>
                   <input type="text" class="guest-number" id="guest-number" onblur="guestNumberCheck()"/>
                   <p id="number-error"></p>
-                </div>
+                </div> -->
 
                 <div class="input-user-data">
-                  <button type="button" onclick="addGuest(this)">
+                  <button type="button" onclick="addGuest(event)">
                     Add Guest
                   </button>
                 </div>
               </form>
             </div>
 
-            <!-- find guest code -->
+            <!-- find guest  -->
             <div class="find-guest" id="find-guest">
               <div class="find-guest-input">
                 <label for="find-user-email">Email</label>
               </div>
+              
               <div class="find-guest-input">
                 <input
                   type="email"
@@ -193,12 +194,13 @@
                 />
               </div>
               <div class="find-guest-input">
-                <button type="button" class="find-user-btn" id="find-user-btn">
+                <button type="button" class="find-user-btn" id="find-user-btn" onclick="findGuest(event)">
                   Find User
                 </button>
               </div>
             </div>
             <!--  display find user -->
+            <p id="result-guest-error">Enter Guest Email to Find the Guest...</p>
             <div class="display-search-guest" id="display-search-guest">
                 <table>
                     <thead>
@@ -206,20 +208,15 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Location</th>
-                        <th>Contact Number</th>
+                        <th>Invite</th>
+                        <th>Delete</th>
                       </tr>
                     </thead>
-                    <tbody id="guest-table">
-                      <tr>
-                        <td>Akash</td>
-                        <td>akash@gmail.com</td>
-                        <td>Dharmapuri</td>
-                        <td>6374252235</td>
-                      </tr>
+                    <tbody id="result-guest">
                     </tbody>
                   </table>
               </div>
-            <!-- display guest code -->
+            <!-- display guest  -->
             <div class="display-guest" id="display-guest">
               <table>
                 <thead>
@@ -227,16 +224,11 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Location</th>
-                    <th>Contact Number</th>
+                    <th>Invite</th>
+                    <th>Delete</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>Akash</td>
-                    <td>akash@gmail.com</td>
-                    <td>Dharmapuri</td>
-                    <td>6374252235</td>
-                  </tr>
+                <tbody id="guest-table">
                 </tbody>
               </table>
             </div>
