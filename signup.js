@@ -4,10 +4,10 @@ function nameError(event) {
     let error = document.getElementById('name-error');
     if (input === '') {
         error.innerText = "Enter a name..";
-        return false; // Return false to indicate an error
+        return false;
     } else {
         error.innerText = "";
-        return true; // Return true to indicate no error
+        return true; 
     }
 }
 
@@ -17,10 +17,10 @@ function dateError(event) {
     let error = document.getElementById('date-error');
     if (input === '') {
         error.innerText = "Enter a Date of birth..";
-        return false; // Return false to indicate an error
+        return false;
     } else {
         error.innerText = "";
-        return true; // Return true to indicate no error
+        return true; 
     }
 }
 
@@ -39,13 +39,13 @@ function emailError(event) {
 
     if (input === '') {
         error.innerText = "Enter a Email..";
-        return false; // Return false to indicate an error
+        return false; 
     } else if (emailExistornot()) { 
         error.innerText = "Email already Exists..";
-        return false; // Return false to indicate an error
+        return false; 
     } else {
         error.innerText = "";
-        return true; // Return true to indicate no error
+        return true; 
     }
 }
 
@@ -57,10 +57,10 @@ function passwordInputError() {
 
     if (password !== confirmPassword) {
         errorElement.innerText = "Passwords do not match";
-        return false; // Return false to indicate an error
+        return false; 
     } else {
         errorElement.innerText = "";
-        return true; // Return true to indicate no error
+        return true; 
     }
 }
 

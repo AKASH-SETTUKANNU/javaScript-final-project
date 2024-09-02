@@ -338,13 +338,189 @@ menu ul li a{
 .icon i {
     color: black;
 }
+/* --------------------------------------------------- */
+
+.event-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 10px;
+    background-color: rgb(252, 242, 228);
+}
+
+/* event heading */
+.Event-heading{
+    display: flex;
+    background-color: rgb(252, 178, 109);
+    color: white;
+    border-radius: 3px;
+    width: 100%;
+    padding: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* form div  event name input*/
+.form-container{
+    background-color: rgb(247, 215, 171);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   border-radius: 3px;
+}
+.event-form{
+    gap: 20px;
+    background-color: rgb(250, 233, 217);
+    width: 97%;
+    height: 97%;
+    border-radius: 3px;
+}
+.event-data-name>*{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.event-data-name label{
+    margin-bottom: 10px;
+ }
+.event-data-name input{
+   height: 30px;
+   width: 500px;
+   border-radius:3px;
+   padding: 5px;
+   border: 1px solid rgb(250, 158, 125);
+}
+
+/* form div  event date input*/
+.event-data-date>*{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: start;
+}
+.event-data-date label{
+    margin-bottom: 10px;
+ }
+.event-data-date input{
+   height: 30px;
+   width: 500px;
+   border-radius:3px;
+   padding: 5px;
+   border: 1px solid rgb(250, 158, 125);
+}
+
+/* form div  event decription input*/
+.event-data-description>*{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: start;
+}
+.event-data-description label{
+    margin-bottom: 10px;
+ }
+.event-data-description input{
+   height: 30px;
+   width: 500px;
+   border-radius:3px;
+   padding: 5px;
+   border: 1px solid rgb(250, 158, 125);
+}
+
+/* form div status description input */
+.event-data-status>*{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: start;
+}
+.event-data-status label{
+    margin-bottom: 10px;
+ }
+.event-data-status select{
+   height: 30px;
+   width: 500px;
+   border-radius:3px;
+   padding: 5px;
+   border: 1px solid rgb(250, 158, 125);
+}
+
+.event-data-status option{
+    background-color: rgb(250, 202, 140);
+}
+
+.event-data-status option:hover{
+    color: brown;
+}
 
 
+/* form div  event category input*/
+.event-data-category>*{
+    display: flex;
+    flex: row;
+    align-items: center;
+    justify-content: start;
+}
+.event-data-category label{
+    margin-bottom: 5px;
+ }
+.event-data-category select{
+   height: 30px;
+   width: 500px;
+   border-radius:3px;
+   padding: 5px;
+   border: 1px solid rgb(250, 158, 125);
+}
 
+.event-data-category option{
+    background-color: rgb(250, 202, 140);
+}
 
+.event-data-category option:hover{
+    color: brown;
+}
+.select-items div {
+    background-color: rgb(250, 202, 140);
+    padding: 5px;
+    cursor: pointer;
+}
 
+.select-items div:hover {
+    background-color: rgb(250, 158, 125);
+    color: brown;
+}
+/* save event button */
+#save-btn{
+    display: flex;
+    height: 40px;
+    width:100px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    background-color: rgb(12, 155, 12);
+    color: white;
+    border: 1px solid rgb(8, 172, 8);
+}
 
-
+/* error handeling*/
+#name-error{
+    color: red;
+}
+#date-error{
+    color: red;
+}
+#description-error{
+    color: red;
+}
+#category-error{
+    color: red;
+}
+#success-message{
+    color: green;
+}
 
 /* max-width 800 media query */
 
