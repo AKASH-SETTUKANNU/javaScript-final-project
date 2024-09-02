@@ -347,104 +347,168 @@ menu ul li a{
 /* home-page-content grid separate */
 .home-page-content {
     display: grid;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: 1fr 1fr 1fr;
     grid-template-areas: 
-        "special-days"
-        "completed-events"
-        "upcoming-events";
+        "birthday"
+        "wedding"
+        "conference";
+        
 }
 
-/* .important-days */
-#Special-day-heading{
-    grid-area: special-days;
+/* birthday display area */
+.birtday-display-area{
+    grid-area: birthday;
 }
-.important-days {
-    grid-area: special-days;
-    display: flex;
-    flex-direction: row;
-    padding: 5px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 100%;
+#Birthday-heading{
+    margin-bottom:10px;
 }
-
-.important-day {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-#birthday-description {
-    width: 100%;
-}
-
-/* .completed-events */
-#completed-event-heading{
-    grid-area: completed-events;
-    
-}
-.completed-events {
-    grid-area: completed-events;
-    display: flex;
-    flex-direction: row;
-    padding: 5px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 100%;
-}
-
-.completed-event {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    margin-right: 10px;
-}
-
-.event-images img {
-    height: 100px;
-    border-radius: 20px;
-    margin-right: 20px;
+.birthday-image img{
+    height:100px;
     aspect-ratio: 1/1;
+    border-radius: 5px;
 }
-
-/* .upcoming-events */
-#upcoming-event-heading{
-    grid-area: upcoming-events;
-}
-.upcoming-events {
-    grid-area: upcoming-events;
+.birthday-lists{
     display: flex;
     flex-direction: row;
-    padding: 5px;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    height: 100%;
+    overflow-x: scroll;
+    gap: 20px;
 }
 
-.upcoming-event {
+.birthday-list{
     display: flex;
+    gap: 25px;
     flex-direction: row;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid rgb(236, 147, 12);
+}
+.birthday-detial{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#canceled{
+    display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
+    background-color: rgb(235, 40, 40);
+    color: white;
+    margin-top: 5px;
+    border-radius: 3px;
+    padding: 5px;
+}
+#planning{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: yellow;
+    color: white;
+    margin-top: 5px;
+    border-radius: 3px;
+    padding: 5px;
+}
+#finalized{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(122, 223, 55);
+    color: white;
+    margin-top: 5px;
+    border-radius: 3px;
+    padding: 5px;
 }
 
-.event-description{
-    display: flex;
-    flex-wrap: wrap;
-    width: 500px;
+/* wedding display area */
+.wedding-display-area{
+    grid-area: wedding;
 }
-#event-description-box{
-    display: flex;
-    flex-wrap: wrap;
-    width: 250px;
+.wedding-image img{
+    height:100px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
 }
+#wedding-heading{
+    margin-bottom:10px;
+}
+.wedding-lists{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 20px;
+}
+.wedding-list{
+    display: flex;
+    gap: 15px;
+    flex-direction: row;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid rgb(236, 147, 12);
+}
+.wedding-detial{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#wedding-status{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+
+/* conference display area */
+.conference-display-area{
+    grid-area: conference;
+}
+.conference-image img{
+    height:100px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+}
+#conference-heading{
+    margin-bottom:10px;
+}
+.conference-lists{
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    gap: 20px;
+}
+.conferences-list{
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    padding: 7px;
+    border-radius: 3px;
+    border: 1px solid rgb(236, 147, 12);
+}
+.conference-detial{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#conference-status{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 3px;
+    padding: 5px;
+}
+
+
+
+
+
+
+
+
 
 /* max-width 800 media query */
 
