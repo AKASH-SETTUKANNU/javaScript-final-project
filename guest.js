@@ -146,7 +146,7 @@ function addGuest(event) {
     event.preventDefault();
     let message = document.getElementById("success-message");
     let errormessage = document.getElementById("name-error");
-    if (guestNameCheck && guestEmailCheck && guestLocationCheck) {
+    if (guestNameCheck() && guestEmailCheck() && guestLocationCheck()) {
         const newGuest = new Guest(guestName.value, guestEmail.value, guestLocation.value);
         allGuest.push(newGuest);
         let guestTable = document.getElementById("guest-table");
@@ -154,25 +154,23 @@ function addGuest(event) {
                             <td>${guestName.value}</td>
                             <td>${guestEmail.value}</td>
                             <td>${guestLocation.value}</td>
-                            <td><div class="invite-btn" id="invite-btn"><button onclick="inviteGuest()">Invite</button></td>
-                           <td><div class="delete-btn" id="delete-btn"><button onclick="deleteGuest()">Delete</button></td>
+                            <td><button onclick="inviteGuest()" id="invite-btn">Invite</button></td>
+                            <td><button onclick="deleteGuest('${guestEmail.value}')" id="delete-btn">Delete</button></td>
                           </tr>`;
         guestTable.innerHTML += tableData;
         guestName.value = "";
         guestEmail.value = "";
         guestLocation.value = "";
-        // guestNumber.value = "";
         message.innerHTML = "Guest added successfully...";
         setTimeout(function () {
             message.innerHTML = "";
         }, 3000);
-    }
-    else {
-        errormessage.innerHTML = "Enter all the Mandotry Fields..";
+    } else {
+        errormessage.innerHTML = "Enter all the Mandatory Fields..";
         message.innerHTML = "";
     }
-
 }
+
 
 // find guest using email id
 function findGuest(event) {
@@ -196,8 +194,8 @@ function findGuest(event) {
                                 <td>${foundGuest.guestName}</td>
                                 <td>${foundGuest.guestEmail}</td>
                                 <td>${foundGuest.guestLocation}</td>
-                                <td><div class="invite-btn" id="invite-btn"><button onclick="inviteGuest()">Invite</button></td>
-                           <td><div class="delete-btn" id="delete-btn"><button onclick="deleteGuest()">Delete</button></td>
+                                <td><button onclick="inviteGuest()" id="invite-btn">Invite</button></td>
+                                <td><button onclick="deleteGuest('${foundGuest.guestEmail}')" id="delete-btn">Delete</button></td>
                              </tr>`;
             resultTableBody.innerHTML = tableData;
 
@@ -218,4 +216,43 @@ function findGuest(event) {
     }
 
     findMailElement.value = "";
+}
+
+
+
+// delete the guest 
+function deleteGuest(email) {
+
+    const index = allGuest.findIndex(guest => guest.guestEmail === email);
+    if (index > -1) {
+        allGuest.splice(index, 1);
+    }
+    
+    // Remove the guest row from the guest table
+    const rows = document.querySelectorAll('#guest-table tr');
+    rows.forEach(row => {
+        const emailCell = row.querySelector('td:nth-child(2)');
+        if (emailCell && emailCell.textContent === email) {
+            row.remove();
+        }
+    });
+    
+    // Remove the guest row from the search result table
+    const searchResultRows = document.querySelectorAll('#result-guest tr');
+    let displayguestSearch=document.getElementById("display-search-guest");
+    searchResultRows.forEach(row => {
+        const emailCell = row.querySelector('td:nth-child(2)');
+        if (emailCell && emailCell.textContent === email) {
+            row.remove();
+            displayguestSearch.style="display:none;"
+        }
+    });
+    
+    alert("Guest deleted!");
+}
+
+
+//invite guest 
+function inviteGuest() {
+    alert("Invitation sent!");
 }
