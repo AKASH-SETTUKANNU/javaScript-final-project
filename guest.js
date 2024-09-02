@@ -172,6 +172,61 @@ function addGuest(event) {
 }
 
 
+emailjs.init("3lfc4E2nm0ohLKKCU"); 
+
+
+function inviteGuest(guestEmail, guestName) {
+    const templateParams = {
+        to_name: guestName,
+        from_name: "Your Name", 
+        message: "You have been invited to an event!",
+        reply_to: guestEmail
+    };
+
+    emailjs.send("service_f0ad9dr", "i7yn4sf", templateParams)
+        .then(function(response) {
+            console.log("Email sent successfully:", response);
+            alert("Invitation sent!");
+        }, function(error) {
+            console.error("Failed to send email:", error);
+            alert("Failed to send invitation. Please check the console for more details.");
+        });
+}
+
+
+
+// Example function to add a guest and send an invitation
+function addGuest(event) {
+    event.preventDefault();
+    let message = document.getElementById("success-message");
+    let errormessage = document.getElementById("name-error");
+    if (guestNameCheck() && guestEmailCheck() && guestLocationCheck()) {
+        const newGuest = new Guest(guestName.value, guestEmail.value, guestLocation.value);
+        allGuest.push(newGuest);
+        let guestTable = document.getElementById("guest-table");
+        let tableData = ` <tr>
+                            <td>${guestName.value}</td>
+                            <td>${guestEmail.value}</td>
+                            <td>${guestLocation.value}</td>
+                            <td><button onclick="inviteGuest('${guestEmail.value}', '${guestName.value}')" id="invite-btn">Invite</button></td>
+                            <td><button onclick="deleteGuest('${guestEmail.value}')" id="delete-btn">Delete</button></td>
+                          </tr>`;
+        guestTable.innerHTML += tableData;
+        guestName.value = "";
+        guestEmail.value = "";
+        guestLocation.value = "";
+        message.innerHTML = "Guest added successfully...";
+        setTimeout(function () {
+            message.innerHTML = "";
+        }, 3000);
+    } else {
+        errormessage.innerHTML = "Enter all the Mandatory Fields..";
+        message.innerHTML = "";
+    }
+}
+
+
+
 // find guest using email id
 function findGuest(event) {
     event.preventDefault();
@@ -194,7 +249,7 @@ function findGuest(event) {
                                 <td>${foundGuest.guestName}</td>
                                 <td>${foundGuest.guestEmail}</td>
                                 <td>${foundGuest.guestLocation}</td>
-                                <td><button onclick="inviteGuest()" id="invite-btn">Invite</button></td>
+                                <td><button onclick="inviteGuest('${foundGuest.guestEmail}')" id="invite-btn">Invite</button></td>
                                 <td><button onclick="deleteGuest('${foundGuest.guestEmail}')" id="delete-btn">Delete</button></td>
                              </tr>`;
             resultTableBody.innerHTML = tableData;
@@ -217,6 +272,7 @@ function findGuest(event) {
 
     findMailElement.value = "";
 }
+
 
 
 
@@ -252,7 +308,4 @@ function deleteGuest(email) {
 }
 
 
-//invite guest 
-function inviteGuest() {
-    alert("Invitation sent!");
-}
+
