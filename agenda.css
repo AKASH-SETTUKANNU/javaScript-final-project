@@ -341,40 +341,79 @@ menu ul li a{
 }
 
 main {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     grid-area: main;
     overflow: hidden;
     background-color: white;
     padding: 10px;
   }
   
-  .event-form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .event-heading {
-    margin-bottom: 20px;
-  }
   
   .event-form label {
     font-weight: bold;
   }
-  
-  .event-form input[type="text"],
-  .event-form input[type="date"],
-  .event-form input[type="time"],
-  .event-form textarea {
+#eventForm{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+  /* location design */
+ .location-item{
+    display: flex;
+    flex-direction: row;
+    gap:25px;
+ }
+.location-item div input{
     width: 100%;
+    height: 30px;
     padding: 10px;
-    border: 1px solid rgb(182, 179, 179);
+    border: 1px solid rgb(245, 153, 49);
     border-radius: 3px;
     box-sizing: border-box;
+}
+/* time design */
+.time-item{
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+}
+
+.time-item input{
+    width: 35%;
+    height: 30px;
+    padding: 10px;
+    border: 1px solid rgb(245, 153, 49);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* description design */
+.description-item{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Use a more specific selector */
+.description-item > textarea {
+    width: 85%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid rgb(245, 153, 49);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+
+
+  .input-btn{
+    display: flex;
+    
   }
+ 
   
   .event-form textarea {
-    resize: vertical;
+    height: 30px;
   }
   
   #save-btn {
@@ -404,7 +443,7 @@ main {
   .display-agenda td {
     padding: 10px;
     border: 1px solid rgb(230, 229, 229);
-    text-align: left;
+    text-align: center;
   }
   
   .display-agenda th {
@@ -423,7 +462,39 @@ main {
     color: red;
     font-size: 0.875rem;
   }
-  
+/* Container for buttons to center-align them */
+.actions-cell {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 5px; 
+}
+
+/* Style for delete button */
+.delete-btn {
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px; 
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer; 
+}
+
+/* Style for edit button */
+.edit-btn {
+    background-color: rgb(26, 127, 167);
+    border: 1px solid rgb(34, 133, 199);
+    color: white;
+    margin-bottom: 5px; 
+    width: 100px;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer; 
+}
+
 /* max-width 800 media query */
 
 @media only screen and (max-width: 800px) {

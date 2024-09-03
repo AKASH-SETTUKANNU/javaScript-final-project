@@ -63,7 +63,7 @@ function saveEvent(event) {
     console.log("Event saved");
 }
 
-// Example function to validate and handle location input
+// validate and handle location input
 function locationCheck() {
     const locationInput = document.getElementById('location-name');
     const errorElement = document.getElementById('location-error');
@@ -75,7 +75,7 @@ function locationCheck() {
     }
 }
 
-// Example function to validate and handle date input
+// validate and handle date input
 function dateCheck() {
     const dateInput = document.getElementById('event-date');
     const errorElement = document.getElementById('date-error');
@@ -87,7 +87,7 @@ function dateCheck() {
     }
 }
 
-// Example function to validate and handle start time input
+// validate and handle start time input
 function eventStartCheck() {
     const startInput = document.getElementById('event-start');
     const errorElement = document.getElementById('start-error');
@@ -99,7 +99,7 @@ function eventStartCheck() {
     }
 }
 
-// Example function to validate and handle end time input
+// validate and handle end time input
 function eventEndCheck() {
     const endInput = document.getElementById('event-end');
     const errorElement = document.getElementById('end-error');
@@ -111,7 +111,7 @@ function eventEndCheck() {
     }
 }
 
-// Example function to validate and handle description input
+// validate and handle description input
 function descriptionCheck() {
     const descriptionInput = document.getElementById('event-description');
     const errorElement = document.getElementById('description-error');
@@ -214,27 +214,37 @@ function descriptionCheck() {
 
     function loadEvents() {
         const events = JSON.parse(localStorage.getItem('events')) || [];
+        const agendaTable = document.getElementById('agendaTable').getElementsByTagName('tbody')[0];
         agendaTable.innerHTML = '';
+    
         events.forEach((eventData, index) => {
             const row = agendaTable.insertRow();
+    
             row.insertCell().textContent = eventData.location;
             row.insertCell().textContent = eventData.date;
             row.insertCell().textContent = eventData.start;
             row.insertCell().textContent = eventData.end;
             row.insertCell().textContent = eventData.description;
-
+    
             const actionsCell = row.insertCell();
+            actionsCell.className = 'actions-cell'; 
+    
+            // Create and append Edit button
             const editBtn = document.createElement('button');
             editBtn.textContent = 'Edit';
+            editBtn.className = 'edit-btn';
             editBtn.addEventListener('click', () => editEvent(index));
             actionsCell.appendChild(editBtn);
-
+    
+            // Create and append Delete button
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
+            deleteBtn.className = 'delete-btn';
             deleteBtn.addEventListener('click', () => deleteEvent(index));
             actionsCell.appendChild(deleteBtn);
         });
     }
+    
 
     function editEvent(id) {
         const events = JSON.parse(localStorage.getItem('events')) || [];
@@ -255,9 +265,6 @@ function loadUserProfile() {
     let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
     let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
-
-    console.log("Logged In User Email:", loggedInUserEmail); 
-    console.log("User Object:", user); 
 
     let profileName = document.getElementById("profile-name");
     let dateOfBirth = document.getElementById("profile-dateOfBirth");
