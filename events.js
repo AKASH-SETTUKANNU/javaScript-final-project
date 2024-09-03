@@ -19,13 +19,14 @@ function menubarDisplay() {
 let addEventArea = document.getElementById("event-add-block");
 
 function addEvent() {
-    if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
-        addEventArea.style.display = 'block';
-        notificationArea.style.display = 'none';
-        logoutArea.style.display = 'none';
-    } else {
-        addEventArea.style.display = 'none';
-    }
+    window.location.href = "events.html";
+    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
+    //     addEventArea.style.display = 'block';
+    //     notificationArea.style.display = 'none';  
+    //     logoutArea.style.display = 'none'; 
+    // } else {
+    //     addEventArea.style.display = 'none'; 
+    // }
 }
 
 // notification display area
@@ -165,29 +166,84 @@ class createEvent {
     }
 }
 
+// Function to save event data to localStorage
 function saveEvent(event) {
     event.preventDefault();
 
+  
     if (nameCheck && dateCheck && descriptionCheck && statusCheck && categoryCheck) {
-        let createdEvent = new createEvent(eventName.value, eventDate.value, eventDescription.value, eventStatus.value, eventCategory.value);
+        let createdEvent = new createEvent(
+            eventName.value,
+            eventDate.value,
+            eventDescription.value,
+            eventStatus.value,
+            eventCategory.value
+        );
         createdEvent.displayData();
 
         let newEventObject = createdEvent.toPlainObject();
-        let allEventJson = JSON.parse(localStorage.getItem("events") || "[]");
-        allEventJson.push(newEventObject);
-        localStorage.setItem("events", JSON.stringify(allEventJson));
-        eventName.value="";
-        eventDate.value="";
-        eventDescription.value="";
-        eventStatus.value="";
-        eventCategory.value="";
-        setTimeout(function(){
-            successMessage.innerHTML="Event Added Successfully...";
-        },3000);
-    }
-    else {
-        setTimeout(function () {
-            categoryError.innerHTML = "Enter all recquired Fields.."
+        let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+        let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+        // Find the logged-in user
+        let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+        if (user) {
+            // Add event to the user's events
+            if (!user.events) {
+                user.events = [];
+            }
+            user.events.push(newEventObject);
+
+            // Save updated users list back to localStorage
+            localStorage.setItem("users", JSON.stringify(allUsersJson));
+
+            // Clear the form fields
+            eventName.value = "";
+            eventDate.value = "";
+            eventDescription.value = "";
+            eventStatus.value = "";
+            eventCategory.value = "";
+
+            // Display success message
+            setTimeout(() => {
+                successMessage.innerHTML = "Event Added Successfully...";
+            }, 3000);
+        } else {
+            console.error("User not found.");
+        }
+    } else {
+        // Display error message if validation fails
+        setTimeout(() => {
+            categoryError.innerHTML = "Enter all required fields.";
         }, 3000);
     }
 }
+// Function to load and display user profile details
+function loadUserProfile() {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+    console.log("Logged In User Email:", loggedInUserEmail); 
+    console.log("User Object:", user); 
+
+    let profileName = document.getElementById("profile-name");
+    let dateOfBirth = document.getElementById("profile-dateOfBirth");
+
+    if (user) {
+        if (profileName && dateOfBirth) {
+            profileName.innerText = user.userName;
+            dateOfBirth.innerText = user.userBirthDate; 
+        } else {
+            console.error("Profile elements not found.");
+        }
+    } else {
+        console.error("User not found in localStorage.");
+    }
+}
+
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserProfile();
+});

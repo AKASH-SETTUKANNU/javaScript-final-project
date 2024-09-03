@@ -19,13 +19,14 @@ let addEventArea = document.getElementById("event-add-block");
 
 // Function to toggle add event display
 function addEvent() {
-    if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
-        addEventArea.style.display = 'block';
-        notificationArea.style.display = 'none';  
-        logoutArea.style.display = 'none'; 
-    } else {
-        addEventArea.style.display = 'none'; 
-    }
+    window.location.href = "events.html";
+    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
+    //     addEventArea.style.display = 'block';
+    //     notificationArea.style.display = 'none';  
+    //     logoutArea.style.display = 'none'; 
+    // } else {
+    //     addEventArea.style.display = 'none'; 
+    // }
 }
 
 // notification display area
@@ -55,14 +56,10 @@ function displayLogout() {
         logoutArea.style.display = 'none'; 
     }
 }
-// JavaScript for handling form validation and agenda display
 
 // Save event function
 function saveEvent(event) {
     event.preventDefault();
-    // Implement saving logic here
-
-    // For demonstration, we'll just log the event details
     console.log("Event saved");
 }
 
@@ -253,3 +250,31 @@ function descriptionCheck() {
         saveBtn.textContent = 'Update Event';
     }
 
+// Function to load and display user profile details
+function loadUserProfile() {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+    console.log("Logged In User Email:", loggedInUserEmail); 
+    console.log("User Object:", user); 
+
+    let profileName = document.getElementById("profile-name");
+    let dateOfBirth = document.getElementById("profile-dateOfBirth");
+
+    if (user) {
+        if (profileName && dateOfBirth) {
+            profileName.innerText = user.userName;
+            dateOfBirth.innerText = user.userBirthDate; 
+        } else {
+            console.error("Profile elements not found.");
+        }
+    } else {
+        console.error("User not found in localStorage.");
+    }
+}
+
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserProfile();
+});

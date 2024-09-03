@@ -1,6 +1,9 @@
-// menu display area
+// Get menu elements
 let menu = document.querySelector('menu');
 let menuIcon = document.querySelector('#menu-icon');
+let addEventArea = document.getElementById("event-add-block");
+let notificationArea = document.getElementById("notification-display");
+let logoutArea = document.getElementById("profile-edit-area");
 
 // Function to toggle menu display
 function menubarDisplay() {
@@ -14,22 +17,17 @@ function menubarDisplay() {
     }
 }
 
-// addevent display area
-let addEventArea = document.getElementById("event-add-block");
-
 // Function to toggle add event display
 function addEvent() {
-    if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
-        addEventArea.style.display = 'block';
-        notificationArea.style.display = 'none';  
-        logoutArea.style.display = 'none'; 
-    } else {
-        addEventArea.style.display = 'none'; 
-    }
+    window.location.href = "events.html";
+    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
+    //     addEventArea.style.display = 'block';
+    //     notificationArea.style.display = 'none';  
+    //     logoutArea.style.display = 'none'; 
+    // } else {
+    //     addEventArea.style.display = 'none'; 
+    // }
 }
-
-// notification display area
-let notificationArea = document.getElementById("notification-display");
 
 // Function to toggle notification display
 function displayNotification() {
@@ -41,9 +39,6 @@ function displayNotification() {
         notificationArea.style.display = 'none'; 
     }
 }
-
-// profile logout popup area
-let logoutArea = document.getElementById("profile-edit-area");
 
 // Function to toggle logout display
 function displayLogout() {
@@ -59,7 +54,6 @@ function displayLogout() {
 // Function to create a birthday card
 function createBirthdayCard(event) {
     let birthdayLists = document.getElementById("birthday-lists");
-
     if (birthdayLists) {
         let birthdayListHTML = `
            <div class="birthday-list">
@@ -69,7 +63,7 @@ function createBirthdayCard(event) {
               <div class="birthday-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p >${event.eventDescription}</p>
+                <p>${event.eventDescription}</p>
               </div>
             </div>
         `;
@@ -123,22 +117,60 @@ function createConferenceCard(event) {
     }
 }
 
-// Load events from localStorage and create event cards
-let allEventJson = JSON.parse(localStorage.getItem("events") || "[]");
+// Load events for the logged-in user from localStorage and create event cards
+function loadUserEvents() {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
 
-allEventJson.forEach(event => {
-    switch (event.eventCategory.toLowerCase()) {
-        case 'birthday':
-            createBirthdayCard(event);
-            break;
-        case 'wedding':
-            createWeddingCard(event);
-            break;
-        case 'conference':
-            createConferenceCard(event);
-            break;
-        default:
-            console.warn(`Unknown event category: ${event.eventCategory}`);
-            break;
+    if (user && user.events) {
+        user.events.forEach(event => {
+            switch (event.eventCategory.toLowerCase()) {
+                case 'birthday':
+                    createBirthdayCard(event);
+                    break;
+                case 'wedding':
+                    createWeddingCard(event);
+                    break;
+                case 'conference':
+                    createConferenceCard(event);
+                    break;
+                default:
+                    console.warn(`Unknown event category: ${event.eventCategory}`);
+                    break;
+            }
+        });
+    } else {
+        console.error("User not found or no events available.");
     }
+}
+
+// Function to load and display user profile details
+function loadUserProfile() {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+    console.log("Logged In User Email:", loggedInUserEmail); 
+    console.log("User Object:", user); 
+
+    let profileName = document.getElementById("profile-name");
+    let dateOfBirth = document.getElementById("profile-dateOfBirth");
+
+    if (user) {
+        if (profileName && dateOfBirth) {
+            profileName.innerText = user.userName;
+            dateOfBirth.innerText = user.userBirthDate; 
+        } else {
+            console.error("Profile elements not found.");
+        }
+    } else {
+        console.error("User not found in localStorage.");
+    }
+}
+
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserEvents();
+    loadUserProfile();
 });

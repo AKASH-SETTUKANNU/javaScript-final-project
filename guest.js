@@ -19,13 +19,14 @@ function menubarDisplay() {
 let addEventArea = document.getElementById("event-add-block");
 
 function addEvent() {
-    if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
-        addEventArea.style.display = 'block';
-        notificationArea.style.display = 'none';
-        logoutArea.style.display = 'none';
-    } else {
-        addEventArea.style.display = 'none';
-    }
+    window.location.href = "events.html";
+    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
+    //     addEventArea.style.display = 'block';
+    //     notificationArea.style.display = 'none';  
+    //     logoutArea.style.display = 'none'; 
+    // } else {
+    //     addEventArea.style.display = 'none'; 
+    // }
 }
 
 // notification display area
@@ -172,26 +173,26 @@ function addGuest(event) {
 }
 
 
-emailjs.init("3lfc4E2nm0ohLKKCU"); 
+// emailjs.init("3lfc4E2nm0ohLKKCU"); 
 
 
-function inviteGuest(guestEmail, guestName) {
-    const templateParams = {
-        to_name: guestName,
-        from_name: "Your Name", 
-        message: "You have been invited to an event!",
-        reply_to: guestEmail
-    };
+// function inviteGuest(guestEmail, guestName) {
+//     const templateParams = {
+//         to_name: guestName,
+//         from_name: "Your Name", 
+//         message: "You have been invited to an event!",
+//         reply_to: guestEmail
+//     };
 
-    emailjs.send("service_f0ad9dr", "i7yn4sf", templateParams)
-        .then(function(response) {
-            console.log("Email sent successfully:", response);
-            alert("Invitation sent!");
-        }, function(error) {
-            console.error("Failed to send email:", error);
-            alert("Failed to send invitation. Please check the console for more details.");
-        });
-}
+//     emailjs.send("service_f0ad9dr", "i7yn4sf", templateParams)
+//         .then(function(response) {
+//             console.log("Email sent successfully:", response);
+//             alert("Invitation sent!");
+//         }, function(error) {
+//             console.error("Failed to send email:", error);
+//             alert("Failed to send invitation. Please check the console for more details.");
+//         });
+// }
 
 
 
@@ -309,3 +310,31 @@ function deleteGuest(email) {
 
 
 
+// Function to load and display user profile details
+function loadUserProfile() {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    let loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    let user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+    console.log("Logged In User Email:", loggedInUserEmail); 
+    console.log("User Object:", user); 
+
+    let profileName = document.getElementById("profile-name");
+    let dateOfBirth = document.getElementById("profile-dateOfBirth");
+
+    if (user) {
+        if (profileName && dateOfBirth) {
+            profileName.innerText = user.userName;
+            dateOfBirth.innerText = user.userBirthDate; 
+        } else {
+            console.error("Profile elements not found.");
+        }
+    } else {
+        console.error("User not found in localStorage.");
+    }
+}
+
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserProfile();
+});

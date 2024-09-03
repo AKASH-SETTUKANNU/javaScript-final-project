@@ -52,12 +52,19 @@ function loginUser(event) {
    event.preventDefault(); 
 
    if (emailErrorHandel() && passwordErrorHandel()) { 
-      let users = JSON.parse(localStorage.getItem("users") || "[]");
-      let user = users.find((user) => user.userEmail === email.value); 
-      if (user) {
-         let name = user.userName;
-         window.location.href = "index.html";
-         alert(`Welcome, ${name}!`);
-      }
+       let email = document.getElementById('user-mail').value.trim();
+       let users = JSON.parse(localStorage.getItem("users") || "[]");
+       let user = users.find(user => user.userEmail === email); 
+
+       if (user) {
+           localStorage.setItem("loggedInUserEmail", email);
+
+           let name = user.userName;
+           alert(`Welcome, ${name}!`);
+           window.location.href = "index.html";
+       } else {
+           alert("Invalid email or password.");
+       }
    }
 }
+
