@@ -402,7 +402,7 @@ menu ul li a{
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(226, 226, 78);
+    background-color: yellow;
     color: white;
     margin-top: 5px;
     border-radius: 3px;

@@ -66,6 +66,7 @@ main {
     display: grid;
     grid-area: main;
     overflow: hidden;
+    background-color: white;
 }
 .menu-icon{
     display:none;
@@ -339,176 +340,160 @@ menu ul li a{
     color: black;
 }
 
-.home-page-content {
+main {
     display: flex;
     flex-direction: column;
-    overflow-y:auto;
-}
-/* home-page-content grid separate */
-.home-page-content {
-    display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas: 
-        "birthday"
-        "wedding"
-        "conference";
-        
-}
-
-/* birthday display area */
-.birtday-display-area{
-    grid-area: birthday;
-}
-#Birthday-heading{
-    margin-bottom:10px;
-}
-.birthday-image img{
-    height:100px;
-    aspect-ratio: 1/1;
-    border-radius: 5px;
-}
-.birthday-lists{
+    grid-area: main;
+    overflow: hidden;
+    background-color: white;
+    padding: 10px;
+  }
+  
+  
+  .event-form label {
+    font-weight: bold;
+  }
+#eventForm{
     display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
+    flex-direction: column;
     gap: 20px;
 }
-
-.birthday-list{
+  /* location design */
+ .location-item{
     display: flex;
+    flex-direction: row;
+    gap:25px;
+ }
+.location-item div input{
+    width: 100%;
+    height: 30px;
+    padding: 10px;
+    border: 1px solid rgb(245, 153, 49);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+/* time design */
+.time-item{
+    display: flex;
+    flex-direction: row;
     gap: 25px;
-    flex-direction: row;
-    padding: 7px;
-    border-radius: 3px;
-    border: 1px solid rgb(236, 147, 12);
 }
-.birthday-detial{
+
+.time-item input{
+    width: 35%;
+    height: 30px;
+    padding: 10px;
+    border: 1px solid rgb(245, 153, 49);
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+/* description design */
+.description-item{
     display: flex;
     flex-direction: column;
-    gap: 5px;
 }
 
-#canceled{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(235, 40, 40);
-    color: white;
-    margin-top: 5px;
+/* Use a more specific selector */
+.description-item > textarea {
+    width: 85%;
+    height: 150px;
+    padding: 10px;
+    border: 1px solid rgb(245, 153, 49);
     border-radius: 3px;
-    padding: 5px;
-}
-#planning{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(226, 226, 78);
-    color: white;
-    margin-top: 5px;
-    border-radius: 3px;
-    padding: 5px;
-}
-#finalized{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(122, 223, 55);
-    color: white;
-    margin-top: 5px;
-    border-radius: 3px;
-    padding: 5px;
+    box-sizing: border-box;
 }
 
-/* wedding display area */
-.wedding-display-area{
-    grid-area: wedding;
+
+
+  .input-btn{
+    display: flex;
+    
+  }
+ 
+  
+  .event-form textarea {
+    height: 30px;
+  }
+  
+  #save-btn {
+    background-color: rgb(248, 102, 17);
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  #save-btn:hover {
+    background-color: rgb(247, 87, 8);
+  }
+  
+  .display-agenda {
+    margin-top: 20px;
+    overflow-x: auto;
+  }
+  
+  .display-agenda table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .display-agenda th,
+  .display-agenda td {
+    padding: 10px;
+    border: 1px solid rgb(230, 229, 229);
+    text-align: center;
+  }
+  
+  .display-agenda th {
+    background-color: rgb(252, 242, 228);
+  }
+  
+  .display-agenda tr:nth-child(even) {
+    background-color: rgb(244, 244, 244);
+  }
+  
+  .display-agenda tr:hover {
+    background-color: rgb(230, 229, 229);
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 0.875rem;
+  }
+/* Container for buttons to center-align them */
+.actions-cell {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    padding: 5px; 
 }
-.wedding-image img{
-    height:100px;
-    aspect-ratio: 1/1;
+
+/* Style for delete button */
+.delete-btn {
+    background-color: red;
+    border: 1px solid red;
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px; 
+    width: 100px;
     border-radius: 5px;
-}
-#wedding-heading{
-    margin-bottom:10px;
-}
-.wedding-lists{
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
-    gap: 20px;
-}
-.wedding-list{
-    display: flex;
-    gap: 15px;
-    flex-direction: row;
-    padding: 7px;
-    border-radius: 3px;
-    border: 1px solid rgb(236, 147, 12);
-}
-.wedding-detial{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    cursor: pointer; 
 }
 
-#wedding-status{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* Style for edit button */
+.edit-btn {
+    background-color: rgb(26, 127, 167);
+    border: 1px solid rgb(34, 133, 199);
     color: white;
-    border-radius: 3px;
+    margin-bottom: 5px; 
+    width: 100px;
     padding: 5px;
-}
-
-
-/* conference display area */
-.conference-display-area{
-    grid-area: conference;
-}
-.conference-image img{
-    height:100px;
-    aspect-ratio: 1/1;
     border-radius: 5px;
+    cursor: pointer; 
 }
-#conference-heading{
-    margin-bottom:10px;
-}
-.conference-lists{
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
-    gap: 20px;
-}
-.conferences-list{
-    display: flex;
-    gap: 10px;
-    flex-direction: row;
-    padding: 7px;
-    border-radius: 3px;
-    border: 1px solid rgb(236, 147, 12);
-}
-.conference-detial{
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-#conference-status{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border-radius: 3px;
-    padding: 5px;
-}
-
-
-
-
-
-
-
-
 
 /* max-width 800 media query */
 

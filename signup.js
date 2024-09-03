@@ -1,4 +1,4 @@
-// name error show
+// Name Error Validation
 function nameError(event) {
     let input = event.value.trim();
     let error = document.getElementById('name-error');
@@ -11,12 +11,12 @@ function nameError(event) {
     }
 }
 
-// DateofBirth error show
+// Date of Birth Error Validation
 function dateError(event) {
     let input = event.value.trim();
     let error = document.getElementById('date-error');
     if (input === '') {
-        error.innerText = "Enter a Date of birth..";
+        error.innerText = "Enter a Date of Birth..";
         return false;
     } else {
         error.innerText = "";
@@ -24,7 +24,7 @@ function dateError(event) {
     }
 }
 
-// email error show
+// Email Error Validation
 function emailError(event) {
     let input = event.value.trim();
     let error = document.getElementById('email-error');
@@ -32,13 +32,12 @@ function emailError(event) {
     let alluser = localStorage.getItem("users");
     let allUsersJson = JSON.parse(alluser || "[]");
 
-    // Function to check if the email exists
     function emailExistornot() {
         return allUsersJson.some((user) => user.userEmail === input);
     }
 
     if (input === '') {
-        error.innerText = "Enter a Email..";
+        error.innerText = "Enter an Email..";
         return false; 
     } else if (emailExistornot()) { 
         error.innerText = "Email already Exists..";
@@ -49,7 +48,7 @@ function emailError(event) {
     }
 }
 
-//password error show
+// Password Error Validation
 function passwordInputError() {
     let password = document.querySelector('.user-password').value.trim();
     let confirmPassword = document.querySelector('.confirm-password').value.trim();
@@ -64,53 +63,53 @@ function passwordInputError() {
     }
 }
 
-//create user object 
+// Create User Object
 class createUser {
-    constructor(userName, userEmail, userbirthDate, userPassword) {
+    constructor(userName, userEmail, userBirthDate, userPassword, userRole = "user") {
         this.userName = userName;
         this.userEmail = userEmail;
-        this.userbirthDate = userbirthDate;
+        this.userBirthDate = userBirthDate;
         this.userPassword = userPassword;
+        this.userRole = userRole; 
     }
 
-    displaydata() {
+    displayData() {
         console.log(`Name: ${this.userName}`);
         console.log(`Email: ${this.userEmail}`);
-        console.log(`Date of Birth: ${this.userbirthDate}`);
-        console.log(`password: ${this.userPassword}`);
+        console.log(`Date of Birth: ${this.userBirthDate}`);
+        console.log(`Password: ${this.userPassword}`);
+        console.log(`Role: ${this.userRole}`);
     }
 
     toPlainObject() {
         return {
             userName: this.userName,
             userEmail: this.userEmail,
-            userBirthDate: this.userbirthDate,
-            userPassword: this.userPassword
+            userBirthDate: this.userBirthDate,
+            userPassword: this.userPassword,
+            userRole: this.userRole
         };
     }
 }
 
-//adduser in localstorage
+// Add User to Local Storage
 function addUser(event) {
     event.preventDefault();
     let userName = document.getElementById('user-name');
     let userEmail = document.getElementById('user-mail');
-    let userbirthDate = document.getElementById('user-birth-date');
-    let userPassword = document.getElementById("user-password");
+    let userBirthDate = document.getElementById('user-birth-date');
+    let userPassword = document.getElementById('user-password');
 
-    // Validate all fields
     const nameValid = nameError(userName);
     const emailValid = emailError(userEmail);
-    const dateValid = dateError(userbirthDate);
+    const dateValid = dateError(userBirthDate);
     const passwordValid = passwordInputError();
 
     if (nameValid && emailValid && dateValid && passwordValid) {
-        let newUser = new createUser(userName.value, userEmail.value, userbirthDate.value, userPassword.value);
-        newUser.displaydata();
-
-        let newUserObject = newUser.toPlainObject();
         let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
-        allUsersJson.push(newUserObject);
+
+        let newUser = new createUser(userName.value, userEmail.value, userBirthDate.value, userPassword.value);
+        allUsersJson.push(newUser.toPlainObject());
         localStorage.setItem("users", JSON.stringify(allUsersJson));
         alert("Account created...!");
         window.location.href = "login.html";
@@ -118,3 +117,12 @@ function addUser(event) {
         alert("Please correct the errors in the form.");
     }
 }
+
+// By Default Add Admin User
+window.addEventListener('load', () => {
+    let allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    if (allUsersJson.length === 0) {
+        let adminUser = new createUser('Admin', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
+        localStorage.setItem("users", JSON.stringify([adminUser.toPlainObject()]));
+    }
+});
