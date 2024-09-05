@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <section>
+      <div class="main-container">
+        <header>
+          <button class="menu-icon" id="menu-icon" onclick="menubarDisplay()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="logo">
+           <img  src="../images/logo.jpg" alt="Logo">
+          </div>
+          <div class="search-profile">
+            <div class="search-bar">
+              <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="search..." />
+            </div>
+            <div class="event-add-profile">
+              <!-- event add  function -->
+              <div class="event-add-btn" id="event-add-btn">
+                <button type="button" onclick="addEvent()">+</button>
+              </div>
+              <div class="event-add-block" id="event-add-block">
+                <ul>
+                  <li>
+                    <div class="icon">
+                      <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    Birthday
+                  </li>
+                  <li>
+                    <div class="icon"><i class="fa-solid fa-ring"></i></div>
+                    Marrage
+                  </li>
+                  <li>
+                    <div class="icon">
+                      <i class="fa-regular fa-handshake"></i>
+                    </div>
+                    conference
+                  </li>
+                  <li>
+                    <div class="icon"><i class="fa-solid fa-gift"></i></div>
+                    Others
+                  </li>
+                </ul>
+              </div>
+
+              <!-- notification display function -->
+              <div class="notification-bell" onclick="displayNotification()">
+                <p id="notification-dot">.</p>
+                <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
+              </div>
+
+              <div class="notification-display" id="notification-display">
+                <div class="notification">
+                  <div class="notification-profile">
+                    <img src="../images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
+                </div>
+
+                <div class="notification">
+                  <div class="notification-profile">
+                    <img src="../images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- profile display area -->
+              <div class="profile">
+                <img src="../images/profile.jpg" alt="" class="profile-icon" />
+                <div class="profile-details">
+                  <p id="profile-name">Akash</p>
+                  <p id="profile-dateOfBirth">coimbatore</p>
+                </div>
+                <div
+                  id="profile-edit-icon"
+                  class="profile-edit-icon"
+                  onclick="displayLogout()"
+                >
+                  <i class="fa-solid fa-angle-down"></i>
+                </div>
+                <div class="profile-edit-area" id="profile-edit-area">
+                  <button id="logout-btn">
+                    <a href="../login/login.html">Log Out</a>
+                  </button>
+                  <button id="profile-edit-btn">
+                    <a href="#">Edit Profile</a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <menu>
+          <nav>
+            <ul class="menu-list">
+              <li>
+                <a href="./index.html">
+                  <div class="icon"><i class="fa-solid fa-house"></i></div>
+                  <p id="menu-name">Events List</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="../events/events.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                  </div>
+                  <p id="menu-name">Add Events</p>
+                </a>
+              </li>
+              <li>
+                <a href="../guests/guest.html">
+                  <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                  <p id="menu-name">Guests List</p>
+                </a>
+              </li>
+              <li>
+                <a href="../guests/guest.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <p id="menu-name"> Add Agenda</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </menu>
+        <main>
+          <div id="home-page-content">
+            <!-- Birthday content area -->
+            <div class="bithday-display-area">
+              <h1 id="Birthday-heading">Birthdays</h1>
+             
+              <div class="birthday-lists" id="birthday-lists"></div>
+            </div>
+
+            <!-- wedding content area -->
+            <div class="wedding-display-area">
+              <h1 id="wedding-heading">Weddings</h1>
+
+              <div class="wedding-lists" id="wedding-lists"></div>
+            </div>
+
+            <!-- conference content area -->
+            <div class="conference-display-area">
+              <h1 id="conference-heading">Conferences</h1>
+              <div class="conference-lists" id="conference-lists"></div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </section>
+    <script src="./index.js"></script>
+  </body>
+</html>

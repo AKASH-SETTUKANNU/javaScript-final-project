@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./events.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <title>Document</title>
+  </head>
+  <body>
+    <section>
+      <div class="main-container">
+        <header>
+          <button class="menu-icon" id="menu-icon" onclick="menubarDisplay()">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="logo">
+            <img  src="../images/logo.jpg" alt="Logo">
+           </div>
+          <div class="search-profile">
+            <div class="search-bar">
+              <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" placeholder="search..." />
+            </div>
+            <div class="event-add-profile">
+              <!-- event add  function -->
+              <div class="event-add-btn" id="event-add-btn">
+                <button type="button" onclick="addEvent()">+</button>
+              </div>
+              <div class="event-add-block" id="event-add-block">
+                <ul>
+                  <li>
+                    <div class="icon">
+                      <i class="fa-solid fa-cake-candles"></i>
+                    </div>
+                    Birthday
+                  </li>
+                  <li>
+                    <div class="icon"><i class="fa-solid fa-ring"></i></div>
+                    Marrage
+                  </li>
+                  <li>
+                    <div class="icon">
+                      <i class="fa-regular fa-handshake"></i>
+                    </div>
+                    conference
+                  </li>
+                  <li>
+                    <div class="icon"><i class="fa-solid fa-gift"></i></div>
+                    Others
+                  </li>
+                </ul>
+              </div>
+
+              <!-- notification display function -->
+              <div class="notification-bell" onclick="displayNotification()">
+                <p id="notification-dot">.</p>
+                <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
+              </div>
+
+              <div class="notification-display" id="notification-display">
+                <div class="notification">
+                  <div class="notification-profile">
+                    <img src="../images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
+                </div>
+
+                <div class="notification">
+                  <div class="notification-profile">
+                    <img src="../images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- profile display area -->
+              <div class="profile">
+                <img src="../images/profile.jpg" alt="" class="profile-icon" />
+                <div class="profile-details">
+                  <p id="profile-name">Akash</p>
+                  <p id="profile-dateOfBirth">coimbatore</p>
+                </div>
+                <div
+                  id="profile-edit-icon"
+                  class="profile-edit-icon"
+                  onclick="displayLogout()"
+                >
+                  <i class="fa-solid fa-angle-down"></i>
+                </div>
+                <div class="profile-edit-area" id="profile-edit-area">
+                  <button id="logout-btn">
+                    <a href="../login/login.html">Log Out</a>
+                  </button>
+                  <button id="profile-edit-btn">
+                    <a href="#">Edit Profile</a>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </header>
+        <menu>
+          <nav>
+            <ul class="menu-list">
+              <li>
+                <a href="../adminIndex/adminIndex.html">
+                  <div class="icon"><i class="fa-solid fa-house"></i></div>
+                  <p id="menu-name">Events List</p>
+                </a>
+              </li>
+
+              <li>
+                <a href="../adminEvents/events.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-calendar-days"></i>
+                  </div>
+                  <p id="menu-name">Add Events</p>
+                </a>
+              </li>
+              <li>
+                <a href="../adminGuest/adminGuest.html">
+                  <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                  <p id="menu-name">Guests List</p>
+                </a>
+              </li>
+              <li>
+                <a href="../adminAgenda/agenda.html">
+                  <div class="icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                  </div>
+                  <p id="menu-name"> Add Agenda</p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </menu>
+        <main>
+          <div class="form-container">
+          <form class="event-form">
+            <div class="Event-heading">
+                 <h1>Add Event</h1>
+            </div>
+
+            <!-- event name input -->
+            <div class="event-data-name">
+              <label for="event-name">Event Name:</label>
+              <input type="text" class="event-name" id="event-name" onblur="nameCheck()"/>
+              <p id="name-error"></p>
+            </div>
+
+            <!-- event date input -->
+            <div class="event-data-date">
+              <label for="event-date">Event Date :</label>
+              <input type="date" class="event-date" id="event-date" onblur="dateCheck()"/>
+              <p id="date-error"></p>
+            </div>
+
+            <!-- event description input -->
+            <div class="event-data-description">
+              <label for="event-description">Description:</label>
+              <input
+                type="textarea"
+                class="event-description"
+                id="event-description"
+                rows="4"
+                cols="50"
+                onblur="descriptionCheck()"
+              />
+              <p id="description-error"></p>
+            </div>
+
+            <!-- event status input -->
+            <div class="event-data-status">
+              <label for="event-status">Event Category:</label>
+               <select name="event-status" id="event-status" onblur="statusCheck()">
+                <option value="planning">Planning</option>
+                <option value="finalized">Finalized</option>
+                <option value="canceled">Canceled</option>
+               </select>
+               <p id="status-error"></p>
+            </div>
+
+            <!-- event category input -->
+            <div class="event-data-category">
+              <label for="event-category">Event Category:</label>
+               <select name="event-category" id="event-category" onblur="categoryCheck()">
+                <option value="conference">Conference</option>
+                <option value="wedding">wedding</option>
+                <option value="birthday">Birthday</option>
+               </select>
+               <p id="category-error"></p>
+               <p id="success-message"></p>
+            </div>
+              <!-- save event button -->
+            <button onclick="saveEvent(event)" id="save-btn">Save Event</button>
+          </form>
+        </div>
+        </main>
+      </div>
+    </section>
+  </body>
+  <script src="./events.js"></script>
+</html>
