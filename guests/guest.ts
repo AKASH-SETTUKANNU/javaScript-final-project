@@ -67,7 +67,7 @@ function guestEmailCheck(): boolean {
     const email = guestEmail.value.trim();
     const emailError = document.getElementById("email-error") as HTMLElement;
     const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
-    const foundGuest = allGuests.find((guest: any) => guest.guestEmail === email);
+    const foundGuest = allGuests.find((guest: Guest) => guest.guestEmail === email);
     if (email === '') {
         emailError.innerHTML = "Enter an Email...";
         return false;
@@ -119,6 +119,7 @@ class Guest {
         this.guestLocation = location;
     }
 }
+
 // Define User interface
 interface User {
     userEmail: string;
@@ -126,59 +127,56 @@ interface User {
     userBirthDate: string;
     events?: Event[];
 }
-// Load guests from local storage and display them
-function loadGuests(): void {
-    const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
-    allGuests.forEach((guest: Guest) => {
-        addGuestToTable(guest);
-    });
+
+// Add guest to the table
+function addGuestToTable(guest: Guest): void {
+    const guestTable = document.getElementById("guest-table") as HTMLElement;
+    if (guestTable) {
+        const tableData = `
+            <tr data-email="${guest.guestEmail}">
+                <td>${guest.guestName}</td>
+                <td>${guest.guestEmail}</td>
+                <td>${guest.guestLocation}</td>
+                <td><button class="invite-btn">Invite</button></td>
+                <td><button class="delete-btn" data-email="${guest.guestEmail}">Delete</button></td>
+            </tr>`;
+        guestTable.innerHTML += tableData;
+    } else {
+        console.error("Guest table element not found.");
+    }
 }
+
+// Load all guests and attach event delegation
 function loadallGuests(): void {
     const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
     const guestTable = document.getElementById("guest-table") as HTMLElement;
 
     if (guestTable) {
-        allGuests.forEach((guest: Guest) => {
-            const tr = document.createElement("tr");
+        allGuests.forEach((guest: Guest) => addGuestToTable(guest));
 
-            tr.innerHTML = `
-                <td>${guest.guestName}</td>
-                <td>${guest.guestEmail}</td>
-                <td>${guest.guestLocation}</td>
-                <td><button class="invite-btn">Invite</button></td>
-                <td><button class="delete-btn" data-name="${guest.guestEmail}">Delete</button></td>
-            `;
-
-            guestTable.appendChild(tr);
+        // Add event delegation for dynamic buttons
+        guestTable.addEventListener("click", (event) => {
+            const target = event.target as HTMLElement;
+            if (target.classList.contains("delete-btn")) {
+                const email = target.getAttribute("data-email") || "";
+                deleteGuest(email);
+            } else if (target.classList.contains("invite-btn")) {
+                const row = target.closest("tr");
+                const email = row?.querySelector('td:nth-child(2)')?.textContent || "";
+                const name = row?.querySelector('td:nth-child(1)')?.textContent || "";
+                inviteGuest(email, name);
+            }
         });
     } else {
-        console.error("Table element not found");
+        console.error("Guest table element not found.");
     }
 }
 
-
-
-// Add guest to the table
-function addGuestToTable(guest: Guest): void {
-    const guestTable = document.getElementById("guest-table") as HTMLElement;
-    const tableData = `
-        <tr>
-            <td>${guest.guestName}</td>
-            <td>${guest.guestEmail}</td>
-            <td>${guest.guestLocation}</td>
-            <td><button  id="invite-btn">Invite</button></td>
-            <td><button  id="delete-btn" data-name="${guest.guestEmail}">Delete</button></td>
-        </tr>`;
-    guestTable.innerHTML += tableData;
-
-   
-    const deleteButtonElement = document.querySelector(`button[data-name="${guest.guestEmail}"]`) as HTMLButtonElement;
-    if (deleteButtonElement) {
-        deleteButtonElement.addEventListener("click", () => deleteGuest(guest.guestEmail));
-    } else {
-        console.error("Button with the specified data-name not found.");
-    }
+// Invite guest function (Assumed placeholder implementation)
+function inviteGuest(email: string, name: string): void {
+    console.log(`Inviting guest ${name} with email ${email}`);
 }
+
 // Add guest to local storage and table
 function addGuest(event: Event): void {
     event.preventDefault();
@@ -235,8 +233,8 @@ function findGuest(event: Event): void {
                     <td>${foundGuest.guestName}</td>
                     <td>${foundGuest.guestEmail}</td>
                     <td>${foundGuest.guestLocation}</td>
-                    <td><button onclick="inviteGuest('${foundGuest.guestEmail}', '${foundGuest.guestName}')" id="invite-btn">Invite</button></td>
-                    <td><button onclick="deleteGuest('${foundGuest.guestEmail}')" id="delete-btn">Delete</button></td>
+                    <td><button onclick="inviteGuest('${foundGuest.guestEmail}', '${foundGuest.guestName}')" class="invite-btn">Invite</button></td>
+                    <td><button onclick="deleteGuest('${foundGuest.guestEmail}')" class="delete-btn">Delete</button></td>
                 </tr>`;
             resultTableBody.innerHTML = tableData;
 
@@ -261,9 +259,12 @@ function findGuest(event: Event): void {
 
 // Delete guest
 function deleteGuest(email: string): void {
+    // Retrieve all guests from localStorage
     const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
     const index = allGuests.findIndex((guest: Guest) => guest.guestEmail === email);
+
     if (index > -1) {
+        // Remove guest from localStorage
         allGuests.splice(index, 1);
         localStorage.setItem("guests", JSON.stringify(allGuests));
 
@@ -300,6 +301,8 @@ function deleteGuest(email: string): void {
         console.error("Guest with this email not found.");
     }
 }
+
+// Event listeners for buttons
 const addGuestBtn = document.getElementById("add-guest-btn") as HTMLButtonElement;
 const findGuestBtn = document.getElementById("find-user-btn") as HTMLButtonElement;
 const eventAddBtn = document.getElementById("event-add-btn") as HTMLButtonElement;
@@ -312,22 +315,20 @@ document.addEventListener("DOMContentLoaded", () => {
     guestLocation.addEventListener("blur", guestLocationCheck);
 
     if (addGuestBtn) {
-        // Only one event listener assigned here
         addGuestBtn.addEventListener("click", addGuest);
     }
 
-    // Assign findGuest to the correct button
     if (findGuestBtn) {
         findGuestBtn.addEventListener("click", findGuest);
     }
     loadallGuests();
     loadUserProfile();
+
     // Event listeners for UI elements
     if (menuIcon) menuIcon.addEventListener("click", menubarDisplay);
     if (eventAddBtn) eventAddBtn.addEventListener("click", addEvent);
     if (notificationBell) notificationBell.addEventListener("click", displayNotification);
 });
-
 
 // Function to load and display user profile details
 function loadUserProfile(): void {

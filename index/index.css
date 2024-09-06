@@ -395,6 +395,12 @@ menu ul li a{
     border-radius: 3px;
     border: 1px solid rgb(236, 147, 12);
 }
+.birthday-list:hover{
+    background-color: aqua;
+    box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
+    transform: scale(1.02);
+    transition: all 0.3s ease; 
+  }
 .birthday-detial{
     display: flex;
     flex-direction: column;
@@ -458,6 +464,13 @@ menu ul li a{
     border-radius: 3px;
     border: 1px solid rgb(236, 147, 12);
 }
+.wedding-list:hover{
+    background-color: aqua;
+    box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
+    transform: scale(1.02);
+    transition: all 0.3s ease; 
+  }
+  
 .wedding-detial{
     display: flex;
     flex-direction: column;
@@ -472,7 +485,15 @@ menu ul li a{
     border-radius: 3px;
     padding: 5px;
 }
-
+.birthday-detail i{
+    color: red;
+}
+.wedding-detail i{
+    color: red;
+}
+.conference-detail i{
+    color: red;
+}
 
 /* conference display area */
 .conference-display-area{
@@ -500,6 +521,12 @@ menu ul li a{
     border-radius: 3px;
     border: 1px solid rgb(236, 147, 12);
 }
+.conferences-list:hover{
+    background-color: aqua;
+    box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
+    transform: scale(1.02);
+    transition: all 0.3s ease; 
+  }
 .conference-detial{
     display: flex;
     flex-direction: column;

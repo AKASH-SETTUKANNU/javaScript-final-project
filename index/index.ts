@@ -72,7 +72,7 @@ function createBirthdayCard(event: Event): void {
     let birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
     if (birthdayLists) {
         let birthdayListHTML = `
-           <div class="birthday-list">
+           <div class="birthday-list" id="${event.eventDescription}">
               <div class="birthday-image">
                 <img src="../images/birthday.avif" alt="birthday" />
               </div>
@@ -80,6 +80,7 @@ function createBirthdayCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')" ></i>
               </div>
             </div>
         `;
@@ -94,7 +95,7 @@ function createWeddingCard(event: Event): void {
     let weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
         let weddingListHTML = `
-            <div class="wedding-list">
+            <div class="wedding-list" id="${event.eventDescription}">
               <div class="wedding-image">
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
@@ -102,6 +103,7 @@ function createWeddingCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
               </div>
             </div>
         `;
@@ -116,7 +118,7 @@ function createConferenceCard(event: Event): void {
     let conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
         let conferenceListHTML = `
-           <div class="conferences-list">
+           <div class="conferences-list" id="${event.eventDescription}">
               <div class="conference-image">
                 <img src="../images/conference.avif" alt="conference" />
               </div>
@@ -124,6 +126,7 @@ function createConferenceCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
               </div>
             </div>
         `;
@@ -132,6 +135,17 @@ function createConferenceCard(event: Event): void {
         console.error('Element with ID "conference-lists" not found.');
     }
 }
+
+// Example of deleteCard function
+function deleteCard(eventDescription: string): void {
+    let element = document.getElementById(eventDescription);
+    if (element) {
+        element.remove();
+    } else {
+        console.error(`Element with ID "${eventDescription}" not found.`);
+    }
+}
+
 
 // Load events for the logged-in user from localStorage and create event cards
 // Load events for the logged-in user from localStorage and create event cards

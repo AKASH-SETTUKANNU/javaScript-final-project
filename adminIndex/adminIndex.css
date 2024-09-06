@@ -402,6 +402,16 @@ menu ul li a {
 #Birthday-heading {
   margin-bottom: 10px;
 }
+.birthday-detail i{
+  color: red;
+}
+.wedding-detail i{
+  color: red;
+}
+.conference-detail i{
+  color: red;
+}
+
 .birthday-image img {
   height: 100px;
   aspect-ratio: 1/1;
@@ -421,6 +431,13 @@ menu ul li a {
   padding: 7px;
   border-radius: 3px;
   border: 1px solid rgb(236, 147, 12);
+  
+}
+.birthday-list:hover{
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
+  transform: scale(1.02);
+  transition: all 0.3s ease; 
 }
 .birthday-detial {
   display: flex;
@@ -486,9 +503,9 @@ menu ul li a {
   border-radius: 3px;
   border: 1px solid rgb(228, 160, 59);
 }
-.wedding-list:hover {
- 
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+.wedding-list:hover{
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
   transform: scale(1.02);
   transition: all 0.3s ease; 
 }
@@ -533,6 +550,12 @@ menu ul li a {
   padding: 7px;
   border-radius: 3px;
   border: 1px solid rgb(236, 147, 12);
+}
+.conferences-list:hover{
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2); 
+  transform: scale(1.02);
+  transition: all 0.3s ease; 
 }
 .conference-detial {
   display: flex;

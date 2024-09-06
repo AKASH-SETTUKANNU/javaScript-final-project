@@ -115,18 +115,46 @@ var Guest = /** @class */ (function () {
     }
     return Guest;
 }());
-// Load guests from local storage and display them
-function loadGuests() {
-    var allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
-    allGuests.forEach(function (guest) {
-        addGuestToTable(guest);
-    });
-}
 // Add guest to the table
 function addGuestToTable(guest) {
     var guestTable = document.getElementById("guest-table");
-    var tableData = "\n        <tr>\n            <td>".concat(guest.guestName, "</td>\n            <td>").concat(guest.guestEmail, "</td>\n            <td>").concat(guest.guestLocation, "</td>\n            <td><button onclick=\"inviteGuest('").concat(guest.guestEmail, "', '").concat(guest.guestName, "')\" id=\"invite-btn\">Invite</button></td>\n            <td><button onclick=\"deleteGuest('").concat(guest.guestEmail, "')\" id=\"delete-btn\">Delete</button></td>\n        </tr>");
-    guestTable.innerHTML += tableData;
+    if (guestTable) {
+        var tableData = "\n            <tr data-email=\"".concat(guest.guestEmail, "\">\n                <td>").concat(guest.guestName, "</td>\n                <td>").concat(guest.guestEmail, "</td>\n                <td>").concat(guest.guestLocation, "</td>\n                <td><button class=\"invite-btn\">Invite</button></td>\n                <td><button class=\"delete-btn\" data-email=\"").concat(guest.guestEmail, "\">Delete</button></td>\n            </tr>");
+        guestTable.innerHTML += tableData;
+    }
+    else {
+        console.error("Guest table element not found.");
+    }
+}
+// Load all guests and attach event delegation
+function loadallGuests() {
+    var allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
+    var guestTable = document.getElementById("guest-table");
+    if (guestTable) {
+        allGuests.forEach(function (guest) { return addGuestToTable(guest); });
+        // Add event delegation for dynamic buttons
+        guestTable.addEventListener("click", function (event) {
+            var _a, _b;
+            var target = event.target;
+            if (target.classList.contains("delete-btn")) {
+                var email = target.getAttribute("data-email") || "";
+                deleteGuest(email);
+            }
+            else if (target.classList.contains("invite-btn")) {
+                var row = target.closest("tr");
+                var email = ((_a = row === null || row === void 0 ? void 0 : row.querySelector('td:nth-child(2)')) === null || _a === void 0 ? void 0 : _a.textContent) || "";
+                var name_1 = ((_b = row === null || row === void 0 ? void 0 : row.querySelector('td:nth-child(1)')) === null || _b === void 0 ? void 0 : _b.textContent) || "";
+                inviteGuest(email, name_1);
+            }
+        });
+    }
+    else {
+        console.error("Guest table element not found.");
+    }
+}
+// Invite guest function (Assumed placeholder implementation)
+function inviteGuest(email, name) {
+    console.log("Inviting guest ".concat(name, " with email ").concat(email));
 }
 // Add guest to local storage and table
 function addGuest(event) {
@@ -170,7 +198,7 @@ function findGuest(event) {
         if (foundGuest) {
             searchDisplayArea.style.display = "block";
             resultMessage.innerHTML = "";
-            var tableData = "\n                <tr>\n                    <td>".concat(foundGuest.guestName, "</td>\n                    <td>").concat(foundGuest.guestEmail, "</td>\n                    <td>").concat(foundGuest.guestLocation, "</td>\n                    <td><button onclick=\"inviteGuest('").concat(foundGuest.guestEmail, "', '").concat(foundGuest.guestName, "')\" id=\"invite-btn\">Invite</button></td>\n                    <td><button onclick=\"deleteGuest('").concat(foundGuest.guestEmail, "')\" id=\"delete-btn\">Delete</button></td>\n                </tr>");
+            var tableData = "\n                <tr>\n                    <td>".concat(foundGuest.guestName, "</td>\n                    <td>").concat(foundGuest.guestEmail, "</td>\n                    <td>").concat(foundGuest.guestLocation, "</td>\n                    <td><button onclick=\"inviteGuest('").concat(foundGuest.guestEmail, "', '").concat(foundGuest.guestName, "')\" class=\"invite-btn\">Invite</button></td>\n                    <td><button onclick=\"deleteGuest('").concat(foundGuest.guestEmail, "')\" class=\"delete-btn\">Delete</button></td>\n                </tr>");
             resultTableBody.innerHTML = tableData;
         }
         else {
@@ -192,9 +220,11 @@ function findGuest(event) {
 }
 // Delete guest
 function deleteGuest(email) {
+    // Retrieve all guests from localStorage
     var allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
     var index = allGuests.findIndex(function (guest) { return guest.guestEmail === email; });
     if (index > -1) {
+        // Remove guest from localStorage
         allGuests.splice(index, 1);
         localStorage.setItem("guests", JSON.stringify(allGuests));
         // Remove the guest row from the guest table
@@ -229,6 +259,7 @@ function deleteGuest(email) {
         console.error("Guest with this email not found.");
     }
 }
+// Event listeners for buttons
 var addGuestBtn = document.getElementById("add-guest-btn");
 var findGuestBtn = document.getElementById("find-user-btn");
 var eventAddBtn = document.getElementById("event-add-btn");
@@ -241,8 +272,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (addGuestBtn) {
         addGuestBtn.addEventListener("click", addGuest);
     }
-        addGuestBtn.addEventListener("click", findGuest);
-    // Load user profile function call
+    if (findGuestBtn) {
+        findGuestBtn.addEventListener("click", findGuest);
+    }
+    loadallGuests();
     loadUserProfile();
     // Event listeners for UI elements
     if (menuIcon)

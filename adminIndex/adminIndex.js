@@ -22,6 +22,8 @@ function addEvent() {
         addEventArea.style.display = addEventArea.style.display === "block" ? "none" : "block";
     }
 }
+// Variable to keep track of the event being edited
+var eventToEditName = null;
 // Add or update an event
 function addEventItem() {
     if (nameCheck()) {
@@ -53,6 +55,7 @@ function displayEvents() {
     var eventsList = document.getElementById("events-list");
     var allEvents = JSON.parse(localStorage.getItem("EventItems") || "[]");
     if (eventsList) {
+        eventsList.innerHTML = ''; // Clear existing events
         allEvents.forEach(function (event) {
             var listItem = document.createElement('li');
             listItem.innerHTML = "\n                <div class=\"icon\">\n                    <i class=\"".concat(event.icon, "\"></i>\n                </div>\n                <span>").concat(event.name, "</span>\n                <button class=\"delete-btn\" data-event-name=\"").concat(event.name, "\">Delete</button>\n                <button class=\"edit-btn\" data-event-name=\"").concat(event.name, "\">Edit</button>\n            ");
@@ -97,8 +100,6 @@ function deleteEvent(name) {
         localStorage.setItem("EventItems", JSON.stringify(updatedEvents));
     }
 }
-// Variable to keep track of the event being edited
-var eventToEditName = null;
 // Edit an event
 function editEvent(name) {
     var allEvents = JSON.parse(localStorage.getItem("EventItems") || "[]");
@@ -133,37 +134,47 @@ function displayLogout() {
         notificationArea.style.display = 'none';
     }
 }
-// Create a birthday card
+// Function to create a birthday card
 function createBirthdayCard(event) {
     var birthdayLists = document.getElementById("birthday-lists");
     if (birthdayLists) {
-        var birthdayListHTML = "\n           <div class=\"birthday-list\">\n              <div class=\"birthday-image\">\n                <img src=\"../images/birthday.avif\" alt=\"birthday\" />\n              </div>\n              <div class=\"birthday-detail\">\n                <h5 id=\"".concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n              </div>\n            </div>\n        ");
+        var birthdayListHTML = "\n           <div class=\"birthday-list\" id=\"".concat(event.eventDescription, "\">\n              <div class=\"birthday-image\">\n                <img src=\"../images/birthday.avif\" alt=\"birthday\" />\n              </div>\n              <div class=\"birthday-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.eventDescription, "')\"></i>\n              </div>\n            </div>\n        ");
         birthdayLists.insertAdjacentHTML('beforeend', birthdayListHTML);
     }
     else {
         console.error('Element with ID "birthday-lists" not found.');
     }
 }
-// Create a wedding card
+// Function to create a wedding card
 function createWeddingCard(event) {
     var weddingLists = document.getElementById("wedding-lists");
     if (weddingLists) {
-        var weddingListHTML = "\n            <div class=\"wedding-list\">\n              <div class=\"wedding-image\">\n                <img src=\"../images/marrage.jpg\" alt=\"wedding\" />\n              </div>\n              <div class=\"wedding-detail\">\n                <h5 id=\"".concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n              </div>\n            </div>\n        ");
+        var weddingListHTML = "\n            <div class=\"wedding-list\" id=\"".concat(event.eventDescription, "\">\n              <div class=\"wedding-image\">\n                <img src=\"../images/marrage.jpg\" alt=\"wedding\" />\n              </div>\n              <div class=\"wedding-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.eventDescription, "')\"></i>\n              </div>\n            </div>\n        ");
         weddingLists.insertAdjacentHTML('beforeend', weddingListHTML);
     }
     else {
         console.error('Element with ID "wedding-lists" not found.');
     }
 }
-// Create a conference card
+// Function to create a conference card
 function createConferenceCard(event) {
     var conferenceLists = document.getElementById("conference-lists");
     if (conferenceLists) {
-        var conferenceListHTML = "\n           <div class=\"conferences-list\">\n              <div class=\"conference-image\">\n                <img src=\"../images/conference.avif\" alt=\"conference\" />\n              </div>\n              <div class=\"conference-detail\">\n                <h5 id=\"".concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n              </div>\n            </div>\n        ");
+        var conferenceListHTML = "\n           <div class=\"conferences-list\" id=\"".concat(event.eventDescription, "\">\n              <div class=\"conference-image\">\n                <img src=\"../images/conference.avif\" alt=\"conference\" />\n              </div>\n              <div class=\"conference-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.eventDescription, "')\"></i>\n              </div>\n            </div>\n        ");
         conferenceLists.insertAdjacentHTML('beforeend', conferenceListHTML);
     }
     else {
         console.error('Element with ID "conference-lists" not found.');
+    }
+}
+// Example of deleteCard function
+function deleteCard(eventDescription) {
+    var element = document.getElementById(eventDescription);
+    if (element) {
+        element.remove();
+    }
+    else {
+        console.error("Element with ID \"".concat(eventDescription, "\" not found."));
     }
 }
 // Load user events

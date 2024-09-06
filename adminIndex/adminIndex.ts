@@ -1,10 +1,3 @@
-// Get references to DOM elements
-const menu = document.querySelector('menu') as HTMLElement;
-const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
-const addEventArea = document.getElementById("event-add-block") as HTMLElement;
-const notificationArea = document.getElementById("notification-display") as HTMLElement;
-const logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
-
 // Define interfaces
 interface EventItem {
     name: string;
@@ -21,6 +14,13 @@ interface User {
     userBirthDate: string;
     events?: EventItem[];
 }
+
+// Get references to DOM elements
+const menu = document.querySelector('menu') as HTMLElement;
+const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
+const addEventArea = document.getElementById("event-add-block") as HTMLElement;
+const notificationArea = document.getElementById("notification-display") as HTMLElement;
+const logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
 
 // Toggle menu display
 function menubarDisplay(): void {
@@ -40,6 +40,9 @@ function addEvent(): void {
         addEventArea.style.display = addEventArea.style.display === "block" ? "none" : "block";
     }
 }
+
+// Variable to keep track of the event being edited
+let eventToEditName: string | null = null;
 
 // Add or update an event
 function addEventItem(): void {
@@ -76,7 +79,7 @@ function displayEvents(): void {
     let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
 
     if (eventsList) {
-       
+        eventsList.innerHTML = ''; // Clear existing events
 
         allEvents.forEach((event) => {
             const listItem = document.createElement('li');
@@ -134,9 +137,6 @@ function deleteEvent(name: string): void {
     }
 }
 
-// Variable to keep track of the event being edited
-let eventToEditName: string | null = null;
-
 // Edit an event
 function editEvent(name: string): void {
     let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
@@ -177,12 +177,12 @@ function displayLogout(): void {
     }
 }
 
-// Create a birthday card
+// Function to create a birthday card
 function createBirthdayCard(event: EventItem): void {
-    const birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
+    let birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
     if (birthdayLists) {
-        const birthdayListHTML = `
-           <div class="birthday-list">
+        let birthdayListHTML = `
+           <div class="birthday-list" id="${event.eventDescription}">
               <div class="birthday-image">
                 <img src="../images/birthday.avif" alt="birthday" />
               </div>
@@ -190,6 +190,7 @@ function createBirthdayCard(event: EventItem): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
               </div>
             </div>
         `;
@@ -199,12 +200,12 @@ function createBirthdayCard(event: EventItem): void {
     }
 }
 
-// Create a wedding card
+// Function to create a wedding card
 function createWeddingCard(event: EventItem): void {
-    const weddingLists = document.getElementById("wedding-lists") as HTMLElement;
+    let weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
-        const weddingListHTML = `
-            <div class="wedding-list">
+        let weddingListHTML = `
+            <div class="wedding-list" id="${event.eventDescription}">
               <div class="wedding-image">
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
@@ -212,6 +213,7 @@ function createWeddingCard(event: EventItem): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
               </div>
             </div>
         `;
@@ -221,12 +223,12 @@ function createWeddingCard(event: EventItem): void {
     }
 }
 
-// Create a conference card
+// Function to create a conference card
 function createConferenceCard(event: EventItem): void {
-    const conferenceLists = document.getElementById("conference-lists") as HTMLElement;
+    let conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
-        const conferenceListHTML = `
-           <div class="conferences-list">
+        let conferenceListHTML = `
+           <div class="conferences-list" id="${event.eventDescription}">
               <div class="conference-image">
                 <img src="../images/conference.avif" alt="conference" />
               </div>
@@ -234,12 +236,23 @@ function createConferenceCard(event: EventItem): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
               </div>
             </div>
         `;
         conferenceLists.insertAdjacentHTML('beforeend', conferenceListHTML);
     } else {
         console.error('Element with ID "conference-lists" not found.');
+    }
+}
+
+// Example of deleteCard function
+function deleteCard(eventDescription: string): void {
+    let element = document.getElementById(eventDescription);
+    if (element) {
+        element.remove();
+    } else {
+        console.error(`Element with ID "${eventDescription}" not found.`);
     }
 }
 

@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         userTableBody.innerHTML = '';
         users.forEach(function (user, index) {
             var userRow = document.createElement('tr');
-            userRow.innerHTML = "\n                <td>".concat(user.userName, "</td>\n                <td>").concat(user.userEmail, "</td>\n                <td>").concat(user.userPassword, "</td>\n                <td>").concat(user.userRole, "</td>\n                <td>").concat(user.userBirthDate, "</td>\n                <td>\n                    <button class=\"edit-btn\" data-index=\"").concat(index, "\">Edit</button>\n                    <button class=\"delete-btn\" data-email=\"").concat(user.userEmail, "\">Delete</button>\n                </td>\n            ");
+            userRow.innerHTML = "\n                <td>".concat(user.userName, "</td>\n                <td>").concat(user.userEmail, "</td>\n                <td>").concat(user.userRole, "</td>\n                <td>").concat(user.userBirthDate, "</td>\n                <td>\n                    <button class=\"edit-btn\" data-index=\"").concat(index, "\">Edit</button>\n                    <button class=\"delete-btn\" data-email=\"").concat(user.userEmail, "\">Delete</button>\n                </td>\n            ");
             userTableBody.appendChild(userRow);
         });
         document.querySelectorAll('.edit-btn').forEach(function (button) {
@@ -100,9 +100,25 @@ document.addEventListener('DOMContentLoaded', function () {
     function addUser(event) {
         event.preventDefault();
         var users = JSON.parse(localStorage.getItem('users') || '[]');
+        var newUserEmailValue = newUserEmail.value.trim();
+        // Check if the email already exists
+        var emailExists = users.some(function (user) { return user.userEmail === newUserEmailValue; });
+        // If editing an existing user, allow updating the same email
+        if (editIndex !== null) {
+            if (emailExists && users[editIndex].userEmail !== newUserEmailValue) {
+                alert("Email already exists. Please use a different email.");
+                return;
+            }
+        }
+        else {
+            if (emailExists) {
+                alert("Email already exists. Please use a different email.");
+                return;
+            }
+        }
         var newUser = {
             userName: newUserName.value.trim(),
-            userEmail: newUserEmail.value.trim(),
+            userEmail: newUserEmailValue,
             userPassword: newUserPassword.value.trim(),
             userRole: newUserRole.value,
             userBirthDate: newUserBirthDate.value
@@ -112,11 +128,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
         if (editIndex !== null) {
+            // Update existing user
             users[editIndex] = newUser;
             editIndex = null;
             submitButton.textContent = 'Add User';
         }
         else {
+            // Add new user
             users.push(newUser);
         }
         localStorage.setItem('users', JSON.stringify(users));

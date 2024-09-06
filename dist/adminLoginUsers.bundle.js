@@ -1,103 +1,96 @@
-interface User {
-    userName: string;
-    userEmail: string;
-    userPassword: string;
-    userRole: string;
-    userBirthDate: string;
-}
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/*!***************************************!*\
+  !*** ./adminLoginUsers/loginUsers.ts ***!
+  \***************************************/
 
 function loadUserProfile() {
     const usersJson = localStorage.getItem("users");
-    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
+    const allUsersJson = usersJson ? JSON.parse(usersJson) : [];
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
-
     if (loggedInUserEmail) {
         const filteredUsers = allUsersJson.filter(user => user.userEmail === loggedInUserEmail);
         const user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
-
-        const profileName = document.getElementById("profile-name") as HTMLElement;
-        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
-
+        const profileName = document.getElementById("profile-name");
+        const dateOfBirth = document.getElementById("profile-dateOfBirth");
         if (user) {
             if (profileName && dateOfBirth) {
                 profileName.innerText = user.userName;
                 dateOfBirth.innerText = user.userBirthDate || 'N/A';
-            } else {
+            }
+            else {
                 console.error("Profile elements not found.");
             }
-        } else {
+        }
+        else {
             console.error("User not found in localStorage.");
         }
-    } else {
+    }
+    else {
         console.error("No logged-in user email found.");
     }
 }
-
-const menu = document.querySelector('menu') as HTMLElement;
-const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
-const addEventArea = document.getElementById("event-add-block") as HTMLElement;
-const notificationArea = document.getElementById("notification-display") as HTMLElement;
-const logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
-const eventAddBtn = document.getElementById("event-add-btn") as HTMLElement;
-const notificationBell = document.getElementById("notification-bell") as HTMLElement;
-const profileEditIcon = document.getElementById("profile-edit-icon") as HTMLElement;
-
+const menu = document.querySelector('menu');
+const menuIcon = document.querySelector('#menu-icon');
+const addEventArea = document.getElementById("event-add-block");
+const notificationArea = document.getElementById("notification-display");
+const logoutArea = document.getElementById("profile-edit-area");
+const eventAddBtn = document.getElementById("event-add-btn");
+const notificationBell = document.getElementById("notification-bell");
+const profileEditIcon = document.getElementById("profile-edit-icon");
 function menubarDisplay() {
     if (menu.style.display === 'none' || menu.style.display === '') {
         menu.style.display = 'block';
         addEventArea.style.display = 'none';
         notificationArea.style.display = 'none';
         logoutArea.style.display = 'none';
-    } else {
+    }
+    else {
         menu.style.display = 'none';
     }
 }
-
 function addEvent() {
     window.location.href = "../events/events.html";
 }
-
 function displayNotification() {
     if (notificationArea.style.display === 'none' || notificationArea.style.display === '') {
         notificationArea.style.display = 'block';
         addEventArea.style.display = 'none';
         logoutArea.style.display = 'none';
-    } else {
+    }
+    else {
         notificationArea.style.display = 'none';
     }
 }
-
 function displayLogout() {
     if (logoutArea.style.display === 'none' || logoutArea.style.display === '') {
         logoutArea.style.display = 'flex';
         addEventArea.style.display = 'none';
         notificationArea.style.display = 'none';
-    } else {
+    }
+    else {
         logoutArea.style.display = 'none';
     }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
-    const userTableBody = document.querySelector('#user-table tbody') as HTMLTableSectionElement;
-    const addUserForm = document.getElementById('add-user-form') as HTMLFormElement;
-    const newUserName = document.getElementById('new-user-name') as HTMLInputElement;
-    const newUserEmail = document.getElementById('new-user-email') as HTMLInputElement;
-    const newUserPassword = document.getElementById('new-user-password') as HTMLInputElement;
-    const newUserRole = document.getElementById('new-user-role') as HTMLSelectElement;
-    const newUserBirthDate = document.getElementById('new-user-birthdate') as HTMLInputElement;
-    const submitButton = document.querySelector('#add-user-form button') as HTMLButtonElement;
-
-    let editIndex: number | null = null;
-
+    const userTableBody = document.querySelector('#user-table tbody');
+    const addUserForm = document.getElementById('add-user-form');
+    const newUserName = document.getElementById('new-user-name');
+    const newUserEmail = document.getElementById('new-user-email');
+    const newUserPassword = document.getElementById('new-user-password');
+    const newUserRole = document.getElementById('new-user-role');
+    const newUserBirthDate = document.getElementById('new-user-birthdate');
+    const submitButton = document.querySelector('#add-user-form button');
+    let editIndex = null;
     function displayUsers() {
-        const users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
         userTableBody.innerHTML = '';
-
         users.forEach((user, index) => {
             const userRow = document.createElement('tr');
             userRow.innerHTML = `
                 <td>${user.userName}</td>
                 <td>${user.userEmail}</td>
+                <td>${user.userPassword}</td>
                 <td>${user.userRole}</td>
                 <td>${user.userBirthDate}</td>
                 <td>
@@ -107,99 +100,72 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             userTableBody.appendChild(userRow);
         });
-
         document.querySelectorAll('.edit-btn').forEach(button => {
             button.addEventListener('click', (event) => {
-                const index = parseInt((event.target as HTMLButtonElement).getAttribute('data-index') || '0');
+                const index = parseInt(event.target.getAttribute('data-index') || '0');
                 editUser(index);
             });
         });
-
         document.querySelectorAll('.delete-btn').forEach(button => {
             button.addEventListener('click', (event) => {
-                const email = (event.target as HTMLButtonElement).getAttribute('data-email') || '';
+                const email = event.target.getAttribute('data-email') || '';
                 deleteUser(email);
             });
         });
     }
-
-    function addUser(event: Event) {
+    function addUser(event) {
         event.preventDefault();
-
-        const users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
-        const newUserEmailValue = newUserEmail.value.trim();
-
-        // Check if the email already exists
-        const emailExists = users.some(user => user.userEmail === newUserEmailValue);
-
-        // If editing an existing user, allow updating the same email
-        if (editIndex !== null) {
-            if (emailExists && users[editIndex].userEmail !== newUserEmailValue) {
-                alert("Email already exists. Please use a different email.");
-                return;
-            }
-        } else {
-            if (emailExists) {
-                alert("Email already exists. Please use a different email.");
-                return;
-            }
-        }
-
-        const newUser: User = {
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        const newUser = {
             userName: newUserName.value.trim(),
-            userEmail: newUserEmailValue,
+            userEmail: newUserEmail.value.trim(),
             userPassword: newUserPassword.value.trim(),
             userRole: newUserRole.value,
             userBirthDate: newUserBirthDate.value
         };
-
         if (!newUser.userName || !newUser.userEmail || !newUser.userPassword) {
             alert("Please fill in all required fields.");
             return;
         }
-
         if (editIndex !== null) {
-            // Update existing user
             users[editIndex] = newUser;
             editIndex = null;
             submitButton.textContent = 'Add User';
-        } else {
-            // Add new user
+        }
+        else {
             users.push(newUser);
         }
-
         localStorage.setItem('users', JSON.stringify(users));
         displayUsers();
         addUserForm.reset();
     }
-
-    function deleteUser(email: string) {
-        let users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+    function deleteUser(email) {
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
         users = users.filter(user => user.userEmail !== email);
         localStorage.setItem('users', JSON.stringify(users));
         displayUsers();
     }
-
-    function editUser(index: number) {
-        let users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+    function editUser(index) {
+        let users = JSON.parse(localStorage.getItem('users') || '[]');
         const user = users[index];
-
         if (user) {
             newUserName.value = user.userName;
             newUserEmail.value = user.userEmail;
             newUserPassword.value = user.userPassword;
             newUserRole.value = user.userRole;
             newUserBirthDate.value = user.userBirthDate || '';
-
             editIndex = index;
             submitButton.textContent = 'Update User';
-        } else {
+        }
+        else {
             console.error("User not found.");
         }
     }
-
     addUserForm.addEventListener('submit', addUser);
-
     displayUsers();
     loadUserProfile();
 });
+
+/******/ })()
+;
+//# sourceMappingURL=adminLoginUsers.bundle.js.map

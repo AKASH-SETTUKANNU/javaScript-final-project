@@ -5,14 +5,11 @@
   \************************/
 
 // Get menu elements
-const menu = document.querySelector('menu');
-const menuIcon = document.querySelector('#menu-icon');
-const addEventArea = document.getElementById("event-add-block");
-const notificationArea = document.getElementById("notification-display");
-const logoutArea = document.getElementById("profile-edit-area");
-const eventAddBtn = document.getElementById("event-add-btn");
-const notificationBell = document.getElementById("notification-bell");
-const profileEditIcon = document.getElementById("profile-edit-icon");
+let menu = document.querySelector('menu');
+let menuIcon = document.querySelector('#menu-icon');
+let addEventArea = document.getElementById("event-add-block");
+let notificationArea = document.getElementById("notification-display");
+let logoutArea = document.getElementById("profile-edit-area");
 // Function to toggle menu display
 function menubarDisplay() {
     if (menu.style.display === 'none' || menu.style.display === '') {
@@ -27,7 +24,14 @@ function menubarDisplay() {
 }
 // Function to toggle add event display
 function addEvent() {
-    window.location.href = "../events/events.html";
+    window.location.href = "events.html";
+    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
+    //     addEventArea.style.display = 'block';
+    //     notificationArea.style.display = 'none';  
+    //     logoutArea.style.display = 'none'; 
+    // } else {
+    //     addEventArea.style.display = 'none'; 
+    // }
 }
 // Function to toggle notification display
 function displayNotification() {
@@ -53,18 +57,18 @@ function displayLogout() {
 }
 // Function to create a birthday card
 function createBirthdayCard(event) {
-    const birthdayLists = document.getElementById("birthday-lists");
+    let birthdayLists = document.getElementById("birthday-lists");
     if (birthdayLists) {
-        const birthdayListHTML = `
-            <div class="birthday-list">
-                <div class="birthday-image">
-                    <img src="../images/birthday.avif" alt="birthday" />
-                </div>
-                <div class="birthday-detail">
-                    <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
-                    <h5>${event.eventDate}</h5>
-                    <p>${event.eventDescription}</p>
-                </div>
+        let birthdayListHTML = `
+           <div class="birthday-list">
+              <div class="birthday-image">
+                <img src="../images/birthday.avif" alt="birthday" />
+              </div>
+              <div class="birthday-detail">
+                <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                <h5>${event.eventDate}</h5>
+                <p>${event.eventDescription}</p>
+              </div>
             </div>
         `;
         birthdayLists.insertAdjacentHTML('beforeend', birthdayListHTML);
@@ -75,18 +79,18 @@ function createBirthdayCard(event) {
 }
 // Function to create a wedding card
 function createWeddingCard(event) {
-    const weddingLists = document.getElementById("wedding-lists");
+    let weddingLists = document.getElementById("wedding-lists");
     if (weddingLists) {
-        const weddingListHTML = `
+        let weddingListHTML = `
             <div class="wedding-list">
-                <div class="wedding-image">
-                    <img src="../images/marrage.jpg" alt="wedding" />
-                </div>
-                <div class="wedding-detail">
-                    <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
-                    <h5>${event.eventDate}</h5>
-                    <p>${event.eventDescription}</p>
-                </div>
+              <div class="wedding-image">
+                <img src="../images/marrage.jpg" alt="wedding" />
+              </div>
+              <div class="wedding-detail">
+                <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                <h5>${event.eventDate}</h5>
+                <p>${event.eventDescription}</p>
+              </div>
             </div>
         `;
         weddingLists.insertAdjacentHTML('beforeend', weddingListHTML);
@@ -97,18 +101,18 @@ function createWeddingCard(event) {
 }
 // Function to create a conference card
 function createConferenceCard(event) {
-    const conferenceLists = document.getElementById("conference-lists");
+    let conferenceLists = document.getElementById("conference-lists");
     if (conferenceLists) {
-        const conferenceListHTML = `
-            <div class="conferences-list">
-                <div class="conference-image">
-                    <img src="../images/conference.avif" alt="conference" />
-                </div>
-                <div class="conference-detail">
-                    <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
-                    <h5>${event.eventDate}</h5>
-                    <p>${event.eventDescription}</p>
-                </div>
+        let conferenceListHTML = `
+           <div class="conferences-list">
+              <div class="conference-image">
+                <img src="../images/conference.avif" alt="conference" />
+              </div>
+              <div class="conference-detail">
+                <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                <h5>${event.eventDate}</h5>
+                <p>${event.eventDescription}</p>
+              </div>
             </div>
         `;
         conferenceLists.insertAdjacentHTML('beforeend', conferenceListHTML);
@@ -118,11 +122,13 @@ function createConferenceCard(event) {
     }
 }
 // Load events for the logged-in user from localStorage and create event cards
+// Load events for the logged-in user from localStorage and create event cards
 function loadUserEvents() {
     const usersJson = localStorage.getItem("users");
     const allUsersJson = usersJson ? JSON.parse(usersJson) : [];
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
     if (loggedInUserEmail) {
+        // Using filter instead of find
         const filteredUsers = allUsersJson.filter((user) => user.userEmail === loggedInUserEmail);
         const user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
         if (user && user.events) {
@@ -180,18 +186,10 @@ function loadUserProfile() {
         console.error("No logged-in user email found.");
     }
 }
-// Add event listeners to elements
+// Call functions on page load
 document.addEventListener("DOMContentLoaded", () => {
     loadUserEvents();
     loadUserProfile();
-    if (menuIcon)
-        menuIcon.addEventListener("click", menubarDisplay);
-    if (eventAddBtn)
-        eventAddBtn.addEventListener("click", addEvent);
-    if (notificationBell)
-        notificationBell.addEventListener("click", displayNotification);
-    if (profileEditIcon)
-        profileEditIcon.addEventListener("click", displayLogout);
 });
 
 /******/ })()
