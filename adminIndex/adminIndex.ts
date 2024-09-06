@@ -79,7 +79,7 @@ function displayEvents(): void {
     let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
 
     if (eventsList) {
-        eventsList.innerHTML = ''; // Clear existing events
+       
 
         allEvents.forEach((event) => {
             const listItem = document.createElement('li');

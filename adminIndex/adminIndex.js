@@ -55,7 +55,6 @@ function displayEvents() {
     var eventsList = document.getElementById("events-list");
     var allEvents = JSON.parse(localStorage.getItem("EventItems") || "[]");
     if (eventsList) {
-        eventsList.innerHTML = ''; // Clear existing events
         allEvents.forEach(function (event) {
             var listItem = document.createElement('li');
             listItem.innerHTML = "\n                <div class=\"icon\">\n                    <i class=\"".concat(event.icon, "\"></i>\n                </div>\n                <span>").concat(event.name, "</span>\n                <button class=\"delete-btn\" data-event-name=\"").concat(event.name, "\">Delete</button>\n                <button class=\"edit-btn\" data-event-name=\"").concat(event.name, "\">Edit</button>\n            ");

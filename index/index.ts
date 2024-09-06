@@ -1,5 +1,6 @@
-// Define Event interface
-interface Event {
+// Rename CustomEvent to EventDetails to avoid conflict with built-in CustomEvent
+interface EventDetails {
+    id: string;
     eventCategory: string;
     eventStatus: string;
     eventDate: string;
@@ -11,7 +12,7 @@ interface User {
     userEmail: string;
     userName: string;
     userBirthDate: string;
-    events?: Event[];
+    events?: EventDetails[];
 }
 
 // Get menu elements
@@ -20,6 +21,25 @@ let menuIcon = document.querySelector('#menu-icon') as HTMLElement;
 let addEventArea = document.getElementById("event-add-block") as HTMLElement;
 let notificationArea = document.getElementById("notification-display") as HTMLElement;
 let logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
+
+// Define form element and error elements
+const form = document.querySelector('.event-form') as HTMLFormElement;
+const popupeventName = document.getElementById("event-name") as HTMLInputElement;
+const popupeventDate = document.getElementById("event-date") as HTMLInputElement;
+const popupeventDescription = document.getElementById("event-description") as HTMLTextAreaElement;
+const popupeventStatus = document.getElementById("event-status") as HTMLSelectElement;
+const popupeventCategory = document.getElementById("event-category") as HTMLSelectElement;
+const popupsuccessMessage = document.getElementById("success-message") as HTMLElement;
+
+// Error elements
+const popupnameError = document.getElementById("name-error") as HTMLElement;
+const popupdateError = document.getElementById("date-error") as HTMLElement;
+const popupdescriptionError = document.getElementById("description-error") as HTMLElement;
+const popupstatusError = document.getElementById("status-error") as HTMLElement;
+const popupcategoryError = document.getElementById("category-error") as HTMLElement;
+
+// Variable to store the ID of the event being edited
+let eventToEditId: string | null = null;
 
 // Function to toggle menu display
 function menubarDisplay(): void {
@@ -35,14 +55,7 @@ function menubarDisplay(): void {
 
 // Function to toggle add event display
 function addEvent(): void {
-    window.location.href = "events.html";
-    // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
-    //     addEventArea.style.display = 'block';
-    //     notificationArea.style.display = 'none';  
-    //     logoutArea.style.display = 'none'; 
-    // } else {
-    //     addEventArea.style.display = 'none'; 
-    // }
+    window.location.href = "../events/events.html";
 }
 
 // Function to toggle notification display
@@ -68,11 +81,11 @@ function displayLogout(): void {
 }
 
 // Function to create a birthday card
-function createBirthdayCard(event: Event): void {
+function createBirthdayCard(event: EventDetails): void {
     let birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
     if (birthdayLists) {
         let birthdayListHTML = `
-           <div class="birthday-list" id="${event.eventDescription}">
+           <div class="birthday-list" id="${event.id}">
               <div class="birthday-image">
                 <img src="../images/birthday.avif" alt="birthday" />
               </div>
@@ -80,7 +93,8 @@ function createBirthdayCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')" ></i>
+                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
               </div>
             </div>
         `;
@@ -91,11 +105,11 @@ function createBirthdayCard(event: Event): void {
 }
 
 // Function to create a wedding card
-function createWeddingCard(event: Event): void {
+function createWeddingCard(event: EventDetails): void {
     let weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
         let weddingListHTML = `
-            <div class="wedding-list" id="${event.eventDescription}">
+            <div class="wedding-list" id="${event.id}">
               <div class="wedding-image">
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
@@ -103,7 +117,8 @@ function createWeddingCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
+                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
               </div>
             </div>
         `;
@@ -114,11 +129,11 @@ function createWeddingCard(event: Event): void {
 }
 
 // Function to create a conference card
-function createConferenceCard(event: Event): void {
+function createConferenceCard(event: EventDetails): void {
     let conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
         let conferenceListHTML = `
-           <div class="conferences-list" id="${event.eventDescription}">
+           <div class="conferences-list" id="${event.id}">
               <div class="conference-image">
                 <img src="../images/conference.avif" alt="conference" />
               </div>
@@ -126,7 +141,8 @@ function createConferenceCard(event: Event): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.eventDescription}')"></i>
+                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
               </div>
             </div>
         `;
@@ -136,18 +152,109 @@ function createConferenceCard(event: Event): void {
     }
 }
 
-// Example of deleteCard function
-function deleteCard(eventDescription: string): void {
-    let element = document.getElementById(eventDescription);
+// Function to delete a card
+function deleteCard(eventId: string): void {
+    let element = document.getElementById(eventId);
     if (element) {
         element.remove();
     } else {
-        console.error(`Element with ID "${eventDescription}" not found.`);
+        console.error(`Element with ID "${eventId}" not found.`);
     }
 }
 
+// Show the form for editing an event
+function showEditForm(eventId: string): void {
+    const usersJson = localStorage.getItem("users");
+    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
 
-// Load events for the logged-in user from localStorage and create event cards
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+        if (user && user.events) {
+            const event = user.events.find(e => e.id === eventId);
+            console.log('Event ID:', eventId);
+            console.log('Events:', user.events);
+            if (event) {
+                // Populate the form with existing event data
+                popupeventName.value = event.eventCategory;
+                popupeventDate.value = event.eventDate;
+                popupeventDescription.value = event.eventDescription;
+                popupeventStatus.value = event.eventStatus;
+                popupeventCategory.value = event.eventCategory;
+                eventToEditId = eventId; // Set the ID of the event being edited
+                // Display the form
+                addEventArea.style.display = 'block';
+            } else {
+                console.error("Event not found.");
+            }
+        } else {
+            console.error("User or events not found.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
+}
+
+// Save or update event in localStorage
+function updateEvent(event: Event): void {
+    event.preventDefault();
+
+    if (popupnameCheck() && popupdateCheck() && popupdescriptionCheck() && popupstatusCheck() && popupcategoryCheck()) {
+        const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+        const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+        if (loggedInUserEmail) {
+            const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
+
+            if (user) {
+                if (!user.events) {
+                    user.events = [];
+                }
+
+                // Find the event to update
+                const eventIndex = user.events.findIndex(event => event.id === eventToEditId);
+
+                if (eventIndex > -1) {
+                    user.events[eventIndex] = {
+                        id: eventToEditId!,
+                        eventCategory: popupeventCategory.value.trim(),
+                        eventStatus: popupeventStatus.value.trim(),
+                        eventDate: popupeventDate.value.trim(),
+                        eventDescription: popupeventDescription.value.trim(),
+                    };
+
+                    localStorage.setItem("users", JSON.stringify(allUsersJson));
+
+                    // Clear form values
+                    popupeventName.value = "";
+                    popupeventDate.value = "";
+                    popupeventDescription.value = "";
+                    popupeventStatus.value = "";
+                    popupeventCategory.value = "";
+
+                    setTimeout(() => {
+                        popupsuccessMessage.innerHTML = "Event Updated Successfully...";
+                        addEventArea.style.display = 'none'; // Hide the form
+                    }, 3000);
+                } else {
+                    console.error("Event not found.");
+                }
+            } else {
+                console.error("User not found.");
+            }
+        } else {
+            console.error("Logged in user email not found.");
+        }
+    } else {
+        setTimeout(() => {
+            popupcategoryError.innerHTML = "Enter all required fields.";
+        }, 3000);
+    }
+}
+
+// Attach event handler to the form
+form?.addEventListener('submit', updateEvent);
+
 // Load events for the logged-in user from localStorage and create event cards
 function loadUserEvents(): void {
     const usersJson = localStorage.getItem("users");
@@ -155,13 +262,11 @@ function loadUserEvents(): void {
     const loggedInUserEmail: string | null = localStorage.getItem("loggedInUserEmail");
 
     if (loggedInUserEmail) {
-        // Using filter instead of find
-        const filteredUsers = allUsersJson.filter((user: User) => user.userEmail === loggedInUserEmail);
-        const user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
+        const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
 
         if (user && user.events) {
-            user.events.forEach((event: Event) => {
-                switch (event.eventCategory.toLowerCase()) {
+            user.events.forEach(event => {
+                switch (event.eventCategory) {
                     case 'birthday':
                         createBirthdayCard(event);
                         break;
@@ -172,51 +277,67 @@ function loadUserEvents(): void {
                         createConferenceCard(event);
                         break;
                     default:
-                        console.warn(`Unknown event category: ${event.eventCategory}`);
-                        break;
+                        console.error(`Unknown event category: ${event.eventCategory}`);
                 }
             });
         } else {
-            console.error("User not found or no events available.");
+            console.error("User or events not found.");
         }
     } else {
-        console.error("No logged-in user email found.");
+        console.error("Logged in user email not found.");
     }
 }
 
-// Function to load and display user profile details
-function loadUserProfile(): void {
-    const usersJson = localStorage.getItem("users");
-    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
-    const loggedInUserEmail: string | null = localStorage.getItem("loggedInUserEmail");
+// Call this function to load events on page load
+window.onload = loadUserEvents;
 
-    if (loggedInUserEmail) {
-        const filteredUsers = allUsersJson.filter((user: User) => user.userEmail === loggedInUserEmail);
-        const user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
-
-        console.log("Logged In User Email:", loggedInUserEmail); 
-        console.log("User Object:", user); 
-
-        const profileName = document.getElementById("profile-name") as HTMLElement;
-        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
-
-        if (user) {
-            if (profileName && dateOfBirth) {
-                profileName.innerText = user.userName;
-                dateOfBirth.innerText = user.userBirthDate; 
-            } else {
-                console.error("Profile elements not found.");
-            }
-        } else {
-            console.error("User not found in localStorage.");
-        }
+// Validation functions for form
+function popupnameCheck(): boolean {
+    if (!popupeventName.value.trim()) {
+        popupnameError.innerHTML = "Event name is required.";
+        return false;
     } else {
-        console.error("No logged-in user email found.");
+        popupnameError.innerHTML = "";
+        return true;
     }
 }
 
-// Call functions on page load
-document.addEventListener("DOMContentLoaded", () => {
-    loadUserEvents();
-    loadUserProfile();
-});
+function popupdateCheck(): boolean {
+    if (!popupeventDate.value.trim()) {
+        popupdateError.innerHTML = "Event date is required.";
+        return false;
+    } else {
+        popupdateError.innerHTML = "";
+        return true;
+    }
+}
+
+function popupdescriptionCheck(): boolean {
+    if (!popupeventDescription.value.trim()) {
+        popupdescriptionError.innerHTML = "Event description is required.";
+        return false;
+    } else {
+        popupdescriptionError.innerHTML = "";
+        return true;
+    }
+}
+
+function popupstatusCheck(): boolean {
+    if (!popupeventStatus.value.trim()) {
+        popupstatusError.innerHTML = "Event status is required.";
+        return false;
+    } else {
+        popupstatusError.innerHTML = "";
+        return true;
+    }
+}
+
+function popupcategoryCheck(): boolean {
+    if (!popupeventCategory.value.trim()) {
+        popupcategoryError.innerHTML = "Event category is required.";
+        return false;
+    } else {
+        popupcategoryError.innerHTML = "";
+        return true;
+    }
+}

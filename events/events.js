@@ -1,11 +1,8 @@
-// Menu display area
 var menu = document.querySelector('menu');
 var menuIcon = document.querySelector('#menu-icon');
-// Event display areas
 var addEventArea = document.getElementById("event-add-block");
 var notificationArea = document.getElementById("notification-display");
 var logoutArea = document.getElementById("profile-edit-area");
-// Toggle menu display
 function menubarDisplay() {
     if (menu.style.display === 'none' || menu.style.display === '') {
         menu.style.display = 'block';
@@ -17,11 +14,9 @@ function menubarDisplay() {
         menu.style.display = 'none';
     }
 }
-// Redirect to add event page
 function addEvent() {
     window.location.href = "../events/events.html";
 }
-// Toggle notification display
 function displayNotification() {
     if (notificationArea.style.display === 'none' || notificationArea.style.display === '') {
         notificationArea.style.display = 'block';
@@ -32,7 +27,6 @@ function displayNotification() {
         notificationArea.style.display = 'none';
     }
 }
-// Toggle logout display
 function displayLogout() {
     if (logoutArea.style.display === 'none' || logoutArea.style.display === '') {
         logoutArea.style.display = 'flex';
@@ -43,26 +37,17 @@ function displayLogout() {
         logoutArea.style.display = 'none';
     }
 }
-// Get data from form
 var eventName = document.getElementById("event-name");
 var eventDate = document.getElementById("event-date");
 var eventDescription = document.getElementById("event-description");
 var eventStatus = document.getElementById("event-status");
 var eventCategory = document.getElementById("event-category");
-var saveEventBtn = document.getElementById("save-btn");
-eventName.addEventListener("onblur", nameCheck);
-eventDate.addEventListener("onblur", dateCheck);
-eventDescription.addEventListener("onblur", descriptionCheck);
-eventCategory.addEventListener("onblur", categoryCheck);
-eventStatus.addEventListener("onblur", statusCheck);
-saveEventBtn.addEventListener("onclick", saveEvent);
 var nameError = document.getElementById("name-error");
 var dateError = document.getElementById("date-error");
 var descriptionError = document.getElementById("description-error");
 var eventstatusError = document.getElementById("status-error");
 var categoryError = document.getElementById("category-error");
 var successMessage = document.getElementById("success-message");
-// Check for event name
 function nameCheck() {
     var name = eventName.value.trim();
     if (name === '') {
@@ -74,7 +59,6 @@ function nameCheck() {
         return true;
     }
 }
-// Check for event date
 function dateCheck() {
     var date = eventDate.value.trim();
     if (date === '') {
@@ -86,7 +70,6 @@ function dateCheck() {
         return true;
     }
 }
-// Check for event description
 function descriptionCheck() {
     var description = eventDescription.value.trim();
     if (description === '') {
@@ -98,7 +81,6 @@ function descriptionCheck() {
         return true;
     }
 }
-// Check for event status
 function statusCheck() {
     var status = eventStatus.value.trim();
     if (status === '') {
@@ -110,7 +92,6 @@ function statusCheck() {
         return true;
     }
 }
-// Check for event category
 function categoryCheck() {
     var category = eventCategory.value.trim();
     if (category === '') {
@@ -122,9 +103,10 @@ function categoryCheck() {
         return true;
     }
 }
-// Create object for event
+// Update EventDetails class to include ID
 var EventDetails = /** @class */ (function () {
-    function EventDetails(eventName, eventDate, eventDescription, eventStatus, eventCategory) {
+    function EventDetails(id, eventName, eventDate, eventDescription, eventStatus, eventCategory) {
+        this.id = id;
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.eventDescription = eventDescription;
@@ -132,6 +114,7 @@ var EventDetails = /** @class */ (function () {
         this.eventCategory = eventCategory;
     }
     EventDetails.prototype.displayData = function () {
+        console.log("Event ID: ".concat(this.id));
         console.log("Event Name: ".concat(this.eventName));
         console.log("Event Date: ".concat(this.eventDate));
         console.log("Event Description: ".concat(this.eventDescription));
@@ -140,6 +123,7 @@ var EventDetails = /** @class */ (function () {
     };
     EventDetails.prototype.toPlainObject = function () {
         return {
+            id: this.id,
             eventName: this.eventName,
             eventDate: this.eventDate,
             eventDescription: this.eventDescription,
@@ -153,9 +137,6 @@ var EventDetails = /** @class */ (function () {
 function saveEvent(event) {
     event.preventDefault();
     if (nameCheck() && dateCheck() && descriptionCheck() && statusCheck() && categoryCheck()) {
-        var newEvent = new EventDetails(eventName.value, eventDate.value, eventDescription.value, eventStatus.value, eventCategory.value);
-        newEvent.displayData();
-        var newEventObject = newEvent.toPlainObject();
         var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
         var loggedInUserEmail_1 = localStorage.getItem("loggedInUserEmail");
         if (loggedInUserEmail_1) {
@@ -164,6 +145,11 @@ function saveEvent(event) {
                 if (!user.events) {
                     user.events = [];
                 }
+                // Generate ID based on the length of the existing events array
+                var newEventId = (user.events.length + 1).toString();
+                var newEvent = new EventDetails(newEventId, eventName.value, eventDate.value, eventDescription.value, eventStatus.value, eventCategory.value);
+                newEvent.displayData();
+                var newEventObject = newEvent.toPlainObject();
                 user.events.push(newEventObject);
                 localStorage.setItem("users", JSON.stringify(allUsersJson));
                 eventName.value = "";
@@ -223,7 +209,7 @@ function populateEventStatusOptions() {
         // Retrieve events from localStorage
         var allEvents = JSON.parse(localStorage.getItem("EventItems") || "[]");
         // Clear existing options
-        eventStatusSelect.innerHTML = "\n           <option value=\"conference\">Conference</option>\n                  <option value=\"wedding\">wedding</option>\n                  <option value=\"birthday\">Birthday</option>\n        ";
+        eventStatusSelect.innerHTML = "\n            <option value=\"conference\">Conference</option>\n            <option value=\"wedding\">Wedding</option>\n            <option value=\"birthday\">Birthday</option>\n        ";
         // Populate options based on events
         allEvents.forEach(function (event) {
             var option = document.createElement("option");
