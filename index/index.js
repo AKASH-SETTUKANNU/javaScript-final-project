@@ -18,7 +18,7 @@ function menubarDisplay() {
 }
 // Function to toggle add event display
 function addEvent() {
-    window.location.href = "../events/events.html";
+    window.location.href = "events.html";
     // if (addEventArea.style.display === 'none' || addEventArea.style.display === '') {
     //     addEventArea.style.display = 'block';
     //     notificationArea.style.display = 'none';  

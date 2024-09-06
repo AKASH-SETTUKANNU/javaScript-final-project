@@ -14,7 +14,7 @@
     <section>
       <div class="main-container">
         <header>
-          <button class="menu-icon" id="menu-icon" onclick="menubarDisplay()">
+          <button class="menu-icon" id="menu-icon" >
             <i class="fa-solid fa-bars"></i>
           </button>
           <div class="logo">
@@ -28,7 +28,7 @@
             <div class="event-add-profile">
               <!-- event add function -->
               <div class="event-add-btn" id="event-add-btn">
-                <button type="button" onclick="addEvent()">+</button>
+                <button type="button" >+</button>
               </div>
               <div class="event-add-block" id="event-add-block">
                 <ul>
@@ -55,7 +55,7 @@
                 </ul>
               </div>
               <!-- notification display function -->
-              <div class="notification-bell" onclick="displayNotification()">
+              <div class="notification-bell" >
                 <p id="notification-dot">.</p>
                 <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
               </div>
@@ -96,7 +96,7 @@
                 <div
                   id="profile-edit-icon"
                   class="profile-edit-icon"
-                  onclick="displayLogout()"
+                 
                 >
                   <i class="fa-solid fa-angle-down"></i>
                 </div>
@@ -116,14 +116,14 @@
           <nav>
             <ul class="menu-list">
               <li>
-                <a href="../index/index.html">
+                <a href="../adminIndex/adminIndex.html">
                   <div class="icon"><i class="fa-solid fa-house"></i></div>
                   <p id="menu-name">Events List</p>
                 </a>
               </li>
 
               <li>
-                <a href="../events/events.html">
+                <a href="../adminEvents/events.html">
                   <div class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
                   </div>
@@ -131,13 +131,13 @@
                 </a>
               </li>
               <li>
-                <a href="./guest.html">
+                <a href="./adminGuest.html">
                   <div class="icon"><i class="fa-solid fa-user-group"></i></div>
                   <p id="menu-name">Guests List</p>
                 </a>
               </li>
               <li>
-                <a href="../agenda/agenda.html">
+                <a href="../adminAgenda/agenda.html">
                   <div class="icon">
                     <i class="fa-solid fa-location-dot"></i>
                   </div>
@@ -157,13 +157,13 @@
               <form>
                 <div class="input-user-data">
                   <label for="guest-name">Name</label>
-                  <input type="text" class="guest-name" id="guest-name" onblur="guestNameCheck()"/>
+                  <input type="text" class="guest-name" id="guest-name" />
                   <p id="name-error"></p>
                   <p id="success-message"></p>
                 </div>
                 <div class="input-user-data">
                   <label for="guest-email">Email</label>
-                  <input type="email" class="guest-email" id="guest-email" onblur="guestEmailCheck()"/>
+                  <input type="email" class="guest-email" id="guest-email" />
                   <p id="email-error"></p>
                 </div>
                 <div class="input-user-data">
@@ -172,7 +172,7 @@
                     type="text"
                     class="guest-location"
                     id="guest-location"
-                    onblur="guestLocationCheck()"
+                   
                   />
                   <p id="location-error"></p>
                 </div>
@@ -183,7 +183,7 @@
                 </div> -->
 
                 <div class="input-user-data">
-                  <button type="button" onclick="addGuest(event)">
+                  <button type="button" id="add-guest-btn">
                     Add Guest
                   </button>
                 </div>
@@ -205,7 +205,7 @@
                 />
               </div>
               <div class="find-guest-input">
-                <button type="button" class="find-user-btn" id="find-user-btn" onclick="findGuest(event)">
+                <button type="button" class="find-user-btn" id="find-user-btn" >
                   Find User
                 </button>
               </div>
@@ -248,6 +248,6 @@
       </div>
     </section>
   </body>
-  <script src="./guest.js"></script>
+  <script src="../dist/guests.bundle.js"></script>
   <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </html>

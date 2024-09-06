@@ -49,6 +49,13 @@ var eventDate = document.getElementById("event-date");
 var eventDescription = document.getElementById("event-description");
 var eventStatus = document.getElementById("event-status");
 var eventCategory = document.getElementById("event-category");
+var saveEventBtn = document.getElementById("save-btn");
+eventName.addEventListener("onblur", nameCheck);
+eventDate.addEventListener("onblur", dateCheck);
+eventDescription.addEventListener("onblur", descriptionCheck);
+eventCategory.addEventListener("onblur", categoryCheck);
+eventStatus.addEventListener("onblur", statusCheck);
+saveEventBtn.addEventListener("onclick", saveEvent);
 var nameError = document.getElementById("name-error");
 var dateError = document.getElementById("date-error");
 var descriptionError = document.getElementById("description-error");
@@ -216,7 +223,7 @@ function populateEventStatusOptions() {
         // Retrieve events from localStorage
         var allEvents = JSON.parse(localStorage.getItem("EventItems") || "[]");
         // Clear existing options
-        eventStatusSelect.innerHTML = "\n             <option value=\"conference\">Conference</option>\n                <option value=\"wedding\">wedding</option>\n                <option value=\"birthday\">Birthday</option>\n        ";
+        eventStatusSelect.innerHTML = "\n           <option value=\"conference\">Conference</option>\n                  <option value=\"wedding\">wedding</option>\n                  <option value=\"birthday\">Birthday</option>\n        ";
         // Populate options based on events
         allEvents.forEach(function (event) {
             var option = document.createElement("option");

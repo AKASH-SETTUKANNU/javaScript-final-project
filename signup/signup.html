@@ -17,19 +17,19 @@
 
                 <div class="input-element">
                     <label for="user-name">Name:</label>
-                    <input type="text" id="user-name" class="user-name" onblur="nameError(this)"/>
+                    <input type="text" id="user-name" class="user-name"/>
                     <p id="name-error"></p> 
                 </div>
 
                 <div class="input-element">
                     <label for="user-mail">Email:</label>
-                    <input type="email" id="user-mail" class="user-mail" onblur="emailError(this)"/>
+                    <input type="email" id="user-mail" class="user-mail" />
                     <p id="email-error"></p> 
                 </div>
 
                 <div class="input-element">
                     <label for="user-birth-date">Date of Birth:</label>
-                    <input type="date" id="user-birth-date" class="user-birth-date" onblur="dateError(this)"/>
+                    <input type="date" id="user-birth-date" class="user-birth-date" />
                     <p id="date-error"></p> 
                 </div>
 
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="signup-btn">
-                    <button type="submit" onclick="addUser(event)">Signup</button>
+                    <button type="submit">Signup</button>
                 </div>
 
                 <div class="input-element">
@@ -55,6 +55,6 @@
             </form>
         </section>
     </main>
-    <script src="./signup.js"></script>
+    <script src="../dist/signup.bundle.js"></script>
 </body>
 </html>

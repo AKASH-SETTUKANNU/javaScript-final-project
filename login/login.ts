@@ -78,3 +78,16 @@ function loginUser(event: Event): void {
     }
 }
 
+// Add event listeners when the window loads
+window.addEventListener('load', () => {
+    // Attach event listeners
+    const emailInput = document.getElementById('user-mail') as HTMLInputElement;
+    const passwordInput = document.getElementById('user-password') as HTMLInputElement;
+    const loginButton = document.querySelector('.login-btn button') as HTMLButtonElement;
+
+    if (emailInput && passwordInput && loginButton) {
+        emailInput.addEventListener('blur', emailErrorHandel);
+        passwordInput.addEventListener('blur', passwordErrorHandel);
+        loginButton.addEventListener('click', loginUser);
+    }
+});

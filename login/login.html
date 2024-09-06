@@ -16,24 +16,23 @@
           </div>
           <div class="input-element">
             <label for="user-mail">Email:</label>
-            <input type="email" id="user-mail" name="email" onblur="emailErrorHandel()"/>
+            <input type="email" id="user-mail" name="email"/>
             <p id="email-error"></p>
           </div>
           <div class="input-element">
             <label for="user-password">Password:</label>
-            <input type="password" id="user-password" name="password"  onblur="passwordErrorHandel()"/>
+            <input type="password" id="user-password" name="password"/>
             <p id="password-error"></p>
           </div>
           <div class="login-btn">
-            <button type="submit" onclick="loginUser(event)">Login</button>
-        </div>
+            <button type="submit">Login</button>
+          </div>
           <div class="input-element">
             <p>Don't have an account? <a href="../signup/signup.html">Sign up</a></p>
           </div>
-         
         </form>
       </section>
     </main>
-    <script src="./login.js"></script>
+    <script src="../dist/login.bundle.js"></script>
   </body>
 </html>

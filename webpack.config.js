@@ -1,33 +1,31 @@
 const path = require('path');
 
 module.exports = {
+  mode: 'development',
+  devtool:'source-map',
   entry: {
-    adminAgenda: './src/adminAgenda/adminAgenda.ts',
-    adminEvents: './src/adminEvents/adminEvents.ts',
-    adminGuest: './src/adminGuest/adminGuest.ts',
-    adminIndex: './src/adminIndex/adminIndex.ts',
-    events: './src/events/events.ts',
-    guests: './src/guest/guest.ts',
-    index: './src/index/index.ts',
-    agenda: './src/agenda/agenda.ts',
-    login: './src/login/login.ts',
-    signup: './src/signup/signup.ts'
+    signup: './signup/signup.ts',
+    login: './login/login.ts',
+    index:'./index/index.ts',
+    guests:'./guests/guest.ts',
+    events:'./events/events.ts',
+    adminLoginUsers:'./adminLoginUsers/loginUsers.ts'
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: '[name].bundle.js', // Dynamic output filenames based on entry point names
+    path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.ts', '.js'], // Resolve both .ts and .js files
   },
   module: {
     rules: [
       {
-        test: /\.ts$/,
+        test: /\.ts$/, // Apply ts-loader to TypeScript files
         use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        exclude: /node_modules/,
+      },
+    ],
   },
-  resolve: {
-    extensions: ['.ts', '.js']
-  },
-  mode: 'development'
+  target: 'web', // Ensure the bundles are for the web
 };

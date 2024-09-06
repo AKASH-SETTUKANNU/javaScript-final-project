@@ -229,3 +229,55 @@ function deleteGuest(email) {
         console.error("Guest with this email not found.");
     }
 }
+var addGuestBtn = document.getElementById("add-guest-btn");
+var findGuestBtn = document.getElementById("find-user-btn");
+var eventAddBtn = document.getElementById("event-add-btn");
+var notificationBell = document.getElementById("notification-bell");
+document.addEventListener("DOMContentLoaded", function () {
+    // Adding blur event listeners to form fields for validation
+    guestName.addEventListener("blur", guestNameCheck);
+    guestEmail.addEventListener("blur", guestEmailCheck);
+    guestLocation.addEventListener("blur", guestLocationCheck);
+    if (addGuestBtn) {
+        addGuestBtn.addEventListener("click", addGuest);
+    }
+        addGuestBtn.addEventListener("click", findGuest);
+    // Load user profile function call
+    loadUserProfile();
+    // Event listeners for UI elements
+    if (menuIcon)
+        menuIcon.addEventListener("click", menubarDisplay);
+    if (eventAddBtn)
+        eventAddBtn.addEventListener("click", addEvent);
+    if (notificationBell)
+        notificationBell.addEventListener("click", displayNotification);
+});
+// Function to load and display user profile details
+function loadUserProfile() {
+    var usersJson = localStorage.getItem("users");
+    var allUsersJson = usersJson ? JSON.parse(usersJson) : [];
+    var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+        var filteredUsers = allUsersJson.filter(function (user) { return user.userEmail === loggedInUserEmail; });
+        var user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+        var profileName = document.getElementById("profile-name");
+        var dateOfBirth = document.getElementById("profile-dateOfBirth");
+        if (user) {
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            }
+            else {
+                console.error("Profile elements not found.");
+            }
+        }
+        else {
+            console.error("User not found in localStorage.");
+        }
+    }
+    else {
+        console.error("No logged-in user email found.");
+    }
+}

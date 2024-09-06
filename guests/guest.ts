@@ -119,7 +119,13 @@ class Guest {
         this.guestLocation = location;
     }
 }
-
+// Define User interface
+interface User {
+    userEmail: string;
+    userName: string;
+    userBirthDate: string;
+    events?: Event[];
+}
 // Load guests from local storage and display them
 function loadGuests(): void {
     const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
@@ -127,6 +133,30 @@ function loadGuests(): void {
         addGuestToTable(guest);
     });
 }
+function loadallGuests(): void {
+    const allGuests = JSON.parse(localStorage.getItem("guests") || "[]");
+    const guestTable = document.getElementById("guest-table") as HTMLElement;
+
+    if (guestTable) {
+        allGuests.forEach((guest: Guest) => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${guest.guestName}</td>
+                <td>${guest.guestEmail}</td>
+                <td>${guest.guestLocation}</td>
+                <td><button class="invite-btn">Invite</button></td>
+                <td><button class="delete-btn" data-name="${guest.guestEmail}">Delete</button></td>
+            `;
+
+            guestTable.appendChild(tr);
+        });
+    } else {
+        console.error("Table element not found");
+    }
+}
+
+
 
 // Add guest to the table
 function addGuestToTable(guest: Guest): void {
@@ -136,12 +166,19 @@ function addGuestToTable(guest: Guest): void {
             <td>${guest.guestName}</td>
             <td>${guest.guestEmail}</td>
             <td>${guest.guestLocation}</td>
-            <td><button onclick="inviteGuest('${guest.guestEmail}', '${guest.guestName}')" id="invite-btn">Invite</button></td>
-            <td><button onclick="deleteGuest('${guest.guestEmail}')" id="delete-btn">Delete</button></td>
+            <td><button  id="invite-btn">Invite</button></td>
+            <td><button  id="delete-btn" data-name="${guest.guestEmail}">Delete</button></td>
         </tr>`;
     guestTable.innerHTML += tableData;
-}
 
+   
+    const deleteButtonElement = document.querySelector(`button[data-name="${guest.guestEmail}"]`) as HTMLButtonElement;
+    if (deleteButtonElement) {
+        deleteButtonElement.addEventListener("click", () => deleteGuest(guest.guestEmail));
+    } else {
+        console.error("Button with the specified data-name not found.");
+    }
+}
 // Add guest to local storage and table
 function addGuest(event: Event): void {
     event.preventDefault();
@@ -261,5 +298,64 @@ function deleteGuest(email: string): void {
         alert("Guest deleted!");
     } else {
         console.error("Guest with this email not found.");
+    }
+}
+const addGuestBtn = document.getElementById("add-guest-btn") as HTMLButtonElement;
+const findGuestBtn = document.getElementById("find-user-btn") as HTMLButtonElement;
+const eventAddBtn = document.getElementById("event-add-btn") as HTMLButtonElement;
+const notificationBell = document.getElementById("notification-bell") as HTMLButtonElement;
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Adding blur event listeners to form fields for validation
+    guestName.addEventListener("blur", guestNameCheck);
+    guestEmail.addEventListener("blur", guestEmailCheck);
+    guestLocation.addEventListener("blur", guestLocationCheck);
+
+    if (addGuestBtn) {
+        // Only one event listener assigned here
+        addGuestBtn.addEventListener("click", addGuest);
+    }
+
+    // Assign findGuest to the correct button
+    if (findGuestBtn) {
+        findGuestBtn.addEventListener("click", findGuest);
+    }
+    loadallGuests();
+    loadUserProfile();
+    // Event listeners for UI elements
+    if (menuIcon) menuIcon.addEventListener("click", menubarDisplay);
+    if (eventAddBtn) eventAddBtn.addEventListener("click", addEvent);
+    if (notificationBell) notificationBell.addEventListener("click", displayNotification);
+});
+
+
+// Function to load and display user profile details
+function loadUserProfile(): void {
+    const usersJson = localStorage.getItem("users");
+    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
+    const loggedInUserEmail: string | null = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const filteredUsers = allUsersJson.filter((user: User) => user.userEmail === loggedInUserEmail);
+        const user = filteredUsers.length > 0 ? filteredUsers[0] : undefined;
+
+        console.log("Logged In User Email:", loggedInUserEmail); 
+        console.log("User Object:", user); 
+
+        const profileName = document.getElementById("profile-name") as HTMLElement;
+        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
+
+        if (user) {
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate; 
+            } else {
+                console.error("Profile elements not found.");
+            }
+        } else {
+            console.error("User not found in localStorage.");
+        }
+    } else {
+        console.error("No logged-in user email found.");
     }
 }

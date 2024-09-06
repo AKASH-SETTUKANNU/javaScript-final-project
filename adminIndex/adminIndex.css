@@ -471,6 +471,7 @@ menu ul li a {
 #wedding-heading {
   margin-bottom: 10px;
 }
+
 .wedding-lists {
   display: flex;
   flex-direction: row;
@@ -485,6 +486,13 @@ menu ul li a {
   border-radius: 3px;
   border: 1px solid rgb(228, 160, 59);
 }
+.wedding-list:hover {
+ 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  transform: scale(1.02);
+  transition: all 0.3s ease; 
+}
+
 .wedding-detial {
   display: flex;
   flex-direction: column;

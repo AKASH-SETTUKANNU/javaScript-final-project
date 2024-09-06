@@ -1,5 +1,5 @@
 // Get references to DOM elements
-const menu = document.querySelector('menu') as HTMLMenuElement;
+const menu = document.querySelector('menu') as HTMLElement;
 const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
 const addEventArea = document.getElementById("event-add-block") as HTMLElement;
 const notificationArea = document.getElementById("notification-display") as HTMLElement;
@@ -10,6 +10,9 @@ interface EventItem {
     name: string;
     icon: string;
     eventCategory: string;
+    eventStatus?: string;
+    eventDate?: string;
+    eventDescription?: string;
 }
 
 interface User {
@@ -44,7 +47,7 @@ function addEventItem(): void {
         const inputItem = document.getElementById("input-item") as HTMLInputElement;
         const inputValue = inputItem.value.trim();
 
-        const allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+        let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
 
         if (eventToEditName) {
             const eventToEdit = allEvents.find((event) => event.name === eventToEditName);
@@ -62,19 +65,18 @@ function addEventItem(): void {
         }
 
         localStorage.setItem("EventItems", JSON.stringify(allEvents));
-
         inputItem.value = "";
-
         displayEvents();
     }
 }
 
 // Display events in the list
 function displayEvents(): void {
-    const eventsList = document.getElementById("events-list");
-    const allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+    const eventsList = document.getElementById("events-list") as HTMLUListElement;
+    let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
 
     if (eventsList) {
+       
 
         allEvents.forEach((event) => {
             const listItem = document.createElement('li');
@@ -95,7 +97,7 @@ function displayEvents(): void {
             if (target.classList.contains('delete-btn')) {
                 const eventName = target.getAttribute('data-event-name');
                 if (eventName) {
-                    deleteEvent(eventName, target.closest('li') as HTMLLIElement);
+                    deleteEvent(eventName);
                 }
             } else if (target.classList.contains('edit-btn')) {
                 const eventName = target.getAttribute('data-event-name');
@@ -107,19 +109,16 @@ function displayEvents(): void {
     }
 }
 
-
 // Delete an event
 function deleteEvent(name: string): void {
-    // Get reference to the events list container
-    const eventsList = document.getElementById("events-list");
+    const eventsList = document.getElementById("events-list") as HTMLUListElement;
 
     if (eventsList) {
-       
         const listItems = eventsList.getElementsByTagName('li');
         for (let i = 0; i < listItems.length; i++) {
             const listItem = listItems[i];
             const span = listItem.querySelector('span');
-            const button = listItem.querySelector('.delete-btn');
+            const button = listItem.querySelector('.delete-btn') as HTMLButtonElement;
 
             if (span && button && button.getAttribute('data-event-name') === name) {
                 // Remove the <li> element from the DOM
@@ -129,20 +128,18 @@ function deleteEvent(name: string): void {
         }
 
         // Update localStorage after removing the item from the DOM
-        const allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+        let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
         const updatedEvents = allEvents.filter((event) => event.name !== name);
         localStorage.setItem("EventItems", JSON.stringify(updatedEvents));
     }
 }
-
-
 
 // Variable to keep track of the event being edited
 let eventToEditName: string | null = null;
 
 // Edit an event
 function editEvent(name: string): void {
-    const allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+    let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
     const eventToEdit = allEvents.find((event) => event.name === name);
 
     if (eventToEdit) {
@@ -181,8 +178,8 @@ function displayLogout(): void {
 }
 
 // Create a birthday card
-function createBirthdayCard(event: { eventStatus: string; eventDate: string; eventDescription: string; }): void {
-    const birthdayLists = document.getElementById("birthday-lists");
+function createBirthdayCard(event: EventItem): void {
+    const birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
     if (birthdayLists) {
         const birthdayListHTML = `
            <div class="birthday-list">
@@ -203,8 +200,8 @@ function createBirthdayCard(event: { eventStatus: string; eventDate: string; eve
 }
 
 // Create a wedding card
-function createWeddingCard(event: { eventStatus: string; eventDate: string; eventDescription: string; }): void {
-    const weddingLists = document.getElementById("wedding-lists");
+function createWeddingCard(event: EventItem): void {
+    const weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
         const weddingListHTML = `
             <div class="wedding-list">
@@ -225,8 +222,8 @@ function createWeddingCard(event: { eventStatus: string; eventDate: string; even
 }
 
 // Create a conference card
-function createConferenceCard(event: { eventStatus: string; eventDate: string; eventDescription: string; }): void {
-    const conferenceLists = document.getElementById("conference-lists");
+function createConferenceCard(event: EventItem): void {
+    const conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
         const conferenceListHTML = `
            <div class="conferences-list">
@@ -251,7 +248,7 @@ function loadUserEvents(): void {
     const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
 
-    const user = allUsersJson.find((user: User) => user.userEmail === loggedInUserEmail);
+    const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
 
     if (user && user.events) {
         user.events.forEach((event) => {
@@ -277,12 +274,12 @@ function loadUserEvents(): void {
 
 // Load user profile
 function loadUserProfile(): void {
-    const profileArea = document.getElementById("profile-area");
+    const profileArea = document.getElementById("profile-area") as HTMLElement;
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
 
     if (profileArea && loggedInUserEmail) {
         const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-        const user = allUsersJson.find((user: User) => user.userEmail === loggedInUserEmail);
+        const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
 
         if (user) {
             profileArea.innerHTML = `

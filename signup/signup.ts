@@ -123,12 +123,26 @@ function addUser(event: Event): void {
     }
 }
 
-
 // By Default Add Admin User
 window.addEventListener('load', () => {
     const allUsersJson: CreateUser[] = JSON.parse(localStorage.getItem("users") || "[]");
     if (allUsersJson.length === 0) {
         const adminUser = new CreateUser('Admin', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
         localStorage.setItem("users", JSON.stringify([adminUser.toPlainObject()]));
+    }
+
+    // Attach event listeners
+    const userNameInput = document.getElementById('user-name') as HTMLInputElement;
+    const userEmailInput = document.getElementById('user-mail') as HTMLInputElement;
+    const userBirthDateInput = document.getElementById('user-birth-date') as HTMLInputElement;
+    const confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
+    const signupButton = document.querySelector('.signup-btn button') as HTMLButtonElement;
+
+    if (userNameInput && userEmailInput && userBirthDateInput && confirmPasswordInput && signupButton) {
+        userNameInput.addEventListener('blur', () => nameError(userNameInput));
+        userEmailInput.addEventListener('blur', () => emailError(userEmailInput));
+        userBirthDateInput.addEventListener('blur', () => dateError(userBirthDateInput));
+        confirmPasswordInput.addEventListener('blur', passwordInputError);
+        signupButton.addEventListener('click', addUser);
     }
 });

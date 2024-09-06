@@ -58,6 +58,17 @@ const eventDescription = document.getElementById("event-description") as HTMLInp
 const eventStatus = document.getElementById("event-status") as HTMLSelectElement;
 const eventCategory = document.getElementById("event-category") as HTMLInputElement;
 
+var saveEventBtn=document.getElementById("save-btn") as HTMLElement;
+
+eventName.addEventListener("onblur",nameCheck);
+eventDate.addEventListener("onblur",dateCheck);
+eventDescription.addEventListener("onblur",descriptionCheck);
+eventCategory.addEventListener("onblur",categoryCheck);
+eventStatus.addEventListener("onblur",statusCheck);
+saveEventBtn.addEventListener("onclick",saveEvent);
+
+
+
 const nameError = document.getElementById("name-error") as HTMLElement;
 const dateError = document.getElementById("date-error") as HTMLElement;
 const descriptionError = document.getElementById("description-error") as HTMLElement;
@@ -244,9 +255,9 @@ function populateEventStatusOptions(): void {
 
         // Clear existing options
         eventStatusSelect.innerHTML = `
-             <option value="conference">Conference</option>
-                <option value="wedding">wedding</option>
-                <option value="birthday">Birthday</option>
+           <option value="conference">Conference</option>
+                  <option value="wedding">wedding</option>
+                  <option value="birthday">Birthday</option>
         `;
 
         // Populate options based on events

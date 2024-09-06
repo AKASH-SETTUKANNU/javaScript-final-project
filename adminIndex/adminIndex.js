@@ -64,7 +64,7 @@ function displayEvents() {
             if (target.classList.contains('delete-btn')) {
                 var eventName = target.getAttribute('data-event-name');
                 if (eventName) {
-                    deleteEvent(eventName, target.closest('li'));
+                    deleteEvent(eventName);
                 }
             }
             else if (target.classList.contains('edit-btn')) {
@@ -78,7 +78,6 @@ function displayEvents() {
 }
 // Delete an event
 function deleteEvent(name) {
-    // Get reference to the events list container
     var eventsList = document.getElementById("events-list");
     if (eventsList) {
         var listItems = eventsList.getElementsByTagName('li');
