@@ -62,7 +62,7 @@ function displayLogout() {
 function createBirthdayCard(event) {
     var birthdayLists = document.getElementById("birthday-lists");
     if (birthdayLists) {
-        var birthdayListHTML = "\n           <div class=\"birthday-list\" id=\"".concat(event.id, "\">\n              <div class=\"birthday-image\">\n                <img src=\"../images/birthday.avif\" alt=\"birthday\" />\n              </div>\n              <div class=\"birthday-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" ></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" ></i>\n              </div>\n            </div>\n        ");
+        var birthdayListHTML = "\n           <div class=\"birthday-list\" id=\"".concat(event.id, "\">\n              <div class=\"birthday-image\">\n                <img src=\"../images/birthday.avif\" alt=\"birthday\" />\n              </div>\n              <div class=\"birthday-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" id=\"edit-icon\"></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" id=\"delete-icon\"></i>\n              </div>\n            </div>\n        ");
         birthdayLists.insertAdjacentHTML('beforeend', birthdayListHTML);
     }
     else {
@@ -73,7 +73,7 @@ function createBirthdayCard(event) {
 function createWeddingCard(event) {
     var weddingLists = document.getElementById("wedding-lists");
     if (weddingLists) {
-        var weddingListHTML = "\n            <div class=\"wedding-list\" id=\"".concat(event.id, "\">\n              <div class=\"wedding-image\">\n                <img src=\"../images/marrage.jpg\" alt=\"wedding\" />\n              </div>\n              <div class=\"wedding-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" ></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" ></i>\n              </div>\n            </div>\n        ");
+        var weddingListHTML = "\n            <div class=\"wedding-list\" id=\"".concat(event.id, "\">\n              <div class=\"wedding-image\">\n                <img src=\"../images/marrage.jpg\" alt=\"wedding\" />\n              </div>\n              <div class=\"wedding-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" id=\"edit-icon\"></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" id=\"delete-icon\"></i>\n              </div>\n            </div>\n        ");
         weddingLists.insertAdjacentHTML('beforeend', weddingListHTML);
     }
     else {
@@ -84,15 +84,16 @@ function createWeddingCard(event) {
 function createConferenceCard(event) {
     var conferenceLists = document.getElementById("conference-lists");
     if (conferenceLists) {
-        var conferenceListHTML = "\n           <div class=\"conferences-list\" id=\"".concat(event.id, "\">\n              <div class=\"conference-image\">\n                <img src=\"../images/conference.avif\" alt=\"conference\" />\n              </div>\n              <div class=\"conference-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n                <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" ></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" ></i>\n              </div>\n            </div>\n        ");
+        var conferenceListHTML = "\n           <div class=\"conferences-list\" id=\"".concat(event.id, "\">\n              <div class=\"conference-image\">\n                <img src=\"../images/conference.avif\" alt=\"conference\" />\n              </div>\n              <div class=\"conference-detail\">\n                <h5 id=\"").concat(event.eventStatus, "\">").concat(event.eventStatus, "</h5>\n                <h5>").concat(event.eventDate, "</h5>\n                <p>").concat(event.eventDescription, "</p>\n               <i class=\"fa-solid fa-edit\" onclick=\"showEditForm('").concat(event.id, "')\" id=\"edit-icon\"></i>\n                <i class=\"fa-solid fa-trash\" onclick=\"deleteCard('").concat(event.id, "')\" id=\"delete-icon\"></i>\n              </div>\n            </div>\n        ");
         conferenceLists.insertAdjacentHTML('beforeend', conferenceListHTML);
     }
     else {
         console.error('Element with ID "conference-lists" not found.');
     }
 }
-// Function to delete a card
+// Function to delete a card and its data from localStorage
 function deleteCard(eventId) {
+    // Remove the card from the DOM
     var element = document.getElementById(eventId);
     if (element) {
         element.remove();
@@ -100,9 +101,27 @@ function deleteCard(eventId) {
     else {
         console.error("Element with ID \"".concat(eventId, "\" not found."));
     }
+    // Remove the event from localStorage
+    var usersJson = localStorage.getItem("users");
+    var allUsersJson = usersJson ? JSON.parse(usersJson) : [];
+    var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+        var user = allUsersJson.find(function (user) { return user.userEmail === loggedInUserEmail; });
+        if (user && user.events) {
+            user.events = user.events.filter(function (event) { return event.id !== eventId; });
+            localStorage.setItem("users", JSON.stringify(allUsersJson));
+        }
+        else {
+            console.error("User or events not found.");
+        }
+    }
+    else {
+        console.error("Logged in user email not found.");
+    }
 }
 // Show the form for editing an event
 function showEditForm(eventId) {
+    form.style.display = 'flex';
     var usersJson = localStorage.getItem("users");
     var allUsersJson = usersJson ? JSON.parse(usersJson) : [];
     var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
@@ -164,9 +183,10 @@ function updateEvent(event) {
                     popupeventDescription.value = "";
                     popupeventStatus.value = "";
                     popupeventCategory.value = "";
+                    popupsuccessMessage.innerHTML = "Event Updated Successfully...";
                     setTimeout(function () {
-                        popupsuccessMessage.innerHTML = "Event Updated Successfully...";
-                        addEventArea.style.display = 'none'; // Hide the form
+                        form.style.display = 'none';
+                        popupsuccessMessage.innerHTML = "";
                     }, 3000);
                 }
                 else {

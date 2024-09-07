@@ -166,6 +166,46 @@
           </nav>
         </menu>
         <main>
+          <form class="event-form" id="event-form">
+            <div class="event-heading">
+              <h1>Update Event</h1>
+            </div>
+            <div class="event-data-name">
+              <label for="event-name">Event Name:</label>
+              <input type="text" class="event-name" id="event-name" required>
+              <p id="name-error" class="error-message"></p>
+            </div>
+            <div class="event-data-date">
+              <label for="event-date">Event Date:</label>
+              <input type="date" class="event-date" id="event-date" required>
+              <p id="date-error" class="error-message"></p>
+            </div>
+            <div class="event-data-description">
+              <label for="event-description">Description:</label>
+              <input type="text" class="event-description" id="event-description" required>
+              <p id="description-error" class="error-message"></p>
+            </div>
+            <div class="event-data-category">
+              <label for="event-category">Event Category:</label>
+              <select name="event-category" id="event-category" required>
+                <option value="conference">Conference</option>
+                <option value="wedding">Wedding</option>
+                <option value="birthday">Birthday</option>
+              </select>
+              <p id="category-error" class="error-message"></p>
+            </div>
+            <div class="event-data-status">
+              <label for="event-status">Event Status:</label>
+              <select name="event-status" id="event-status" required>
+                <option value="planning">Planning</option>
+                <option value="finalized">Finalized</option>
+                <option value="canceled">Canceled</option>
+              </select>
+              <p id="status-error" class="error-message"></p>
+            </div>
+            <button type="submit" id="save-btn">Save Event</button>
+            <p id="success-message"></p>
+          </form>
           <div id="home-page-content">
             <!-- Birthday content area -->
             <div class="bithday-display-area">

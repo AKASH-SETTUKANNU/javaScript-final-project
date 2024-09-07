@@ -93,8 +93,8 @@ function createBirthdayCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
+                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
             </div>
         `;
@@ -117,8 +117,8 @@ function createWeddingCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
+                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
             </div>
         `;
@@ -141,8 +141,8 @@ function createConferenceCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
-                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" ></i>
-                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" ></i>
+               <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
+                <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
             </div>
         `;
@@ -152,18 +152,40 @@ function createConferenceCard(event: EventDetails): void {
     }
 }
 
-// Function to delete a card
+
+// Function to delete a card and its data from localStorage
 function deleteCard(eventId: string): void {
+    // Remove the card from the DOM
     let element = document.getElementById(eventId);
     if (element) {
         element.remove();
     } else {
         console.error(`Element with ID "${eventId}" not found.`);
     }
+
+    // Remove the event from localStorage
+    const usersJson = localStorage.getItem("users");
+    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+        if (user && user.events) {
+            user.events = user.events.filter(event => event.id !== eventId);
+            localStorage.setItem("users", JSON.stringify(allUsersJson));
+        } else {
+            console.error("User or events not found.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
 }
+
 
 // Show the form for editing an event
 function showEditForm(eventId: string): void {
+    form.style.display = 'flex'; 
     const usersJson = localStorage.getItem("users");
     const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
@@ -231,10 +253,11 @@ function updateEvent(event: Event): void {
                     popupeventDescription.value = "";
                     popupeventStatus.value = "";
                     popupeventCategory.value = "";
-
+                    popupsuccessMessage.innerHTML = "Event Updated Successfully...";
                     setTimeout(() => {
-                        popupsuccessMessage.innerHTML = "Event Updated Successfully...";
-                        addEventArea.style.display = 'none'; // Hide the form
+                       
+                        form.style.display = 'none'; 
+                        popupsuccessMessage.innerHTML = "";
                     }, 3000);
                 } else {
                     console.error("Event not found.");

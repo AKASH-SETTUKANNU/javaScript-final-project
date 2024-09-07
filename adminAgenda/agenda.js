@@ -23,7 +23,7 @@ function menubarDisplay() {
 }
 // Function to toggle add event display
 function addEvent() {
-    window.location.href = "../events/events.html";
+    window.location.href = "../adminEvents/events.html";
 }
 // Function to toggle notification display
 function displayNotification() {
