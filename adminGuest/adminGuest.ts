@@ -263,3 +263,35 @@ function deleteGuest(email: string): void {
         console.error("Guest with this email not found.");
     }
 }
+// Load and display user profile details
+function loadUserProfile(): void {
+    const allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find((user: any) => user.userEmail === loggedInUserEmail);
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+
+        const profileName = document.getElementById("profile-name") as HTMLElement;
+        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
+
+        if (user) {
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            } else {
+                console.error("Profile elements not found.");
+            }
+        } else {
+            console.error("User not found in localStorage.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
+}
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", () => {
+    loadUserProfile();
+   
+});

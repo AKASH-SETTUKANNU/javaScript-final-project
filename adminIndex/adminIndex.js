@@ -387,22 +387,31 @@ function popupcategoryCheck() {
         return true;
     }
 }
-// Load user profile
+// Load and display user profile details
 function loadUserProfile() {
-    var profileArea = document.getElementById("profile-area");
+    var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
     var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
-    if (profileArea && loggedInUserEmail) {
-        var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    if (loggedInUserEmail) {
         var user = allUsersJson.find(function (user) { return user.userEmail === loggedInUserEmail; });
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+        var profileName = document.getElementById("profile-name");
+        var dateOfBirth = document.getElementById("profile-dateOfBirth");
         if (user) {
-            profileArea.innerHTML = "\n                <h2>".concat(user.userName, "</h2>\n                <p>Email: ").concat(user.userEmail, "</p>\n                <p>Birth Date: ").concat(user.userBirthDate, "</p>\n            ");
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            }
+            else {
+                console.error("Profile elements not found.");
+            }
         }
         else {
-            console.error("User profile could not be found.");
+            console.error("User not found in localStorage.");
         }
     }
     else {
-        console.error("Profile area element not found or user not logged in.");
+        console.error("Logged in user email not found.");
     }
 }
 // Initialize the application on DOM content loaded

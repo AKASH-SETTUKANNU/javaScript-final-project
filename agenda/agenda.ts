@@ -21,7 +21,7 @@ function menubarDisplay(): void {
 
 // Function to toggle add event display
 function addEvent(): void {
-    window.location.href = "../adminEvents/events.html";
+    window.location.href = "../events/events.html";
 }
 
 // Function to toggle notification display

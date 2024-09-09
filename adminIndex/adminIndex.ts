@@ -496,26 +496,31 @@ function popupcategoryCheck(): boolean {
     }
 }
 
-// Load user profile
+// Load and display user profile details
 function loadUserProfile(): void {
-    const profileArea = document.getElementById("profile-area") as HTMLElement;
+    const allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
     const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
 
-    if (profileArea && loggedInUserEmail) {
-        const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
-        const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find((user: any) => user.userEmail === loggedInUserEmail);
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+
+        const profileName = document.getElementById("profile-name") as HTMLElement;
+        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
 
         if (user) {
-            profileArea.innerHTML = `
-                <h2>${user.userName}</h2>
-                <p>Email: ${user.userEmail}</p>
-                <p>Birth Date: ${user.userBirthDate}</p>
-            `;
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            } else {
+                console.error("Profile elements not found.");
+            }
         } else {
-            console.error("User profile could not be found.");
+            console.error("User not found in localStorage.");
         }
     } else {
-        console.error("Profile area element not found or user not logged in.");
+        console.error("Logged in user email not found.");
     }
 }
 

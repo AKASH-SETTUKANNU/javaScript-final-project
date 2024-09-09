@@ -229,3 +229,34 @@ function deleteGuest(email) {
         console.error("Guest with this email not found.");
     }
 }
+// Load and display user profile details
+function loadUserProfile() {
+    var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (loggedInUserEmail) {
+        var user = allUsersJson.find(function (user) { return user.userEmail === loggedInUserEmail; });
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+        var profileName = document.getElementById("profile-name");
+        var dateOfBirth = document.getElementById("profile-dateOfBirth");
+        if (user) {
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            }
+            else {
+                console.error("Profile elements not found.");
+            }
+        }
+        else {
+            console.error("User not found in localStorage.");
+        }
+    }
+    else {
+        console.error("Logged in user email not found.");
+    }
+}
+// Call functions on page load
+document.addEventListener("DOMContentLoaded", function () {
+    loadUserProfile();
+});
