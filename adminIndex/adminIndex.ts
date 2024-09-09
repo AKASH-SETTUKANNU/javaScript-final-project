@@ -231,7 +231,7 @@ function createBirthdayCard(event: EventDetails): void {
               <div class="birthday-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+                <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
@@ -256,7 +256,7 @@ function createWeddingCard(event: EventDetails): void {
               <div class="wedding-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+                <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
@@ -282,7 +282,7 @@ function createConferenceCard(event: EventDetails): void {
               <div class="conference-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+                <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>

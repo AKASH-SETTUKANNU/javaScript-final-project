@@ -79,9 +79,93 @@ function displayBackupHistory(): void {
     backupHistory.forEach((backup: { timestamp: string, fileName: string }) => {
         const backupDiv = document.createElement('div');
         backupDiv.className = 'backup-item';
-        backupDiv.innerHTML = `<p>${backup.timestamp}: <a href="${backup.fileName}" download>${backup.fileName}</a></p>`;
+        backupDiv.innerHTML = `<p>Time: ${backup.timestamp} File: <a href="${backup.fileName}" download>${backup.fileName}</a></p>`;
         historyContainer.appendChild(backupDiv);
     });
+}
+
+// Function to display restore history
+function displayRestoreHistory(): void {
+    const restoreHistoryContainer = document.querySelector('.displayRestoreHistory') as HTMLElement;
+    const restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
+
+    restoreHistoryContainer.innerHTML = '<h2>Restore History</h2>';
+
+    restoreHistory.forEach((restore: { timestamp: string, fileName: string }) => {
+        const restoreDiv = document.createElement('div');
+        restoreDiv.className = 'backup-item';
+        restoreDiv.innerHTML = `<p>Time: ${restore.timestamp} Restored File: ${restore.fileName}</p>`;
+        restoreHistoryContainer.appendChild(restoreDiv);
+    });
+}
+
+// Function to merge data (if necessary)
+function mergeData(existingValue: string, newValue: string): string {
+    try {
+        const existingData = JSON.parse(existingValue);
+        const newData = JSON.parse(newValue);
+        
+        // Merge the existing and new data. Adjust merging logic as needed.
+        // Here, simply merging arrays or objects for demonstration purposes.
+        if (Array.isArray(existingData) && Array.isArray(newData)) {
+            return JSON.stringify([...existingData, ...newData]);
+        } else if (typeof existingData === 'object' && typeof newData === 'object') {
+            return JSON.stringify({ ...existingData, ...newData });
+        } else {
+            return newValue; // No merge needed for non-array, non-object data
+        }
+    } catch (error) {
+        console.error("Error merging data:", error);
+        return newValue; // Fallback to newValue in case of error
+    }
+}
+
+// Function to save restore history
+function saveRestoreHistory(fileName: string): void {
+    const restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
+    restoreHistory.push({ timestamp: new Date().toLocaleString(), fileName });
+    localStorage.setItem('restoreHistory', JSON.stringify(restoreHistory));
+}
+
+// Function to handle file upload and restore data
+function restoreData(file: File): void {
+    const reader = new FileReader();
+    
+    reader.onload = function(event) {
+        try {
+            const jsonData = JSON.parse(event.target?.result as string);
+            if (jsonData.localStorage) {
+                // Merge the localStorage data from the file with the existing localStorage
+                for (const [key, value] of Object.entries(jsonData.localStorage)) {
+                    const existingValue = localStorage.getItem(key);
+                    if (existingValue) {
+                        // If there's already data for this key, merge it if necessary
+                        const mergedValue = mergeData(existingValue, value as string);
+                        localStorage.setItem(key, mergedValue);
+                    } else {
+                        // If no existing data, just set the new value
+                        localStorage.setItem(key, value as string);
+                    }
+                }
+
+                // Save restore data to localStorage for history
+                saveRestoreHistory(file.name);
+                
+                // Update the backup and restore history display
+                displayBackupHistory();
+                displayRestoreHistory();
+                
+                alert("Data restored successfully.");
+            } else {
+                alert("Invalid file format.");
+            }
+        } catch (error) {
+            console.error("Error reading or parsing file:", error);
+            alert("Error reading or parsing file.");
+        }
+    };
+    
+    reader.readAsText(file);
 }
 
 // Backup function to include all local storage data
@@ -101,7 +185,10 @@ document.getElementById('backup-btn')?.addEventListener('click', () => {
 
     const blob = new Blob([jsonData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
-    const fileName = `backup-${new Date().toISOString()}.json`;
+
+    // Get the logged-in user's name and use it in the file name
+    const userName = getLoggedInUserName();
+    const fileName = userName ? `backup-${userName}-${new Date().toISOString()}.json` : `backup-${new Date().toISOString()}.json`;
 
     const a = document.createElement('a');
     a.href = url;
@@ -119,8 +206,37 @@ document.getElementById('backup-btn')?.addEventListener('click', () => {
     displayBackupHistory();
 });
 
-// Initial display of backup history on page load
+// Function to get logged-in user's name
+function getLoggedInUserName(): string | null {
+    const allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find((user: any) => user.userEmail === loggedInUserEmail);
+        if (user) {
+            return user.userName;
+        } else {
+            console.error("User not found in localStorage.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
+    return null;
+}
+
+// Add event listener for restore button
+document.getElementById('restore-btn')?.addEventListener('click', () => {
+    const fileInput = document.getElementById('restore-file') as HTMLInputElement;
+    if (fileInput.files?.length) {
+        restoreData(fileInput.files[0]);
+    } else {
+        alert("Please select a file to restore.");
+    }
+});
+
+// Initial display of backup and restore history on page load
 document.addEventListener("DOMContentLoaded", () => {
     loadUserProfile();
     displayBackupHistory();
+    displayRestoreHistory();
 });

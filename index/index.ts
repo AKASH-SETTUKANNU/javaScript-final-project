@@ -118,7 +118,7 @@ function createBirthdayCard(event: EventDetails): void {
               <div class="birthday-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+                <p class="truncate">${event.eventDescription}</p>
                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
@@ -143,7 +143,7 @@ function createWeddingCard(event: EventDetails): void {
               <div class="wedding-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+              <p class="truncate">${event.eventDescription}</p>
                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
@@ -168,7 +168,7 @@ function createConferenceCard(event: EventDetails): void {
               <div class="conference-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
-                <p>${event.eventDescription}</p>
+                <p class="truncate">${event.eventDescription}</p>
                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
@@ -180,7 +180,6 @@ function createConferenceCard(event: EventDetails): void {
         console.error('Element with ID "conference-lists" not found.');
     }
 }
-
 function displayDetails(eventId: string): void {
     const backdrop = document.getElementById("backdrop") as HTMLDivElement;
     const detailImage = document.getElementById("detail-img") as HTMLImageElement;
@@ -210,7 +209,7 @@ function displayDetails(eventId: string): void {
                 // Populate the details
                 detailImage.src = getEventImageByCategory(event.eventCategory);
                 detailName.textContent = event.eventCategory;
-                detailDate.textContent = `Event Date:${event.eventDate}`;
+                detailDate.textContent = `Event Date: ${event.eventDate}`;
                 detailDescription.textContent = event.eventDescription;
                 detailCategory.textContent = `Event Category: ${event.eventCategory}`;
                 
@@ -233,7 +232,6 @@ function displayDetails(eventId: string): void {
         console.error("Logged in user email not found.");
     }
 }
-
 
 
 

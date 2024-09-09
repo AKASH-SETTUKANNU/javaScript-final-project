@@ -112,7 +112,9 @@
               </li>
               <li>
                 <a href="../adminLoginUsers/loginUsers.html">
-                  <div class="icon" id="icone"><i class="fa-regular fa-user"></i></div>
+                  <div class="icon" id="icone">
+                    <i class="fa-regular fa-user"></i>
+                  </div>
                   <p id="menu-name">Users List</p>
                 </a>
               </li>
@@ -122,7 +124,6 @@
                   <p id="menu-name">Data Backup</p>
                 </a>
               </li>
-             
             </ul>
           </nav>
         </menu>
@@ -134,14 +135,18 @@
               </div>
               <div class="backup-restore-container">
                 <button id="backup-btn">Backup Data</button>
+                <input type="file" id="restore-file" accept=".json" />
+                <button id="restore-btn">Restore</button>
+
                 <div class="displaBackUpHistory">
                   <h2>Backup History</h2>
-                  <div class="backup-item">
-                    
-                  </div>
+                  <div class="backup-item"></div>
+                </div>
+                <div class="displayRestoreHistory">
+                  <h2>Restore History</h2>
+                  <div class="backup-item"></div>
                 </div>
               </div>
-              
             </div>
           </section>
         </main>

@@ -668,6 +668,28 @@ menu ul li a {
 .hidden {
   display: none;
 }
+.truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; 
+}
+
+.wedding-list,
+.birthday-list{
+  max-width: 250px; 
+}
+.conference-detail{
+  max-width: 150px; 
+}
+
+.event-detail p {
+  margin: 0;
+  height: auto; 
+}
+
 
 /* max-width 800 media query */
 
