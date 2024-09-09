@@ -18,13 +18,18 @@
             <i class="fa-solid fa-bars"></i>
           </button>
           <div class="logo">
-            <img  src="../images/logo.jpg" alt="Logo">
-           </div>
+            <img src="../images/logo.jpg" alt="Logo" />
+          </div>
           <div class="event-add-block" id="event-add-block">
             <ul id="events-list">
               <!-- get input to add -->
               <li>
-                <input type="text"  id="input-item" placeholder="Enter the Event Name.." onblur="nameCheck()">
+                <input
+                  type="text"
+                  id="input-item"
+                  placeholder="Enter the Event Name.."
+                  onblur="nameCheck()"
+                />
                 <button id="add-btn" onclick="addEventItem(event)">Add</button>
               </li>
               <p id="input-event-error"></p>
@@ -33,13 +38,13 @@
                 <div class="icon">
                   <i class="fa-solid fa-cake-candles"></i>
                 </div>
-               <span id="event-name"> Birthday </span>
-               <!-- <button class="delete-btn" data-event-name="Birthday" onclick="deleteEvent(Birthday)"> Delete</button>
+                <span id="event-name"> Birthday </span>
+                <!-- <button class="delete-btn" data-event-name="Birthday" onclick="deleteEvent(Birthday)"> Delete</button>
                <button class="edit-btn" data-event-name="Birthday">Edit</button> -->
               </li>
               <li>
                 <div class="icon"><i class="fa-solid fa-ring"></i></div>
-                 <span id="event-name">Marrage</span>  
+                <span id="event-name">Marrage</span>
                 <!-- <button class="delete-btn">Delete</button>
                 <button class="edit-btn">Edit</button> -->
               </li>
@@ -60,11 +65,10 @@
             </div>
             <div class="event-add-profile">
               <!-- event add  function -->
-               
+
               <div class="event-add-btn" id="event-add-btn">
                 <button type="button" onclick="addEvent()">+</button>
               </div>
-             
 
               <!-- notification display function -->
               <div class="notification-bell" onclick="displayNotification()">
@@ -172,17 +176,22 @@
             </div>
             <div class="event-data-name">
               <label for="event-name">Event Name:</label>
-              <input type="text" class="event-name" id="event-name" required>
+              <input type="text" class="event-name" id="event-name" required />
               <p id="name-error" class="error-message"></p>
             </div>
             <div class="event-data-date">
               <label for="event-date">Event Date:</label>
-              <input type="date" class="event-date" id="event-date" required>
+              <input type="date" class="event-date" id="event-date" required />
               <p id="date-error" class="error-message"></p>
             </div>
             <div class="event-data-description">
               <label for="event-description">Description:</label>
-              <input type="text" class="event-description" id="event-description" required>
+              <input
+                type="text"
+                class="event-description"
+                id="event-description"
+                required
+              />
               <p id="description-error" class="error-message"></p>
             </div>
             <div class="event-data-category">
@@ -206,6 +215,30 @@
             <button type="submit" id="save-btn">Save Event</button>
             <p id="success-message"></p>
           </form>
+          <!--  div for the backdrop -->
+          <div id="backdrop" class="backdrop"></div>
+          <!-- display the detial description -->
+          <div class="display-details" id="display-details">
+            <div
+              id="detail-close-icon"
+              class="detail-close-icon"
+              onclick="closeDetail()"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="detail-image">
+              <img id="detail-img" class="detail-img" />
+            </div>
+            <div class="detail">
+              <h3 id="detail-name"></h3>
+              <h4 id="detail-date"></h4>
+              <h4>Event Description:</h4>
+              <p id="detail-description"></p>
+              <span id="detail-category">Event Category:</span>
+              <span id="detail-status">Event Status:</span>
+            </div>
+          </div>
+
           <div id="home-page-content">
             <!-- Birthday content area -->
             <div class="bithday-display-area">
