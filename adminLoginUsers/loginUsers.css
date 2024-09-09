@@ -455,6 +455,9 @@ main {
     padding: 7px;
     border-radius: 2px;
 }
+#icone{
+    margin-right: 42px;
+}
 /* Responsive Design for Main Area */
 @media only screen and (max-width: 800px) {
     main {

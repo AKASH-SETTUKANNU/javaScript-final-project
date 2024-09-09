@@ -111,7 +111,7 @@ function createBirthdayCard(event: EventDetails): void {
     let birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
     if (birthdayLists) {
         let birthdayListHTML = `
-           <div class="birthday-list" id="${event.id}">
+           <div class="birthday-list" id="${event.id}" >
               <div class="birthday-image">
                 <img src="../images/birthday.avif" alt="birthday" />
               </div>
@@ -119,6 +119,7 @@ function createBirthdayCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -135,7 +136,7 @@ function createWeddingCard(event: EventDetails): void {
     let weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
         let weddingListHTML = `
-            <div class="wedding-list" id="${event.id}">
+            <div class="wedding-list" id="${event.id} "onclick="displayDetails('${event.id}')">
               <div class="wedding-image">
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
@@ -143,6 +144,7 @@ function createWeddingCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -159,7 +161,7 @@ function createConferenceCard(event: EventDetails): void {
     let conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
         let conferenceListHTML = `
-           <div class="conferences-list" id="${event.id}">
+           <div class="conferences-list" id="${event.id}" onclick="displayDetails('${event.id}')">
               <div class="conference-image">
                 <img src="../images/conference.avif" alt="conference" />
               </div>
@@ -167,6 +169,7 @@ function createConferenceCard(event: EventDetails): void {
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
                 <h5>${event.eventDate}</h5>
                 <p>${event.eventDescription}</p>
+                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -176,6 +179,92 @@ function createConferenceCard(event: EventDetails): void {
     } else {
         console.error('Element with ID "conference-lists" not found.');
     }
+}
+
+function displayDetails(eventId: string): void {
+    const backdrop = document.getElementById("backdrop") as HTMLDivElement;
+    const detailImage = document.getElementById("detail-img") as HTMLImageElement;
+    const detailName = document.getElementById("detail-name") as HTMLHeadingElement;
+    const detailDate = document.getElementById("detail-date") as HTMLHeadingElement;
+    const detailDescription = document.getElementById("detail-description") as HTMLParagraphElement;
+    const detailCategory = document.getElementById("detail-category") as HTMLSpanElement;
+    const detailStatus = document.getElementById("detail-status") as HTMLSpanElement;
+    const displayDetails = document.getElementById("display-details") as HTMLDivElement;
+
+    if (!displayDetails) {
+        console.error("Display details element not found.");
+        return;
+    }
+
+    // Retrieve user data from localStorage
+    const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+
+        if (user && user.events) {
+            const event = user.events.find(e => e.id === eventId);
+
+            if (event) {
+                // Populate the details
+                detailImage.src = getEventImageByCategory(event.eventCategory);
+                detailName.textContent = event.eventCategory;
+                detailDate.textContent = `Event Date:${event.eventDate}`;
+                detailDescription.textContent = event.eventDescription;
+                detailCategory.textContent = `Event Category: ${event.eventCategory}`;
+                
+                // Set the status and its id
+                detailStatus.textContent = ` ${event.eventStatus}`;
+                detailStatus.id = event.eventStatus.toLowerCase(); 
+                
+                // Show the details div
+                backdrop.classList.remove('hidden');
+                backdrop.classList.add('visible');
+                displayDetails.classList.remove('hidden');
+                displayDetails.classList.add('visible');
+            } else {
+                console.error("Event not found.");
+            }
+        } else {
+            console.error("User or events not found.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
+}
+
+
+
+
+
+// Function to determine image based on event category
+function getEventImageByCategory(category: string): string {
+    switch (category.toLowerCase()) {
+        case 'birthday':
+            return '../images/birthday.avif';
+        case 'wedding':
+            return '../images/marrage.jpg';
+        case 'conference':
+            return '../images/conference.avif';
+        default:
+            return '../images/default.png'; 
+    }
+}
+
+function closeDetail(): void {
+    const displayDetails = document.getElementById("display-details") as HTMLDivElement;
+    const backdrop = document.getElementById("backdrop") as HTMLDivElement;
+    if (displayDetails.classList.contains('visible')) {
+        displayDetails.classList.remove('visible');
+        displayDetails.classList.add('hidden');
+        backdrop.classList.remove('visible');
+        backdrop.classList.add('hidden');
+        window.location.reload();
+    }
+   
+       
+  
 }
 
 

@@ -11,7 +11,7 @@ body {
 section {
   display: flex;
   justify-content: center;
-  padding: 5px;
+ border-radius: 5px;
   background-color: rgb(228, 229, 230);
   background-image: url("../images/background.avif");
   background-size: cover;
@@ -65,7 +65,7 @@ menu {
 main {
   display: grid;
   grid-area: main;
-  overflow-y: scroll;
+  background-color: bisque;
 }
 .menu-icon {
   display: none;
@@ -348,327 +348,82 @@ menu ul li a {
 .icon i {
   color: black;
 }
-
-.home-page-content {
+/* General Container Styling */
+.backup-restore-main-container {
+  background-color: rgb(247, 215, 171);
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
-}
-/* home-page-content grid separate */
-.home-page-content {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-  grid-template-areas:
-    "birthday"
-    "wedding"
-    "conference";
-}
-
-/* birthday display area */
-.birtday-display-area {
-  grid-area: birthday;
-}
-#Birthday-heading {
-  margin-bottom: 10px;
-}
-.birthday-image img {
-  height: 100px;
-  aspect-ratio: 1/1;
-  border-radius: 5px;
-}
-.birthday-lists {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 20px;
-}
-
-.birthday-list {
-  display: flex;
-  gap: 25px;
-  flex-direction: row;
-  padding: 7px;
-  border-radius: 3px;
-  border: 1px solid rgb(236, 147, 12);
-}
-.birthday-list:hover {
-  background-color: aqua;
-  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
-  transform: scale(1.02);
-  transition: all 0.3s ease;
-}
-.birthday-detial {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-#canceled {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(235, 40, 40);
-  color: white;
-  margin-top: 5px;
-  border-radius: 3px;
-  padding: 5px;
-}
-#planning {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(226, 226, 78);
-  color: white;
-  margin-top: 5px;
-  border-radius: 3px;
-  padding: 5px;
-}
-#finalized {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(122, 223, 55);
-  color: white;
-  margin-top: 5px;
-  border-radius: 3px;
-  padding: 5px;
-}
-
-/* wedding display area */
-.wedding-display-area {
-  grid-area: wedding;
-}
-.wedding-image img {
-  height: 100px;
-  aspect-ratio: 1/1;
-  border-radius: 5px;
-}
-#wedding-heading {
-  margin-bottom: 10px;
-}
-.wedding-lists {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 20px;
-}
-.wedding-list {
-  display: flex;
-  gap: 15px;
-  flex-direction: row;
-  padding: 7px;
-  border-radius: 3px;
-  border: 1px solid rgb(236, 147, 12);
-}
-.wedding-list:hover {
-  background-color: aqua;
-  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
-  transform: scale(1.02);
-  transition: all 0.3s ease;
-}
-
-.wedding-detial {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-#wedding-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  border-radius: 3px;
-  padding: 5px;
-}
-.birthday-detail i {
-  color: red;
-}
-.wedding-detail i {
-  color: red;
-}
-.conference-detail i {
-  color: red;
-}
-
-/* conference display area */
-.conference-display-area {
-  grid-area: conference;
-}
-.conference-image img {
-  height: 100px;
-  aspect-ratio: 1/1;
-  border-radius: 5px;
-}
-#conference-heading {
-  margin-bottom: 10px;
-}
-.conference-lists {
-  display: flex;
-  flex-direction: row;
-  overflow-x: scroll;
-  gap: 20px;
-}
-.conferences-list {
-  display: flex;
-  gap: 10px;
-  flex-direction: row;
-  padding: 7px;
-  border-radius: 3px;
-  border: 1px solid rgb(236, 147, 12);
-}
-.conferences-list:hover {
-  background-color: aqua;
-  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
-  transform: scale(1.02);
-  transition: all 0.3s ease;
-}
-.conference-detial {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-}
-
-#conference-status {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  border-radius: 3px;
-  padding: 5px;
-}
-
-.event-form {
-  display: none;
-  background-color: rgba(245, 154, 49, 0.849);
-  padding: 10px;
-  gap: 10px;
-  border-radius: 5px;
-  flex-direction: column;
-}
-.event-data-description {
-  display: flex;
-  flex-direction: column;
-}
-.event-form input,
-.event-form select {
+  overflow-y: scroll;
+  height: 100%;
   width: 100%;
-  height: 30px;
-  border: 3px solid rgb(248, 161, 61);
-  border-radius: 5px;
-  padding: 0 10px;
-}
-.event-form input:hover,
-.event-form select:hover {
-  border: 1px solid rgb(248, 161, 61);
+  border-radius: 3px;
 }
 
-.event-form button {
-  height: 35px;
-  width: 100%;
-  background-color: rgb(248, 102, 17);
-  border: 1px solid rgba(252, 124, 78, 0.411);
-  color: white;
-  border-radius: 3px;
-  cursor: pointer;
+/* Header Styling */
+#backup-heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(233, 177, 104);
+  padding: 30px;
+}
+
+/* Backup and Restore Section */
+.backup-restore-container {
+  margin: 2px auto;
+  text-align: center;
+  width: 97%;
+  border-radius:15px;
+}
+
+.backup-restore-container button {
+  padding: 10px 20px;
   font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 10px;
 }
 
-#success-message {
-  color: green;
-}
-#edit-icon {
-  margin-left: 10px;
-  color: rgb(14, 23, 153);
-  padding: 5px;
-  border-radius: 50px;
+#backup-btn {
+  background-color: #4CAF50;
+  color: white;
 }
 
-#info-icon {
-  color: rgb(14, 23, 153);
-  padding: 5px;
-  width: 15px;
-  border-radius: 50px;
-}
-#info-icon:hover {
-  background-color: rgb(253, 191, 97);
-}
-
-
-#edit-icon:hover {
-  background-color: rgb(253, 191, 97);
-}
-#delete-icon {
-  margin-left: 5px;
-  color: rgb(153, 14, 14);
-  padding: 5px;
-  border-radius: 50px;
-}
-#delete-icon:hover {
-  background-color: rgb(253, 191, 97);
-}
-
-/* Backdrop for the blur effect */
-.backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
+/* Backup History Styling */
+.displaBackUpHistory {
+  display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(3px);
-  z-index: 300;
-  display: none;
-}
-
-/* The details card */
-.display-details {
-  display: none;
-  flex-direction: column;
-  background-color: rgb(240, 198, 143);
-  border: 1px solid orangered;
-  border-radius: 5px;
-  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  background-color: #d3e9d4;
   padding: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 250px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  z-index: 300;
+ 
+  box-sizing: border-box;
 }
 
-/* Style for the image */
-.detail-image img {
-  height: 180px;
-  border-radius: 3px;
-  aspect-ratio: 1/1;
-}
-
-/* Style for the close icon */
-.detail-close-icon {
+.backup-item {
   display: flex;
-  justify-content: end;
-  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  margin-bottom: 10px; /* Add margin to space out items */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 90%;
 }
 
-/* Style for the details container */
-.detail {
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
+/* Restore Button (if needed) */
+#restore-btn {
+  background-color: #2196F3;
+  color: white;
 }
-
-/* Visible and hidden classes */
-.visible {
-  display: flex;
+#icone{
+  margin-right: 42px;
 }
-
-.hidden {
-  display: none;
-}
-
 /* max-width 800 media query */
 
 @media only screen and (max-width: 800px) {

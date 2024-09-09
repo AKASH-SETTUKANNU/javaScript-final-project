@@ -700,7 +700,9 @@ menu ul li a {
 }
 
 
-
+#icone{
+  margin-right: 42px;
+}
 
 
 /* max-width 800 media query */

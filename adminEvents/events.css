@@ -533,7 +533,9 @@ menu ul li a{
 #success-message{
     color: green;
 }
-
+#icone{
+    margin-right: 42px;
+}
 /* max-width 800 media query */
 
 @media only screen and (max-width: 800px) {

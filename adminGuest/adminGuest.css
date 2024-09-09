@@ -555,7 +555,9 @@
     width: 70px;
     border-radius: 3px;
   }
-  
+  #icone{
+    margin-right: 42px;
+}
   @media only screen and (max-width: 800px) {
     menu {
       position: absolute;
