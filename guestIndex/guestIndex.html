@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./events.css" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./guestIndex.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
     />
-    <title>Document</title>
   </head>
   <body>
     <section>
@@ -18,8 +18,9 @@
             <i class="fa-solid fa-bars"></i>
           </button>
           <div class="logo">
-            <img  src="../images/logo.jpg" alt="Logo">
-           </div>
+            <img src="../images/logo.jpg" alt="Logo" />
+          </div>
+
           <div class="search-profile">
             <div class="search-bar">
               <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
@@ -27,32 +28,9 @@
             </div>
             <div class="event-add-profile">
               <!-- event add  function -->
+
               <div class="event-add-btn" id="event-add-btn">
                 <button type="button" onclick="addEvent()">+</button>
-              </div>
-              <div class="event-add-block" id="event-add-block">
-                <ul>
-                  <li>
-                    <div class="icon">
-                      <i class="fa-solid fa-cake-candles"></i>
-                    </div>
-                    Birthday
-                  </li>
-                  <li>
-                    <div class="icon"><i class="fa-solid fa-ring"></i></div>
-                    Marrage
-                  </li>
-                  <li>
-                    <div class="icon">
-                      <i class="fa-regular fa-handshake"></i>
-                    </div>
-                    conference
-                  </li>
-                  <li>
-                    <div class="icon"><i class="fa-solid fa-gift"></i></div>
-                    Others
-                  </li>
-                </ul>
               </div>
 
               <!-- notification display function -->
@@ -124,7 +102,7 @@
               </li>
 
               <li>
-                <a href="./events.html">
+                <a href="../events/events.html">
                   <div class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
                   </div>
@@ -149,88 +127,100 @@
           </nav>
         </menu>
         <main>
-          <div class="form-container">
-            <form class="event-form">
-              <div class="Event-heading">
-                <h1>Add Event</h1>
-              </div>
+          <form class="event-form" id="event-form">
+            <div class="event-heading">
+              <h1>Update Event</h1>
+            </div>
+            <div class="event-data-name">
+              <label for="event-name">Event Name:</label>
+              <input type="text" class="event-name" id="event-namea" required />
+              <p id="name-error" class="error-message"></p>
+            </div>
 
-              <!-- event name input -->
-              <div class="event-data-name">
-                <label for="event-name">Event Name:</label>
-                <input
-                  type="text"
-                  class="event-name"
-                  id="event-name"
-                  onblur="nameCheck()"
-                />
-                <p id="name-error"></p>
-              </div>
+            <div class="event-data-date">
+              <label for="event-date">Event Date:</label>
+              <input type="date" class="event-date" id="event-date" required />
+              <p id="date-error" class="error-message"></p>
+            </div>
+            <div class="event-data-description">
+              <label for="event-description">Description:</label>
+              <input
+                type="text"
+                class="event-description"
+                id="event-description"
+                required
+              />
+              <p id="description-error" class="error-message"></p>
+            </div>
+            <div class="event-data-category">
+              <label for="event-category">Event Category:</label>
+              <select name="event-category" id="event-category" required>
+                <option value="conference">Conference</option>
+                <option value="wedding">Wedding</option>
+                <option value="birthday">Birthday</option>
+              </select>
+              <p id="category-error" class="error-message"></p>
+            </div>
+            <div class="event-data-status">
+              <label for="event-status">Event Status:</label>
+              <select name="event-status" id="event-status" required>
+                <option value="planning">Planning</option>
+                <option value="finalized">Finalized</option>
+                <option value="canceled">Canceled</option>
+              </select>
+              <p id="status-error" class="error-message"></p>
+            </div>
+            <button type="submit" id="save-btn">Save Event</button>
+            <p id="success-message"></p>
+          </form>
+          <!--  div for the backdrop -->
+          <div id="backdrop" class="backdrop"></div>
+          <!-- display the detial description -->
+          <div class="display-details" id="display-details">
+            <div
+              id="detail-close-icon"
+              class="detail-close-icon"
+              onclick="closeDetail()"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+            <div class="detail-image">
+              <img id="detail-img" class="detail-img" />
+            </div>
+            <div class="detail">
+              <h3 id="detail-name"></h3>
+              <h4 id="detail-date"></h4>
+              <h4>Event Description:</h4>
+              <p id="detail-description"></p>
+              <span id="detail-category">Event Category:</span>
+              <span id="detail-status">Event Status:</span>
+            </div>
+          </div>
 
-              <!-- event date input -->
-              <div class="event-data-date">
-                <label for="event-date">Event Date :</label>
-                <input
-                  type="date"
-                  class="event-date"
-                  id="event-date"
-                  onblur="dateCheck()"
-                />
-                <p id="date-error"></p>
-              </div>
+          <div id="home-page-content">
+            <!-- Birthday content area -->
+            <div class="bithday-display-area">
+              <h1 id="Birthday-heading">Birthdays</h1>
 
-              <!-- event description input -->
-              <div class="event-data-description">
-                <label for="event-description">Description:</label>
-                <input
-                  type="textarea"
-                  class="event-description"
-                  id="event-description"
-                  rows="4"
-                  cols="50"
-                  onblur="descriptionCheck()"
-                />
-                <p id="description-error"></p>
-              </div>
-              <!-- event category input -->
-              <div class="event-data-category">
-                <label for="event-category">Event Category:</label>
-                <select
-                  name="event-category"
-                  id="event-category"
-                  onblur="categoryCheck()"
-                >
-                  <option value="conference">Conference</option>
-                  <option value="wedding">wedding</option>
-                  <option value="birthday">Birthday</option>
-                </select>
-                <p id="category-error"></p>
-              </div>
-              <!-- event status input -->
-              <div class="event-data-status">
-                <label for="event-status">Event Status:</label>
-                <select
-                  name="event-status"
-                  id="event-status"
-                  onblur="statusCheck()"
-                >
-                  <option value="planning">Planning</option>
-                  <option value="finalized">Finalized</option>
-                  <option value="canceled">Canceled</option>
-                </select>
-                <p id="status-error"></p>
-                <p id="success-message"></p>
-              </div>
+              <div class="birthday-lists" id="birthday-lists"></div>
+            </div>
 
-              <!-- save event button -->
-              <button onclick="saveEvent(event)" id="save-btn">
-                Save Event
-              </button>
-            </form>
+            <!-- wedding content area -->
+            <div class="wedding-display-area">
+              <h1 id="wedding-heading">Weddings</h1>
+
+              <div class="wedding-lists" id="wedding-lists"></div>
+            </div>
+
+            <!-- conference content area -->
+            <div class="conference-display-area">
+              <h1 id="conference-heading">Conferences</h1>
+              <div class="conference-lists" id="conference-lists"></div>
+            </div>
           </div>
         </main>
       </div>
     </section>
+    <script src="./guestIndex.js"></script>
   </body>
-  <script src="./events.js"></script>
 </html>

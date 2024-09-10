@@ -1,0 +1,759 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+section {
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+  background-color: rgb(228, 229, 230);
+  background-image: url("../images/background.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+}
+
+.main-container {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header header header header"
+    "menu main main main"
+    "menu footer footer footer";
+  gap: 5px;
+  height: 98vh;
+  width: 99%;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: white;
+  overflow: hidden;
+}
+
+header {
+  display: flex;
+  grid-area: header;
+  background-color: rgb(255, 218, 169);
+  border-radius: 3px;
+  justify-content: space-between;
+  height: 80px;
+  align-items: center;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+menu {
+  display: flex;
+  width: 95%;
+  padding: 10px 10px;
+  border-radius: 3px;
+  grid-area: menu;
+  background-color: rgb(252, 242, 228);
+  justify-content: center;
+  overflow: hidden;
+}
+
+main {
+  display: grid;
+  grid-area: main;
+  overflow-y: scroll;
+}
+.menu-icon {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  padding: 7px;
+  border: 2px solid rgb(247, 160, 119);
+  border-radius: 5px;
+}
+/* menu area design */
+.menu-list {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-height: calc(100vh - 50px);
+  overflow-y: auto;
+}
+
+menu nav {
+  width: 100%;
+}
+.menu-list li:hover {
+  background-color: rgb(116, 176, 253);
+}
+
+.menu-list li {
+  display: flex;
+  padding: 10px;
+  width: 100%;
+  border-radius: 3px;
+  color: black;
+  background-color: rgb(230, 229, 229);
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+menu ul li a {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: black;
+  text-decoration: none;
+}
+
+#menu-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.profile-icon {
+  display: block;
+  height: 40px;
+  border-radius: 50%;
+  aspect-ratio: 1 / 1;
+}
+
+.search-profile {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.event-add-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+}
+
+/* profile pic design area */
+.profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+.logo img {
+  height: 75px;
+  width: 500px;
+  margin-left: 150px;
+  border-radius: 5px;
+}
+.profile-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-bar input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid rgb(248, 161, 61);
+  padding-left: 50px;
+  border-radius: 3px;
+}
+
+#search-icon {
+  position: absolute;
+  margin-top: 12px;
+  margin-left: 16px;
+  color: rgb(185, 184, 184);
+}
+
+#search-icon {
+  position: absolute;
+  margin-top: 12px;
+  margin-left: 16px;
+  color: rgb(185, 184, 184);
+}
+
+.event-add-btn button {
+  height: 30px;
+  aspect-ratio: 1/1;
+  font-size: 30px;
+  padding-bottom: 33px;
+  color: white;
+  border-radius: 3px;
+  background-color: rgb(248, 102, 17);
+  border: 1px solid rgba(252, 124, 78, 0.411);
+}
+
+/* event add block display area */
+.event-add-block {
+  position: absolute;
+  margin-top: 320px;
+  margin-left: 0px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgb(250, 185, 124);
+  display: none;
+}
+.event-add-block ul {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.event-add-block ul li {
+  display: flex;
+  padding: 8px;
+  flex-direction: row;
+  align-items: center;
+  color: black;
+  background-color: rgb(230, 229, 229);
+  border-radius: 5px;
+}
+
+/* notification display function */
+.notification-display {
+  position: absolute;
+  display: none;
+  margin-top: 230px;
+  margin-left: 60px;
+  background-color: rgb(250, 185, 124);
+  border-radius: 5px;
+  border: 2px solid rgb(250, 149, 113);
+  padding: 10px;
+}
+.notification {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  width: 195px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid rgb(250, 149, 113);
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  overflow: hidden;
+}
+
+.notification-content p {
+  margin-bottom: 10px;
+}
+.notification-message {
+  display: flex;
+  overflow: hidden;
+}
+.notification-profile {
+  display: flex;
+}
+.notification-profile img {
+  height: 30px;
+  width: 30px;
+  margin-top: 5px;
+  border-radius: 50px;
+}
+.notification-bell {
+  display: flex;
+  border: 1px solid rgb(212, 210, 210);
+  background-color: white;
+  padding: 7px;
+  height: 40px;
+  aspect-ratio: 1/1;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+#notification-dot {
+  color: red;
+  font-size: 55px;
+  position: absolute;
+  margin-left: 8px;
+  margin-bottom: 38px;
+}
+/* ---------------------------------------- */
+
+/* profile edit Area */
+.profile-edit-area {
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  background-color: rgb(250, 185, 124);
+  padding: 5px;
+  margin-top: 180px;
+  margin-left: 60px;
+  gap: 10px;
+  border-radius: 2px;
+}
+
+.profile-edit-area button {
+  display: block;
+  padding: 8px;
+  border-radius: 3px;
+  width: 95px;
+}
+
+#logout-btn {
+  background-color: rgb(248, 60, 60);
+  border: 1px solid red;
+  color: white;
+  direction: none;
+}
+
+#profile-edit-btn {
+  background-color: rgb(65, 65, 245);
+  border: 1px solid blue;
+  color: white;
+}
+#logout-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+#profile-edit-btn a {
+  text-decoration: none;
+  color: white;
+}
+
+.icon {
+  display: flex;
+  height: 25px;
+  aspect-ratio: 1/1;
+  padding: 15px;
+  justify-content: center;
+  align-items: center;
+  margin-right: 25px;
+  background-color: white;
+  border-radius: 3px;
+}
+
+.icon i {
+  color: black;
+}
+
+.home-page-content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+/* home-page-content grid separate */
+.home-page-content {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas:
+    "birthday"
+    "wedding"
+    "conference";
+}
+
+/* birthday display area */
+.birtday-display-area {
+  grid-area: birthday;
+}
+#Birthday-heading {
+  margin-bottom: 10px;
+}
+.birthday-image img {
+  height: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+}
+.birthday-lists {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 20px;
+}
+
+.birthday-list {
+  display: flex;
+  gap: 25px;
+  flex-direction: row;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid rgb(236, 147, 12);
+}
+.birthday-list:hover {
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+.birthday-detial {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#canceled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(235, 40, 40);
+  color: white;
+  margin-top: 5px;
+  border-radius: 3px;
+  padding: 5px;
+}
+#planning {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(226, 226, 78);
+  color: white;
+  margin-top: 5px;
+  border-radius: 3px;
+  padding: 5px;
+}
+#finalized {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(122, 223, 55);
+  color: white;
+  margin-top: 5px;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+/* wedding display area */
+.wedding-display-area {
+  grid-area: wedding;
+}
+.wedding-image img {
+  height: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+}
+#wedding-heading {
+  margin-bottom: 10px;
+}
+.wedding-lists {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 20px;
+}
+.wedding-list {
+  display: flex;
+  gap: 15px;
+  flex-direction: row;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid rgb(236, 147, 12);
+}
+.wedding-list:hover {
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+.wedding-detial {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#wedding-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 3px;
+  padding: 5px;
+}
+.birthday-detail i {
+  color: red;
+}
+.wedding-detail i {
+  color: red;
+}
+.conference-detail i {
+  color: red;
+}
+
+/* conference display area */
+.conference-display-area {
+  grid-area: conference;
+}
+.conference-image img {
+  height: 100px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+}
+#conference-heading {
+  margin-bottom: 10px;
+}
+.conference-lists {
+  display: flex;
+  flex-direction: row;
+  overflow-x: scroll;
+  gap: 20px;
+}
+.conferences-list {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  padding: 7px;
+  border-radius: 3px;
+  border: 1px solid rgb(236, 147, 12);
+}
+.conferences-list:hover {
+  background-color: aqua;
+  box-shadow: 5px 4px 8px rgba(240, 111, 6, 0.2);
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+.conference-detial {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#conference-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.event-form {
+  display: none;
+  background-color: rgba(245, 154, 49, 0.849);
+  padding: 10px;
+  gap: 10px;
+  border-radius: 5px;
+  flex-direction: column;
+}
+.event-data-description {
+  display: flex;
+  flex-direction: column;
+}
+.event-form input,
+.event-form select {
+  width: 100%;
+  height: 30px;
+  border: 3px solid rgb(248, 161, 61);
+  border-radius: 5px;
+  padding: 0 10px;
+}
+.event-form input:hover,
+.event-form select:hover {
+  border: 1px solid rgb(248, 161, 61);
+}
+
+.event-form button {
+  height: 35px;
+  width: 100%;
+  background-color: rgb(248, 102, 17);
+  border: 1px solid rgba(252, 124, 78, 0.411);
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#success-message {
+  color: green;
+}
+#edit-icon {
+  margin-left: 10px;
+  color: rgb(14, 23, 153);
+  padding: 5px;
+  border-radius: 50px;
+}
+
+#info-icon {
+  color: rgb(14, 23, 153);
+  padding: 5px;
+  width: 15px;
+  border-radius: 50px;
+}
+#info-icon:hover {
+  background-color: rgb(253, 191, 97);
+}
+
+
+#edit-icon:hover {
+  background-color: rgb(253, 191, 97);
+}
+#delete-icon {
+  margin-left: 5px;
+  color: rgb(153, 14, 14);
+  padding: 5px;
+  border-radius: 50px;
+}
+#delete-icon:hover {
+  background-color: rgb(253, 191, 97);
+}
+
+/* Backdrop for the blur effect */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(3px);
+  z-index: 300;
+  display: none;
+}
+
+/* The details card */
+.display-details {
+  display: none;
+  flex-direction: column;
+  background-color: rgb(240, 198, 143);
+  border: 1px solid orangered;
+  border-radius: 5px;
+  gap: 10px;
+  padding: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  z-index: 300;
+}
+
+/* Style for the image */
+.detail-image img {
+  height: 180px;
+  border-radius: 3px;
+  aspect-ratio: 1/1;
+}
+
+/* Style for the close icon */
+.detail-close-icon {
+  display: flex;
+  justify-content: end;
+  cursor: pointer;
+}
+
+/* Style for the details container */
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+/* Visible and hidden classes */
+.visible {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+.truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 1; 
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal; 
+}
+
+.wedding-list,
+.birthday-list{
+  max-width: 250px; 
+}
+.conference-detail{
+  max-width: 150px; 
+}
+
+.event-detail p {
+  margin: 0;
+  height: auto; 
+}
+
+
+/* max-width 800 media query */
+
+@media only screen and (max-width: 800px) {
+  menu {
+    position: absolute;
+    width: 30%;
+    margin-top: 90px;
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgb(250, 185, 124);
+    justify-content: center;
+    overflow: hidden;
+    display: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .main-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto 1fr auto;
+    grid-template-areas:
+      "header header header header"
+      "main main main main"
+      "footer footer footer footer";
+    gap: 5px;
+    height: 98vh;
+    width: 99%;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: white;
+    overflow: hidden;
+  }
+
+  main {
+    display: grid;
+    grid-area: main;
+    overflow-y: scroll;
+  }
+
+  .menu-icon {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 7px;
+    border-radius: 5px;
+  }
+  .logo img {
+    margin-left: 0px;
+    border-radius: 5px;
+  }
+}
+
+@media only screen and (max-width: 690px) {
+  .logo img {
+    width: 60px;
+    margin-left: 0px;
+    border-radius: 5px;
+  }
+}
+
+@media only screen and (max-width: 530px) {
+  .logo img {
+    display: none;
+  }
+}
