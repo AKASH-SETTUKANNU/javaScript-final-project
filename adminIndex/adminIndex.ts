@@ -13,6 +13,7 @@ interface EventItem {
 ///to add data to form
 interface EventDetails {
     id: string;
+    eventName:string;
     eventCategory: string;
     eventStatus: string;
     eventDate: string;
@@ -36,7 +37,7 @@ const logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
 
 // Define form element and error elements
 const form = document.querySelector('.event-form') as HTMLFormElement;
-const popupeventName = document.getElementById("event-name") as HTMLInputElement;
+const popupeventName = document.getElementById("event-namea") as HTMLInputElement;
 const popupeventDate = document.getElementById("event-date") as HTMLInputElement;
 const popupeventDescription = document.getElementById("event-description") as HTMLTextAreaElement;
 const popupeventStatus = document.getElementById("event-status") as HTMLSelectElement;
@@ -230,7 +231,9 @@ function createBirthdayCard(event: EventDetails): void {
               </div>
               <div class="birthday-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                  <h5>${event.eventName}</h5>
                 <h5>${event.eventDate}</h5>
+
                 <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
@@ -254,8 +257,10 @@ function createWeddingCard(event: EventDetails): void {
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
               <div class="wedding-detail">
+               
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
-                <h5>${event.eventDate}</h5>
+                 <h5>${event.eventName}</h5>
+                  <h5>${event.eventDate}</h5>
                 <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
@@ -281,6 +286,7 @@ function createConferenceCard(event: EventDetails): void {
               </div>
               <div class="conference-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                 <h5>${event.eventName}</h5>
                 <h5>${event.eventDate}</h5>
                 <p class="truncate">${event.eventDescription}</p>
                  <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
@@ -323,7 +329,7 @@ function displayDetails(eventId: string): void {
             if (event) {
                 // Populate the details
                 detailImage.src = getEventImageByCategory(event.eventCategory);
-                detailName.textContent = event.eventCategory;
+                detailName.textContent = event.eventName;
                 detailDate.textContent = `Event Date:${event.eventDate}`;
                 detailDescription.textContent = event.eventDescription;
                 detailCategory.textContent = `Event Category: ${event.eventCategory}`;
@@ -414,33 +420,47 @@ function deleteCard(eventId: string): void {
 //////////////////////////////////////////////////////////////////////////////
 // Show the form for editing an event
 function showEditForm(eventId: string): void {
-    form.style.display = 'flex'; 
-    const usersJson = localStorage.getItem("users");
-    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
-    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    form.style.display = 'flex';
 
-    if (loggedInUserEmail) {
-        const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
-        if (user && user.events) {
-            const event = user.events.find(e => e.id === eventId);
-            console.log('Event ID:', eventId);
-            console.log('Events:', user.events);
-            if (event) {
-                // Populate the form with existing event data
-                popupeventName.value = event.eventCategory;
-                popupeventDate.value = event.eventDate;
-                popupeventDescription.value = event.eventDescription;
-                popupeventStatus.value = event.eventStatus;
-                popupeventCategory.value = event.eventCategory;
-                eventToEditId = eventId; // Set the ID of the event being edited
-            } else {
-                console.error("Event not found.");
-            }
+    const usersJson = localStorage.getItem("users");
+    if (!usersJson) {
+        console.error("Users data not found in local storage.");
+        return;
+    }
+
+    const allUsersJson: User[] = JSON.parse(usersJson);
+
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (!loggedInUserEmail) {
+        console.error("Logged in user email not found.");
+        return;
+    }
+
+    const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+    if (!user) {
+        console.error("User not found.");
+        return;
+    }
+
+    if (user.events) {
+        const event = user.events.find(e => e.id === eventId);
+        if (event) {
+       
+                popupeventName.value = event.eventName ?? "";
+                
+            
+            popupeventDate.value = event.eventDate ?? "";
+            popupeventDescription.value = event.eventDescription ?? "";
+            popupeventStatus.value = event.eventStatus ?? "";
+            popupeventCategory.value = event.eventCategory ?? "";
+
+            // Store the event ID for further use
+            eventToEditId = eventId;
         } else {
-            console.error("User or events not found.");
+            console.error("Event not found.");
         }
     } else {
-        console.error("Logged in user email not found.");
+        console.error("User does not have any events.");
     }
 }
 
@@ -466,6 +486,7 @@ function updateEvent(event: Event): void {
                 if (eventIndex > -1) {
                     user.events[eventIndex] = {
                         id: eventToEditId!,
+                        eventName:popupeventName.value.trim(),
                         eventCategory: popupeventCategory.value.trim(),
                         eventStatus: popupeventStatus.value.trim(),
                         eventDate: popupeventDate.value.trim(),
@@ -485,6 +506,7 @@ function updateEvent(event: Event): void {
                        
                         form.style.display = 'none'; 
                         popupsuccessMessage.innerHTML = "";
+                        window.location.reload();
                     }, 2000);
                 } else {
                     console.error("Event not found.");

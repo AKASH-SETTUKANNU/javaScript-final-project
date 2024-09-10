@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Event Management</title>
+    <title>Document</title>
     <link rel="stylesheet" href="./index.css" />
     <link
       rel="stylesheet"
@@ -20,21 +20,26 @@
           <div class="logo">
             <img src="../images/logo.jpg" alt="Logo" />
           </div>
+
           <div class="search-profile">
             <div class="search-bar">
               <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
               <input type="text" placeholder="search..." />
             </div>
             <div class="event-add-profile">
+              <!-- event add  function -->
+
               <div class="event-add-btn" id="event-add-btn">
-                <button type="button" onclick=" addEvent()">+</button>
+                <button type="button" onclick="addEvent()">+</button>
               </div>
-              <div class="notification-bell" onclick=" displayNotification()">
+
+              <!-- notification display function -->
+              <div class="notification-bell" onclick="displayNotification()">
                 <p id="notification-dot">.</p>
                 <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
               </div>
+
               <div class="notification-display" id="notification-display">
-                <!-- Sample Notifications -->
                 <div class="notification">
                   <div class="notification-profile">
                     <img src="../images/profile.jpg" alt="profile" />
@@ -46,17 +51,26 @@
                     </p>
                   </div>
                 </div>
-                <!-- Add more notifications here -->
+
+                <div class="notification">
+                  <div class="notification-profile">
+                    <img src="../images/profile.jpg" alt="profile" />
+                  </div>
+                  <div class="notification-content">
+                    <h3>Koushikk</h3>
+                    <p class="notification-message">
+                      Inviting for his marriage
+                    </p>
+                  </div>
+                </div>
               </div>
+
+              <!-- profile display area -->
               <div class="profile">
-                <img
-                  src="../images/profile.jpg"
-                  alt="Profile"
-                  class="profile-icon"
-                />
+                <img src="../images/profile.jpg" alt="" class="profile-icon" />
                 <div class="profile-details">
                   <p id="profile-name">Akash</p>
-                  <p id="profile-dateOfBirth">Coimbatore</p>
+                  <p id="profile-dateOfBirth">coimbatore</p>
                 </div>
                 <div
                   id="profile-edit-icon"
@@ -81,34 +95,33 @@
           <nav>
             <ul class="menu-list">
               <li>
-                <a href="./index.html"
-                  ><div class="icon"><i class="fa-solid fa-house"></i></div>
-                  <p id="menu-name">Events List</p></a
-                >
+                <a href="../index/index.html">
+                  <div class="icon"><i class="fa-solid fa-house"></i></div>
+                  <p id="menu-name">Events List</p>
+                </a>
               </li>
+
               <li>
-                <a href="../events/events.html"
-                  ><div class="icon">
+                <a href="../events/events.html">
+                  <div class="icon">
                     <i class="fa-solid fa-calendar-days"></i>
                   </div>
-                  <p id="menu-name">Add Events</p></a
-                >
+                  <p id="menu-name">Add Events</p>
+                </a>
               </li>
               <li>
-                <a href="../guests/guest.html"
-                  ><div class="icon">
-                    <i class="fa-solid fa-user-group"></i>
-                  </div>
-                  <p id="menu-name">Guests List</p></a
-                >
+                <a href="../guests/guest.html">
+                  <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                  <p id="menu-name">Guests List</p>
+                </a>
               </li>
               <li>
-                <a href="../guests/guest.html"
-                  ><div class="icon">
+                <a href="../agenda/agenda.html">
+                  <div class="icon">
                     <i class="fa-solid fa-location-dot"></i>
                   </div>
-                  <p id="menu-name">Add Agenda</p></a
-                >
+                  <p id="menu-name">Add Agenda</p>
+                </a>
               </li>
             </ul>
           </nav>
@@ -120,9 +133,10 @@
             </div>
             <div class="event-data-name">
               <label for="event-name">Event Name:</label>
-              <input type="text" class="event-name" id="event-name" required />
+              <input type="text" class="event-name" id="event-namea" required />
               <p id="name-error" class="error-message"></p>
             </div>
+
             <div class="event-data-date">
               <label for="event-date">Event Date:</label>
               <input type="date" class="event-date" id="event-date" required />
@@ -161,7 +175,6 @@
           </form>
           <!--  div for the backdrop -->
           <div id="backdrop" class="backdrop"></div>
-
           <!-- display the detial description -->
           <div class="display-details" id="display-details">
             <div
@@ -184,16 +197,22 @@
             </div>
           </div>
 
-          <!-- Event Lists -->
           <div id="home-page-content">
-            <div class="birthday-display-area">
+            <!-- Birthday content area -->
+            <div class="bithday-display-area">
               <h1 id="Birthday-heading">Birthdays</h1>
+
               <div class="birthday-lists" id="birthday-lists"></div>
             </div>
+
+            <!-- wedding content area -->
             <div class="wedding-display-area">
               <h1 id="wedding-heading">Weddings</h1>
+
               <div class="wedding-lists" id="wedding-lists"></div>
             </div>
+
+            <!-- conference content area -->
             <div class="conference-display-area">
               <h1 id="conference-heading">Conferences</h1>
               <div class="conference-lists" id="conference-lists"></div>

@@ -1,8 +1,8 @@
 // Name Error Validation
-function nameError(event: HTMLInputElement): boolean {
-    const input = event.value.trim();
+function nameError(input: HTMLInputElement): boolean {
+    const value = input.value.trim();
     const error = document.getElementById('name-error') as HTMLSpanElement;
-    if (input === '') {
+    if (value === '') {
         error.innerText = "Enter a name..";
         return false;
     } else {
@@ -12,10 +12,10 @@ function nameError(event: HTMLInputElement): boolean {
 }
 
 // Date of Birth Error Validation
-function dateError(event: HTMLInputElement): boolean {
-    const input = event.value.trim();
+function dateError(input: HTMLInputElement): boolean {
+    const value = input.value.trim();
     const error = document.getElementById('date-error') as HTMLSpanElement;
-    if (input === '') {
+    if (value === '') {
         error.innerText = "Enter a Date of Birth..";
         return false;
     } else {
@@ -25,17 +25,17 @@ function dateError(event: HTMLInputElement): boolean {
 }
 
 // Email Error Validation
-function emailError(event: HTMLInputElement): boolean {
-    const input = event.value.trim();
+function emailError(input: HTMLInputElement): boolean {
+    const value = input.value.trim();
     const error = document.getElementById('email-error') as HTMLSpanElement;
 
     const allUsersJson: { userEmail: string }[] = JSON.parse(localStorage.getItem("users") || "[]");
 
     function emailExistornot(): boolean {
-        return allUsersJson.some(user => user.userEmail === input);
+        return allUsersJson.some(user => user.userEmail === value);
     }
 
-    if (input === '') {
+    if (value === '') {
         error.innerText = "Enter an Email..";
         return false; 
     } else if (emailExistornot()) { 
@@ -53,13 +53,28 @@ function passwordInputError(): boolean {
     const confirmPassword = (document.querySelector('.confirm-password') as HTMLInputElement).value.trim();
     const errorElement = document.getElementById('password-error') as HTMLSpanElement;
 
+    const hasCapitalLetter = /[A-Z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialCharacter = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    let isValid = true;
+
     if (password !== confirmPassword) {
-        errorElement.innerText = "Passwords do not match";
-        return false; 
+        errorElement.innerText = "Passwords do not match.";
+        isValid = false;
+    } else if (!hasCapitalLetter || !hasNumber || !hasSpecialCharacter) {
+        let errorMessages: string[] = [];
+        if (!hasCapitalLetter) errorMessages.push("Password must contain at least one capital letter.");
+        if (!hasNumber) errorMessages.push("Password must contain at least one number.");
+        if (!hasSpecialCharacter) errorMessages.push("Password must contain at least one special character.");
+
+        errorElement.innerText = errorMessages.join(" ");
+        isValid = false;
     } else {
         errorElement.innerText = "";
-        return true; 
     }
+
+    return isValid;
 }
 
 // Create User Object
@@ -104,6 +119,11 @@ function addUser(event: Event): void {
     const userEmail = document.getElementById('user-mail') as HTMLInputElement;
     const userBirthDate = document.getElementById('user-birth-date') as HTMLInputElement;
     const userPassword = document.getElementById('user-password') as HTMLInputElement;
+
+    if (!userName || !userEmail || !userBirthDate || !userPassword) {
+        alert("Form elements missing.");
+        return;
+    }
 
     const nameValid = nameError(userName);
     const emailValid = emailError(userEmail);

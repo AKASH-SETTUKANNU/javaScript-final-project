@@ -1,6 +1,19 @@
-// Rename CustomEvent to EventDetails to avoid conflict with built-in CustomEvent
+// Define interfaces
+interface EventItem {
+    name: string;
+    icon: string;
+    eventCategory: string;
+    eventStatus?: string;
+    eventDate?: string;
+    eventDescription?: string;
+}
+
+
+
+///to add data to form
 interface EventDetails {
     id: string;
+    eventName:string;
     eventCategory: string;
     eventStatus: string;
     eventDate: string;
@@ -15,16 +28,16 @@ interface User {
     events?: EventDetails[];
 }
 
-// Get menu elements
-let menu = document.querySelector('menu') as HTMLElement;
-let menuIcon = document.querySelector('#menu-icon') as HTMLElement;
-let addEventArea = document.getElementById("event-add-block") as HTMLElement;
-let notificationArea = document.getElementById("notification-display") as HTMLElement;
-let logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
+// Get references to DOM elements
+const menu = document.querySelector('menu') as HTMLElement;
+const menuIcon = document.querySelector('#menu-icon') as HTMLElement;
+const addEventArea = document.getElementById("event-add-block") as HTMLElement;
+const notificationArea = document.getElementById("notification-display") as HTMLElement;
+const logoutArea = document.getElementById("profile-edit-area") as HTMLElement;
 
 // Define form element and error elements
 const form = document.querySelector('.event-form') as HTMLFormElement;
-const popupeventName = document.getElementById("event-name") as HTMLInputElement;
+const popupeventName = document.getElementById("event-namea") as HTMLInputElement;
 const popupeventDate = document.getElementById("event-date") as HTMLInputElement;
 const popupeventDescription = document.getElementById("event-description") as HTMLTextAreaElement;
 const popupeventStatus = document.getElementById("event-status") as HTMLSelectElement;
@@ -38,26 +51,26 @@ const popupdescriptionError = document.getElementById("description-error") as HT
 const popupstatusError = document.getElementById("status-error") as HTMLElement;
 const popupcategoryError = document.getElementById("category-error") as HTMLElement;
 
+
 // Variable to store the ID of the event being edited
 let eventToEditId: string | null = null;
 
-// Function to toggle menu display
+// Toggle menu display
 function menubarDisplay(): void {
     if (menu.style.display === 'none' || menu.style.display === '') {
         menu.style.display = 'block';
         addEventArea.style.display = 'none';
-        notificationArea.style.display = 'none'; 
-        logoutArea.style.display = 'none'; 
+        notificationArea.style.display = 'none';
+        logoutArea.style.display = 'none';
     } else {
-        menu.style.display = 'none'; 
+        menu.style.display = 'none';
     }
 }
 
-// Function to toggle add event display
+// Toggle add event area display
 function addEvent(): void {
     window.location.href = "../events/events.html";
 }
-
 // Function to toggle notification display
 function displayNotification(): void {
     if (notificationArea.style.display === 'none' || notificationArea.style.display === '') {
@@ -79,33 +92,132 @@ function displayLogout(): void {
         logoutArea.style.display = 'none'; 
     }
 }
-// Load and display user profile details
-function loadUserProfile(): void {
-    const allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
-    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+/////////////////////////////////////////////////////////////////////////////////
+// Variable to keep track of the event being edited
+let eventToEditName: string | null = null;
 
-    if (loggedInUserEmail) {
-        const user = allUsersJson.find((user: any) => user.userEmail === loggedInUserEmail);
-        console.log("Logged In User Email:", loggedInUserEmail);
-        console.log("User Object:", user);
+// Add or update an event
+function addEventItem(): void {
+    if (nameCheck()) {
+        const inputItem = document.getElementById("input-item") as HTMLInputElement;
+        const inputValue = inputItem.value.trim();
 
-        const profileName = document.getElementById("profile-name") as HTMLElement;
-        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
+        let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
 
-        if (user) {
-            if (profileName && dateOfBirth) {
-                profileName.innerText = user.userName;
-                dateOfBirth.innerText = user.userBirthDate;
-            } else {
-                console.error("Profile elements not found.");
+        if (eventToEditName) {
+            const eventToEdit = allEvents.find((event) => event.name === eventToEditName);
+            if (eventToEdit) {
+                eventToEdit.name = inputValue;
             }
+            eventToEditName = null;
         } else {
-            console.error("User not found in localStorage.");
+            const newEvent: EventItem = {
+                name: inputValue,
+                icon: 'fa-solid fa-holly-berry',
+                eventCategory: 'general',
+            };
+            allEvents.push(newEvent);
         }
-    } else {
-        console.error("Logged in user email not found.");
+
+        localStorage.setItem("EventItems", JSON.stringify(allEvents));
+        inputItem.value = "";
+        displayEvents();
     }
 }
+
+/// Display events in the list
+function displayEvents(): void {
+    const eventsList = document.getElementById("events-list") as HTMLUListElement;
+    let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+
+    if (eventsList) {
+       
+
+        allEvents.forEach((event) => {
+            const listItem = document.createElement('li');
+            listItem.innerHTML = `
+                <div class="icon">
+                    <i class="${event.icon}"></i>
+                </div>
+                <span>${event.name}</span>
+                <button class="delete-btn" data-event-name="${event.name}">Delete</button>
+                <button class="edit-btn" data-event-name="${event.name}">Edit</button>
+            `;
+            eventsList.appendChild(listItem);
+        });
+
+        // Add event listeners for delete and edit buttons
+        eventsList.addEventListener('click', (e) => {
+            const target = e.target as HTMLElement;
+            if (target.classList.contains('delete-btn')) {
+                const eventName = target.getAttribute('data-event-name');
+                if (eventName) {
+                    deleteEvent(eventName);
+                }
+            } else if (target.classList.contains('edit-btn')) {
+                const eventName = target.getAttribute('data-event-name');
+                if (eventName) {
+                    editEvent(eventName);
+                }
+            }
+        });
+    }
+}
+
+// Delete an event
+function deleteEvent(name: string): void {
+    const eventsList = document.getElementById("events-list") as HTMLUListElement;
+
+    if (eventsList) {
+        const listItems = eventsList.getElementsByTagName('li');
+        for (let i = 0; i < listItems.length; i++) {
+            const listItem = listItems[i];
+            const span = listItem.querySelector('span');
+            const button = listItem.querySelector('.delete-btn') as HTMLButtonElement;
+
+            if (span && button && button.getAttribute('data-event-name') === name) {
+                // Remove the <li> element from the DOM
+                listItem.remove();
+                break;
+            }
+        }
+
+        // Update localStorage after removing the item from the DOM
+        let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+        const updatedEvents = allEvents.filter((event) => event.name !== name);
+        localStorage.setItem("EventItems", JSON.stringify(updatedEvents));
+    }
+}
+
+// Edit an event
+function editEvent(name: string): void {
+    let allEvents: EventItem[] = JSON.parse(localStorage.getItem("EventItems") || "[]");
+    const eventToEdit = allEvents.find((event) => event.name === name);
+
+    if (eventToEdit) {
+        const inputItem = document.getElementById("input-item") as HTMLInputElement;
+        if (inputItem) {
+            inputItem.value = eventToEdit.name;
+        }
+
+        eventToEditName = name;
+        addEvent();
+    }
+}
+
+
+
+
+// Check if input item name is valid
+function nameCheck(): boolean {
+    const inputItem = document.getElementById("input-item") as HTMLInputElement;
+    return inputItem.value.trim() !== "";
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
 // Function to create a birthday card
 function createBirthdayCard(event: EventDetails): void {
     let birthdayLists = document.getElementById("birthday-lists") as HTMLElement;
@@ -117,9 +229,10 @@ function createBirthdayCard(event: EventDetails): void {
               </div>
               <div class="birthday-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                <h5>${event.eventName}</h5>
                 <h5>${event.eventDate}</h5>
                 <p class="truncate">${event.eventDescription}</p>
-                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
+                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -136,15 +249,16 @@ function createWeddingCard(event: EventDetails): void {
     let weddingLists = document.getElementById("wedding-lists") as HTMLElement;
     if (weddingLists) {
         let weddingListHTML = `
-            <div class="wedding-list" id="${event.id} "onclick="displayDetails('${event.id}')">
+            <div class="wedding-list" id="${event.id}" >
               <div class="wedding-image">
                 <img src="../images/marrage.jpg" alt="wedding" />
               </div>
               <div class="wedding-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                <h5>${event.eventName}</h5>
                 <h5>${event.eventDate}</h5>
-              <p class="truncate">${event.eventDescription}</p>
-                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
+                <p class="truncate">${event.eventDescription}</p>
+                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                 <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -156,20 +270,22 @@ function createWeddingCard(event: EventDetails): void {
     }
 }
 
+
 // Function to create a conference card
 function createConferenceCard(event: EventDetails): void {
     let conferenceLists = document.getElementById("conference-lists") as HTMLElement;
     if (conferenceLists) {
         let conferenceListHTML = `
-           <div class="conferences-list" id="${event.id}" onclick="displayDetails('${event.id}')">
+           <div class="conferences-list" id="${event.id}" >
               <div class="conference-image">
                 <img src="../images/conference.avif" alt="conference" />
               </div>
               <div class="conference-detail">
                 <h5 id="${event.eventStatus}">${event.eventStatus}</h5>
+                  <h5>${event.eventName}</h5>
                 <h5>${event.eventDate}</h5>
                 <p class="truncate">${event.eventDescription}</p>
-                <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
+                 <i class="fa-solid fa-info" onclick="displayDetails('${event.id}')" id="info-icon"></i>
                <i class="fa-solid fa-edit" onclick="showEditForm('${event.id}')" id="edit-icon"></i>
                 <i class="fa-solid fa-trash" onclick="deleteCard('${event.id}')" id="delete-icon"></i>
               </div>
@@ -180,6 +296,7 @@ function createConferenceCard(event: EventDetails): void {
         console.error('Element with ID "conference-lists" not found.');
     }
 }
+
 function displayDetails(eventId: string): void {
     const backdrop = document.getElementById("backdrop") as HTMLDivElement;
     const detailImage = document.getElementById("detail-img") as HTMLImageElement;
@@ -208,8 +325,8 @@ function displayDetails(eventId: string): void {
             if (event) {
                 // Populate the details
                 detailImage.src = getEventImageByCategory(event.eventCategory);
-                detailName.textContent = event.eventCategory;
-                detailDate.textContent = `Event Date: ${event.eventDate}`;
+                detailName.textContent = event.eventName;
+                detailDate.textContent = `Event Date:${event.eventDate}`;
                 detailDescription.textContent = event.eventDescription;
                 detailCategory.textContent = `Event Category: ${event.eventCategory}`;
                 
@@ -232,6 +349,7 @@ function displayDetails(eventId: string): void {
         console.error("Logged in user email not found.");
     }
 }
+
 
 
 
@@ -266,6 +384,7 @@ function closeDetail(): void {
 }
 
 
+// Function to delete a card
 // Function to delete a card and its data from localStorage
 function deleteCard(eventId: string): void {
     // Remove the card from the DOM
@@ -294,39 +413,50 @@ function deleteCard(eventId: string): void {
         console.error("Logged in user email not found.");
     }
 }
-
-
+//////////////////////////////////////////////////////////////////////////////
 // Show the form for editing an event
 function showEditForm(eventId: string): void {
-    form.style.display = 'flex'; 
-    const usersJson = localStorage.getItem("users");
-    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
-    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    form.style.display = 'flex';
 
-    if (loggedInUserEmail) {
-        const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
-        if (user && user.events) {
-            const event = user.events.find(e => e.id === eventId);
-            console.log('Event ID:', eventId);
-            console.log('Events:', user.events);
-            if (event) {
-                // Populate the form with existing event data
-                popupeventName.value = event.eventCategory;
-                popupeventDate.value = event.eventDate;
-                popupeventDescription.value = event.eventDescription;
-                popupeventStatus.value = event.eventStatus;
-                popupeventCategory.value = event.eventCategory;
-                eventToEditId = eventId; // Set the ID of the event being edited
-                // Display the form
-                addEventArea.style.display = 'block';
-            } else {
-                console.error("Event not found.");
-            }
+    const usersJson = localStorage.getItem("users");
+    if (!usersJson) {
+        console.error("Users data not found in local storage.");
+        return;
+    }
+
+    const allUsersJson: User[] = JSON.parse(usersJson);
+
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+    if (!loggedInUserEmail) {
+        console.error("Logged in user email not found.");
+        return;
+    }
+
+    const user = allUsersJson.find(user => user.userEmail === loggedInUserEmail);
+    if (!user) {
+        console.error("User not found.");
+        return;
+    }
+
+    if (user.events) {
+        const event = user.events.find(e => e.id === eventId);
+        if (event) {
+       
+                popupeventName.value = event.eventName ?? "";
+                
+            
+            popupeventDate.value = event.eventDate ?? "";
+            popupeventDescription.value = event.eventDescription ?? "";
+            popupeventStatus.value = event.eventStatus ?? "";
+            popupeventCategory.value = event.eventCategory ?? "";
+
+            // Store the event ID for further use
+            eventToEditId = eventId;
         } else {
-            console.error("User or events not found.");
+            console.error("Event not found.");
         }
     } else {
-        console.error("Logged in user email not found.");
+        console.error("User does not have any events.");
     }
 }
 
@@ -352,6 +482,7 @@ function updateEvent(event: Event): void {
                 if (eventIndex > -1) {
                     user.events[eventIndex] = {
                         id: eventToEditId!,
+                        eventName:popupeventName.value.trim(),
                         eventCategory: popupeventCategory.value.trim(),
                         eventStatus: popupeventStatus.value.trim(),
                         eventDate: popupeventDate.value.trim(),
@@ -371,7 +502,8 @@ function updateEvent(event: Event): void {
                        
                         form.style.display = 'none'; 
                         popupsuccessMessage.innerHTML = "";
-                    }, 3000);
+                        window.location.reload();
+                    }, 2000);
                 } else {
                     console.error("Event not found.");
                 }
@@ -384,48 +516,42 @@ function updateEvent(event: Event): void {
     } else {
         setTimeout(() => {
             popupcategoryError.innerHTML = "Enter all required fields.";
-        }, 3000);
+        }, 2000);
     }
 }
 
 // Attach event handler to the form
 form?.addEventListener('submit', updateEvent);
-
-// Load events for the logged-in user from localStorage and create event cards
+///////////////////////////////////////////////////////////////////////////////////////////
+// Load user events
 function loadUserEvents(): void {
-    const usersJson = localStorage.getItem("users");
-    const allUsersJson: User[] = usersJson ? JSON.parse(usersJson) : [];
-    const loggedInUserEmail: string | null = localStorage.getItem("loggedInUserEmail");
+    const allUsersJson: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
 
-    if (loggedInUserEmail) {
-        const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
+    const user = allUsersJson.find((user) => user.userEmail === loggedInUserEmail);
 
-        if (user && user.events) {
-            user.events.forEach(event => {
-                switch (event.eventCategory) {
-                    case 'birthday':
-                        createBirthdayCard(event);
-                        break;
-                    case 'wedding':
-                        createWeddingCard(event);
-                        break;
-                    case 'conference':
-                        createConferenceCard(event);
-                        break;
-                    default:
-                        console.error(`Unknown event category: ${event.eventCategory}`);
-                }
-            });
-        } else {
-            console.error("User or events not found.");
-        }
+    if (user && user.events) {
+        user.events.forEach((event) => {
+            switch (event.eventCategory.toLowerCase()) {
+                case 'birthday':
+                    createBirthdayCard(event);
+                    break;
+                case 'wedding':
+                    createWeddingCard(event);
+                    break;
+                case 'conference':
+                    createConferenceCard(event);
+                    break;
+                default:
+                    console.warn(`Unknown event category: ${event.eventCategory}`);
+                    break;
+            }
+        });
     } else {
-        console.error("Logged in user email not found.");
+        console.error("User not found or no events available.");
     }
 }
 
-// Call this function to load events on page load
-window.onload = loadUserEvents;
 
 // Validation functions for form
 function popupnameCheck(): boolean {
@@ -477,8 +603,38 @@ function popupcategoryCheck(): boolean {
         return true;
     }
 }
-// Call functions on page load
-document.addEventListener("DOMContentLoaded", () => {
+
+// Load and display user profile details
+function loadUserProfile(): void {
+    const allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
+    const loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
+
+    if (loggedInUserEmail) {
+        const user = allUsersJson.find((user: any) => user.userEmail === loggedInUserEmail);
+        console.log("Logged In User Email:", loggedInUserEmail);
+        console.log("User Object:", user);
+
+        const profileName = document.getElementById("profile-name") as HTMLElement;
+        const dateOfBirth = document.getElementById("profile-dateOfBirth") as HTMLElement;
+
+        if (user) {
+            if (profileName && dateOfBirth) {
+                profileName.innerText = user.userName;
+                dateOfBirth.innerText = user.userBirthDate;
+            } else {
+                console.error("Profile elements not found.");
+            }
+        } else {
+            console.error("User not found in localStorage.");
+        }
+    } else {
+        console.error("Logged in user email not found.");
+    }
+}
+
+// Initialize the application on DOM content loaded
+document.addEventListener('DOMContentLoaded', () => {
     loadUserProfile();
-  
+    loadUserEvents();
+    displayEvents();
 });
