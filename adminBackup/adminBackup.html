@@ -135,18 +135,27 @@
               </div>
               <div class="backup-restore-container">
                 <button id="backup-btn">Backup Data</button>
-                <input type="file" id="restore-file" accept=".json" />
+                <div class="file-input-container">
+                  <label class="file-input-label">
+                    Choose file
+                    <input type="file" class="file-input" id="file-input" />
+                  </label>
+                  <span class="file-name" id="file-name">No file chosen</span>
+                </div>
                 <button id="restore-btn">Restore</button>
-
-                <div class="displaBackUpHistory">
-                  <h2>Backup History</h2>
-                  <div class="backup-item"></div>
-                </div>
-                <div class="displayRestoreHistory">
-                  <h2>Restore History</h2>
-                  <div class="backup-item"></div>
-                </div>
               </div>
+
+              <div class="displaBackUpHistory">
+                <h2>Backup History</h2>
+                <div class="backup-item"></div>
+              </div>
+              <button id="clear-backup-history">Clear Backup History</button>
+              <div class="displayRestoreHistory">
+                <h2>Restore History</h2>
+                <div class="backup-item"></div>
+              </div>
+              
+              <button id="clear-restore-history">Clear Restore History</button>
             </div>
           </section>
         </main>

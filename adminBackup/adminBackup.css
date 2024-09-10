@@ -11,7 +11,7 @@ body {
 section {
   display: flex;
   justify-content: center;
- border-radius: 5px;
+  border-radius: 5px;
   background-color: rgb(228, 229, 230);
   background-image: url("../images/background.avif");
   background-size: cover;
@@ -63,10 +63,13 @@ menu {
 }
 
 main {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   grid-area: main;
   background-color: bisque;
+  overflow-y: auto;
 }
+
 .menu-icon {
   display: none;
   justify-content: center;
@@ -76,7 +79,7 @@ main {
   border: 2px solid rgb(247, 160, 119);
   border-radius: 5px;
 }
-/* menu area design */
+
 .menu-list {
   list-style-type: none;
   display: flex;
@@ -89,6 +92,7 @@ main {
 menu nav {
   width: 100%;
 }
+
 .menu-list li:hover {
   background-color: rgb(116, 176, 253);
 }
@@ -118,6 +122,7 @@ menu ul li a {
   justify-content: center;
   align-items: center;
 }
+
 .profile-icon {
   display: block;
   height: 40px;
@@ -140,7 +145,6 @@ menu ul li a {
   gap: 20px;
 }
 
-/* profile pic design area */
 .profile {
   display: flex;
   flex-direction: row;
@@ -156,12 +160,14 @@ menu ul li a {
   align-items: center;
   padding: 10px;
 }
+
 .logo img {
   height: 75px;
   width: 500px;
   margin-left: 150px;
   border-radius: 5px;
 }
+
 .profile-details {
   display: flex;
   flex-direction: column;
@@ -182,13 +188,6 @@ menu ul li a {
   color: rgb(185, 184, 184);
 }
 
-#search-icon {
-  position: absolute;
-  margin-top: 12px;
-  margin-left: 16px;
-  color: rgb(185, 184, 184);
-}
-
 .event-add-btn button {
   height: 30px;
   aspect-ratio: 1/1;
@@ -200,7 +199,6 @@ menu ul li a {
   border: 1px solid rgba(252, 124, 78, 0.411);
 }
 
-/* event add block display area */
 .event-add-block {
   position: absolute;
   margin-top: 320px;
@@ -210,12 +208,14 @@ menu ul li a {
   background-color: rgb(250, 185, 124);
   display: none;
 }
+
 .event-add-block ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
+
 .event-add-block ul li {
   display: flex;
   padding: 8px;
@@ -226,7 +226,6 @@ menu ul li a {
   border-radius: 5px;
 }
 
-/* notification display function */
 .notification-display {
   position: absolute;
   display: none;
@@ -237,6 +236,7 @@ menu ul li a {
   border: 2px solid rgb(250, 149, 113);
   padding: 10px;
 }
+
 .notification {
   display: flex;
   flex-direction: row;
@@ -256,19 +256,23 @@ menu ul li a {
 .notification-content p {
   margin-bottom: 10px;
 }
+
 .notification-message {
   display: flex;
   overflow: hidden;
 }
+
 .notification-profile {
   display: flex;
 }
+
 .notification-profile img {
   height: 30px;
   width: 30px;
   margin-top: 5px;
   border-radius: 50px;
 }
+
 .notification-bell {
   display: flex;
   border: 1px solid rgb(212, 210, 210);
@@ -289,9 +293,7 @@ menu ul li a {
   margin-left: 8px;
   margin-bottom: 38px;
 }
-/* ---------------------------------------- */
 
-/* profile edit Area */
 .profile-edit-area {
   position: absolute;
   display: none;
@@ -323,6 +325,7 @@ menu ul li a {
   border: 1px solid blue;
   color: white;
 }
+
 #logout-btn a {
   text-decoration: none;
   color: white;
@@ -348,97 +351,174 @@ menu ul li a {
 .icon i {
   color: black;
 }
-/* General Container Styling */
+
+.file-input {
+  display: none;
+}
+
+/* Custom file input button */
+.file-input-label {
+  display: inline-block;
+  padding: 5px 2px;
+  font-size: 16px;
+  color: #131111;
+  background-color: #d6ae7a;
+  border-radius: 5px;
+  border: 1px solid #8c8d8f;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.file-input-label:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.file-input-label:active {
+  background-color: #004494;
+  border-color: #004494;
+}
+
+/* File input styling */
+.file-input-label input[type="file"] {
+  display: none;
+}
+
+
+.file-input-text {
+  display: inline-block;
+  padding: 10px 15px;
+  font-size: 14px;
+  color: #333;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.file-input-text:hover {
+  border-color: #007bff;
+  background-color: #e9f5ff;
+}
+
+.file-input-text:focus {
+  border-color: #0056b3;
+  background-color: #e9f5ff;
+  outline: none;
+}
+
+/* Container for file input and file name */
+.file-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Style for file name text */
+.file-name {
+  flex: 1;
+  font-size: 14px;
+  color: #333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .backup-restore-main-container {
-  background-color: rgb(247, 215, 171);
+  background-color: blanchedalmond;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-  height: 100%;
-  width: 100%;
-  border-radius: 3px;
-}
-
-/* Header Styling */
-#backup-heading {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: rgb(233, 177, 104);
-  padding: 30px;
+  overflow-y: auto;
 }
 
-/* Backup and Restore Section */
+#backup-heading {
+  margin-bottom: 20px;
+}
+
+#backup-heading h1 {
+  font-size: 24px;
+  color: #333;
+}
+
 .backup-restore-container {
-  margin: 2px auto;
-  text-align: center;
-  width: 97%;
-  height: 40%;
-  
-  border-radius:15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.backup-restore-container button {
+#backup-btn,
+#restore-btn {
   padding: 10px 20px;
   font-size: 16px;
+  margin: 5px;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin: 10px;
-}
-
-#backup-btn {
-  background-color: #4CAF50;
+  border-radius: 5px;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
 }
 
-/* Backup History Styling */
-.displaBackUpHistory {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  background-color: #d3e9d4;
-  overflow-y: scroll;
-  padding: 10px;
-  box-sizing: border-box;
+#backup-btn:hover,
+#restore-btn:hover {
+  background-color: #0056b3;
 }
-.displayRestoreHistory{
-  display: flex;
-  flex-direction: column;
+
+.displaBackUpHistory,
+.displayRestoreHistory {
   width: 100%;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-  background-color: #d3e9d4;
-  overflow-y: scroll;
-  padding: 10px;
-  box-sizing: border-box;
+  max-width: 600px;
+  height: 50%;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.displaBackUpHistory h2,
+.displayRestoreHistory h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+  color: #333;
 }
 
 .backup-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   padding: 10px;
-  background-color: #ffffff;
-  border-radius: 4px;
-  margin-bottom: 10px; /* Add margin to space out items */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 90%;
+  border-bottom: 1px solid #ddd;
 }
 
-/* Restore Button (if needed) */
-#restore-btn {
-  background-color: #2196F3;
-  color: white;
+.backup-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #555;
 }
-#icone{
+
+#clear-backup-history,
+#clear-restore-history {
+  padding: 8px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: white;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#clear-backup-history:hover,
+#clear-restore-history:hover {
+  background-color: #c82333;
+}
+
+#icone {
   margin-right: 42px;
 }
-/* max-width 800 media query */
 
 @media only screen and (max-width: 800px) {
   menu {
@@ -472,9 +552,9 @@ menu ul li a {
   }
 
   main {
-    display: grid;
-    grid-area: main;
-    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
   }
 
   .menu-icon {
@@ -485,6 +565,7 @@ menu ul li a {
     padding: 7px;
     border-radius: 5px;
   }
+
   .logo img {
     margin-left: 0px;
     border-radius: 5px;
