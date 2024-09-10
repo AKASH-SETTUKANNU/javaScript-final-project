@@ -123,7 +123,7 @@ function addUser(event) {
         allUsersJson.push(newUser); // Push `CreateUser` instance
         localStorage.setItem("users", JSON.stringify(allUsersJson.map(function (user) { return user.toPlainObject(); })));
         alert("Account created...!");
-        window.location.href = "../login/login.html";
+        window.location.href = "../index/index.html";
     }
     else {
         alert("Please correct the errors in the form.");
