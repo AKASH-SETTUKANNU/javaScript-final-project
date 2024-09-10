@@ -137,7 +137,7 @@ function addUser(event: Event): void {
         allUsersJson.push(newUser); // Push `CreateUser` instance
         localStorage.setItem("users", JSON.stringify(allUsersJson.map(user => user.toPlainObject())));
         alert("Account created...!");
-        window.location.href = "../index/index.html";
+        window.location.href = "../index.html";
     } else {
         alert("Please correct the errors in the form.");
     }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <link rel="stylesheet" href="./signup.css">
-</head>
+<script defer src="signup.bundle.js"></script></head>
 <body>
     <div class="background-image"></div>
     <main>
@@ -17,19 +17,19 @@
 
                 <div class="input-element">
                     <label for="user-name">Name:</label>
-                    <input type="text" id="user-name" class="user-name"/>
+                    <input type="text" id="user-name" class="user-name" onblur="nameError(this)"/>
                     <p id="name-error"></p> 
                 </div>
 
                 <div class="input-element">
                     <label for="user-mail">Email:</label>
-                    <input type="email" id="user-mail" class="user-mail" />
+                    <input type="email" id="user-mail" class="user-mail" onblur="emailError(this)"/>
                     <p id="email-error"></p> 
                 </div>
 
                 <div class="input-element">
                     <label for="user-birth-date">Date of Birth:</label>
-                    <input type="date" id="user-birth-date" class="user-birth-date" />
+                    <input type="date" id="user-birth-date" class="user-birth-date" onblur="dateError(this)"/>
                     <p id="date-error"></p> 
                 </div>
 
@@ -45,11 +45,11 @@
                 </div>
 
                 <div class="signup-btn">
-                    <button type="submit">Signup</button>
+                    <button type="submit" onclick="addUser(event)">Signup</button>
                 </div>
 
                 <div class="input-element">
-                    <p>Have an account? <a href="../index.html">Login</a></p>
+                    <p>Have an account? <a href="../login/login.html">Login</a></p>
                 </div>
                 
             </form>
