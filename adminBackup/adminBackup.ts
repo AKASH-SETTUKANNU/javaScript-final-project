@@ -59,7 +59,7 @@ function loadUserProfile(): void {
     }
 }
 
-// Function to merge data (if necessary)
+
 function mergeData(existingValue: string, newValue: string): string {
     try {
         const existingData = JSON.parse(existingValue);

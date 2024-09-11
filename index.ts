@@ -67,10 +67,10 @@ function loginUser(event: Event): void {
             localStorage.setItem("loggedInUserEmail", emailValue);
 
             if (user.userRole === 'admin') {
-                window.location.href = "../adminIndex/adminIndex.html";
+                window.location.href = "./adminIndex/adminIndex.html";
             } else {
                 alert(`Welcome, ${name}!`);
-                window.location.href = "../guestIndex/guestIndex.html";
+                window.location.href = "./guestIndex/guestIndex.html";
             }
         } else {
             alert("Invalid email or password.");

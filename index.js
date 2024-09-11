@@ -62,11 +62,11 @@ function loginUser(event) {
             var name_1 = user.userName;
             localStorage.setItem("loggedInUserEmail", emailValue_1);
             if (user.userRole === 'admin') {
-                window.location.href = "../adminIndex/adminIndex.html";
+                window.location.href = "./adminIndex/adminIndex.html";
             }
             else {
                 alert("Welcome, ".concat(name_1, "!"));
-                window.location.href = "../guestIndex/guestIndex.html";
+                window.location.href = "./guestIndex/guestIndex.html";
             }
         }
         else {
