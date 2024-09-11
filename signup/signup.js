@@ -133,7 +133,7 @@ function addUser(event) {
 window.addEventListener('load', function () {
     var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
     if (allUsersJson.length === 0) {
-        var adminUser = new CreateUser('Admin', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
+        var adminUser = new CreateUser('Akash', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
         localStorage.setItem("users", JSON.stringify([adminUser.toPlainObject()]));
     }
     // Attach event listeners

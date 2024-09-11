@@ -18,8 +18,64 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-var _a, _b, _c, _d, _e;
-// Function to toggle menu display
+var _a;
+// Function to save backup history
+function saveBackupHistory(fileName) {
+    var backupHistory = JSON.parse(localStorage.getItem('backupHistory') || "[]");
+    var isDuplicate = backupHistory.some(function (entry) { return entry.fileName === fileName; });
+    if (!isDuplicate) {
+        backupHistory.push({ timestamp: new Date().toLocaleString(), fileName: fileName });
+        localStorage.setItem('backupHistory', JSON.stringify(backupHistory));
+    }
+}
+// Function to save restore history
+function saveRestoreHistory(fileName) {
+    var restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
+    var isDuplicate = restoreHistory.some(function (entry) { return entry.fileName === fileName; });
+    if (!isDuplicate) {
+        restoreHistory.push({ timestamp: new Date().toLocaleString(), fileName: fileName });
+        localStorage.setItem('restoreHistory', JSON.stringify(restoreHistory));
+    }
+}
+// Function to display backup history
+function displayBackupHistory() {
+    var historyContainer = document.querySelector('.displayBackupHistory .backup-history-items');
+    var backupHistory = JSON.parse(localStorage.getItem('backupHistory') || "[]");
+    if (historyContainer) {
+        historyContainer.innerHTML = '';
+        backupHistory.forEach(function (backup) {
+            var backupDiv = document.createElement('div');
+            backupDiv.className = 'backup-item';
+            backupDiv.innerHTML = "<p>Time: ".concat(backup.timestamp, " File: <a href=\"").concat(backup.fileName, "\" download>").concat(backup.fileName, "</a></p>");
+            historyContainer.appendChild(backupDiv);
+        });
+    }
+}
+// Function to display restore history
+function displayRestoreHistory() {
+    var restoreHistoryContainer = document.querySelector('.displayRestoreHistory .restore-history-items');
+    var restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
+    if (restoreHistoryContainer) {
+        restoreHistoryContainer.innerHTML = '';
+        restoreHistory.forEach(function (restore) {
+            var restoreDiv = document.createElement('div');
+            restoreDiv.className = 'restore-item';
+            restoreDiv.innerHTML = "<p>Time: ".concat(restore.timestamp, " Restored File: ").concat(restore.fileName, "</p>");
+            restoreHistoryContainer.appendChild(restoreDiv);
+        });
+    }
+}
+// Function to clear backup history
+function clearBackupHistory() {
+    localStorage.removeItem('backupHistory');
+    displayBackupHistory(); // Refresh display
+}
+// Function to clear restore history
+function clearRestoreHistory() {
+    localStorage.removeItem('restoreHistory');
+    displayRestoreHistory(); // Refresh display
+}
+// Function to handle menu display
 function menubarDisplay() {
     var menu = document.querySelector('menu');
     var addEventArea = document.getElementById("event-add-block");
@@ -40,25 +96,25 @@ function menubarDisplay() {
         }
     }
 }
-// Function to navigate to add event page
+// Function to handle adding events
 function addEvent() {
     window.location.href = "../adminEvents/events.html";
 }
-// Function to toggle notification display
+// Function to display notifications
 function displayNotification() {
     var notificationArea = document.getElementById("notification-display");
     if (notificationArea) {
         notificationArea.style.display = (notificationArea.style.display === 'none' || notificationArea.style.display === '') ? 'block' : 'none';
     }
 }
-// Function to toggle logout display
+// Function to display logout area
 function displayLogout() {
     var logoutArea = document.getElementById("profile-edit-area");
     if (logoutArea) {
         logoutArea.style.display = (logoutArea.style.display === 'none' || logoutArea.style.display === '') ? 'flex' : 'none';
     }
 }
-// Load and display user profile details
+// Function to load user profile information
 function loadUserProfile() {
     var allUsersJson = JSON.parse(localStorage.getItem("users") || "[]");
     var loggedInUserEmail = localStorage.getItem("loggedInUserEmail");
@@ -78,7 +134,7 @@ function loadUserProfile() {
         console.error("Logged in user email not found.");
     }
 }
-// Function to merge data (if necessary)
+// Function to merge data
 function mergeData(existingValue, newValue) {
     try {
         var existingData = JSON.parse(existingValue);
@@ -90,96 +146,113 @@ function mergeData(existingValue, newValue) {
             return JSON.stringify(__assign(__assign({}, existingData), newData));
         }
         else {
-            return newValue; // No merge needed for non-array, non-object data
+            return newValue;
         }
     }
     catch (error) {
         console.error("Error merging data:", error);
-        return newValue; // Fallback to newValue in case of error
+        return newValue;
     }
 }
-// Function to save a new backup entry
-function saveBackupHistory(fileName) {
-    var backupHistory = JSON.parse(localStorage.getItem('backupHistory') || "[]");
-    var isDuplicate = backupHistory.some(function (entry) { return entry.fileName === fileName; });
-    if (!isDuplicate) {
-        backupHistory.push({ timestamp: new Date().toLocaleString(), fileName: fileName });
-        localStorage.setItem('backupHistory', JSON.stringify(backupHistory));
-    }
-}
-// Function to save a new restore entry
-function saveRestoreHistory(fileName) {
-    var restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
-    var isDuplicate = restoreHistory.some(function (entry) { return entry.fileName === fileName; });
-    if (!isDuplicate) {
-        restoreHistory.push({ timestamp: new Date().toLocaleString(), fileName: fileName });
-        localStorage.setItem('restoreHistory', JSON.stringify(restoreHistory));
-    }
-}
-// Function to display backup history
-function displayBackupHistory() {
-    var historyContainer = document.querySelector('.displaBackUpHistory');
-    var backupHistory = JSON.parse(localStorage.getItem('backupHistory') || "[]");
-    if (historyContainer) {
-        historyContainer.innerHTML = '<h2>Backup History</h2>';
-        backupHistory.forEach(function (backup) {
-            var backupDiv = document.createElement('div');
-            backupDiv.className = 'backup-item';
-            backupDiv.innerHTML = "<p>Time: ".concat(backup.timestamp, " File: <a href=\"").concat(backup.fileName, "\" download>").concat(backup.fileName, "</a></p>");
-            historyContainer.appendChild(backupDiv);
-        });
-    }
-}
-// Function to display restore history
-function displayRestoreHistory() {
-    var restoreHistoryContainer = document.querySelector('.displayRestoreHistory');
-    var restoreHistory = JSON.parse(localStorage.getItem('restoreHistory') || "[]");
-    if (restoreHistoryContainer) {
-        restoreHistoryContainer.innerHTML = '<h2>Restore History</h2>';
-        restoreHistory.forEach(function (restore) {
-            var restoreDiv = document.createElement('div');
-            restoreDiv.className = 'backup-item';
-            restoreDiv.innerHTML = "<p>Time: ".concat(restore.timestamp, " Restored File: ").concat(restore.fileName, "</p>");
-            restoreHistoryContainer.appendChild(restoreDiv);
-        });
-    }
-}
-// Function to handle file upload and restore data
+// Function to restore data from file
 function restoreData(file) {
     var reader = new FileReader();
+    var restoreSuccessMessage = document.getElementById("restore-success-message");
+    var restoreErrorMessage = document.getElementById("restore-error-message");
+    if (restoreSuccessMessage) {
+        restoreSuccessMessage.textContent = '';
+    }
+    if (restoreErrorMessage) {
+        restoreErrorMessage.textContent = '';
+    }
     reader.onload = function (event) {
         var _a;
         try {
-            var jsonData = JSON.parse((_a = event.target) === null || _a === void 0 ? void 0 : _a.result);
-            if (jsonData.localStorage) {
-                for (var _i = 0, _b = Object.entries(jsonData.localStorage); _i < _b.length; _i++) {
-                    var _c = _b[_i], key = _c[0], value = _c[1];
-                    var existingValue = localStorage.getItem(key);
-                    if (existingValue) {
-                        var mergedValue = mergeData(existingValue, value);
-                        localStorage.setItem(key, mergedValue);
-                    }
-                    else {
-                        localStorage.setItem(key, value);
-                    }
+            var fileContent = (_a = event.target) === null || _a === void 0 ? void 0 : _a.result;
+            if (fileContent) {
+                // Parse the file content as JSON
+                var parsedContent_1 = JSON.parse(fileContent);
+                // Iterate over the localStorage keys and update values
+                if (parsedContent_1.localStorage) {
+                    Object.keys(parsedContent_1.localStorage).forEach(function (key) {
+                        localStorage.setItem(key, parsedContent_1.localStorage[key]);
+                    });
+                }
+                var fileInputContainer = document.getElementById("file-input-container");
+                if (fileInputContainer && fileInputContainer.style.display === 'block') {
+                    fileInputContainer.style.display = 'none';
                 }
                 saveRestoreHistory(file.name);
-                displayBackupHistory();
                 displayRestoreHistory();
-                alert("Data restored successfully.");
-            }
-            else {
-                alert("Invalid file format.");
+                if (restoreSuccessMessage) {
+                    restoreSuccessMessage.textContent = 'Data restored successfully.';
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 3000);
+                }
             }
         }
         catch (error) {
-            console.error("Error reading or parsing file:", error);
-            alert("Error reading or parsing file.");
+            console.error("Error restoring data:", error);
+            if (restoreErrorMessage) {
+                restoreErrorMessage.textContent = 'Error restoring data. Please try again.';
+            }
+        }
+    };
+    reader.onerror = function () {
+        if (restoreErrorMessage) {
+            restoreErrorMessage.textContent = 'Error reading file. Please ensure it is a valid JSON file.';
         }
     };
     reader.readAsText(file);
 }
-// Backup function to include all local storage data
+// Event listener for the restore button
+var restoreBtn = document.getElementById("restore-btn");
+restoreBtn.addEventListener('click', function () {
+    var _a;
+    var fileInputContainer = document.getElementById("file-input-container");
+    if (fileInputContainer) {
+        fileInputContainer.style.display = fileInputContainer.style.display === 'none' ? 'block' : 'none';
+    }
+    var fileInput = document.getElementById("file-input");
+    if ((_a = fileInput === null || fileInput === void 0 ? void 0 : fileInput.files) === null || _a === void 0 ? void 0 : _a.length) {
+        var file = fileInput.files[0];
+        restoreData(file);
+    }
+    else {
+        var restoreErrorMessage = document.getElementById("restore-error-message");
+        if (restoreErrorMessage) {
+            restoreErrorMessage.textContent = 'Please upload a file to restore.';
+        }
+    }
+});
+// Handle file input change event
+var fileInput = document.getElementById("file-input");
+fileInput.addEventListener('change', function () {
+    var _a, _b;
+    var fileName = ((_b = (_a = fileInput.files) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.name) || 'No file chosen';
+    var fileNameSpan = document.getElementById("file-name");
+    if (fileNameSpan) {
+        fileNameSpan.textContent = fileName;
+    }
+    // Call disappearmessage when file is selected
+    disappearmessage();
+});
+// Function to display file area
+function displayFileArea() {
+    var restoreSuccessMessage = document.getElementById("restore-success-message");
+    var fileInputContainer = document.getElementById("file-input-container");
+    if (fileInputContainer) {
+        if (fileInputContainer.style.display === 'none') {
+            fileInputContainer.style.display = 'block';
+            if (restoreSuccessMessage) {
+                restoreSuccessMessage.textContent = '';
+            }
+        }
+    }
+}
+// Event listener for the backup button
+var backupBtn = document.getElementById("backup-btn");
 (_a = document.getElementById('backup-btn')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () {
     var allStorageData = {};
     for (var i = 0; i < localStorage.length; i++) {
@@ -221,44 +294,22 @@ function getLoggedInUserName() {
     }
     return null;
 }
-// Add event listener for restore button
-(_b = document.getElementById('restore-btn')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', function () {
-    var _a;
-    var fileInput = document.getElementById('file-input');
-    if (fileInput && ((_a = fileInput.files) === null || _a === void 0 ? void 0 : _a.length)) {
-        restoreData(fileInput.files[0]);
+// Function to hide the error message
+function disappearmessage() {
+    var restoreErrorMessage = document.getElementById("restore-error-message");
+    if (restoreErrorMessage) {
+        restoreErrorMessage.style.display = 'none';
     }
-    else {
-        alert("Please select a file to restore.");
-    }
-});
-// Update file name display
-var fileNameElement = document.getElementById('file-name');
-if (fileNameElement) {
-    (_c = document.getElementById('file-input')) === null || _c === void 0 ? void 0 : _c.addEventListener('change', function (event) {
-        var _a, _b, _c;
-        var fileName = (_c = (_b = (_a = event.target.files) === null || _a === void 0 ? void 0 : _a[0]) === null || _b === void 0 ? void 0 : _b.name) !== null && _c !== void 0 ? _c : 'No file chosen';
-        if (fileNameElement) {
-            fileNameElement.textContent = fileName;
-        }
-    });
 }
-// Function to clear backup history
-function clearBackupHistory() {
-    localStorage.removeItem('backupHistory');
+// Event listener for clear backup history button
+var clearBackupHistoryBtn = document.getElementById("clear-backup-history");
+clearBackupHistoryBtn.addEventListener('click', clearBackupHistory);
+// Event listener for clear restore history button
+var clearRestoreHistoryBtn = document.getElementById("clear-restore-history");
+clearRestoreHistoryBtn.addEventListener('click', clearRestoreHistory);
+// Display history on page load
+document.addEventListener('DOMContentLoaded', function () {
     displayBackupHistory();
-}
-// Function to clear restore history
-function clearRestoreHistory() {
-    localStorage.removeItem('restoreHistory');
     displayRestoreHistory();
-}
-// Add event listeners for clear history buttons
-(_d = document.getElementById('clear-backup-history')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', clearBackupHistory);
-(_e = document.getElementById('clear-restore-history')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', clearRestoreHistory);
-// Initial display of backup and restore history on page load
-document.addEventListener("DOMContentLoaded", function () {
     loadUserProfile();
-    displayBackupHistory();
-    displayRestoreHistory();
 });

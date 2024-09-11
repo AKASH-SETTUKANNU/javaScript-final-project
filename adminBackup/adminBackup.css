@@ -436,7 +436,8 @@ menu ul li a {
 }
 
 #backup-heading {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #backup-heading h1 {
@@ -468,7 +469,7 @@ menu ul li a {
   background-color: #0056b3;
 }
 
-.displaBackUpHistory,
+.displayBackupHistory,
 .displayRestoreHistory {
   width: 100%;
   max-width: 600px;
@@ -480,14 +481,14 @@ menu ul li a {
   overflow-y: auto;
 }
 
-.displaBackUpHistory h2,
+.displayBackupHistory h2,
 .displayRestoreHistory h2 {
   margin: 0 0 10px;
   font-size: 20px;
   color: #333;
 }
 
-.backup-item {
+.backup-item,.restore-item {
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
@@ -519,7 +520,12 @@ menu ul li a {
 #icone {
   margin-right: 42px;
 }
-
+.file-input-container{
+  display: none;
+}
+#restore-success-message,#restore-error-message{
+  padding: 3px;
+}
 @media only screen and (max-width: 800px) {
   menu {
     position: absolute;

@@ -1,166 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Event Management</title>
     <link rel="stylesheet" href="./adminBackup.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<body>
     <section>
-      <div class="main-container">
-        <header>
-          <button class="menu-icon" id="menu-icon" onclick="menubarDisplay()">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-          <div class="logo">
-            <img src="../images/logo.jpg" alt="Logo" />
-          </div>
-          <div class="search-profile">
-            <div class="search-bar">
-              <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
-              <input type="text" placeholder="search..." />
-            </div>
-            <div class="event-add-profile">
-              <div class="event-add-btn" id="event-add-btn">
-                <button type="button" onclick="addEvent()">+</button>
-              </div>
-              <div class="notification-bell" onclick="displayNotification()">
-                <p id="notification-dot">.</p>
-                <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
-              </div>
-              <div class="notification-display" id="notification-display">
-                <!-- Sample Notifications -->
-                <div class="notification">
-                  <div class="notification-profile">
-                    <img src="../images/profile.jpg" alt="profile" />
-                  </div>
-                  <div class="notification-content">
-                    <h3>Koushikk</h3>
-                    <p class="notification-message">
-                      Inviting for his marriage
-                    </p>
-                  </div>
+        <div class="main-container">
+            <header>
+                <button class="menu-icon" id="menu-icon" onclick="menubarDisplay()">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="logo">
+                    <img src="../images/logo.jpg" alt="Logo" />
                 </div>
-                <!-- Add more notifications here -->
-              </div>
-              <div class="profile">
-                <img
-                  src="../images/profile.jpg"
-                  alt="Profile"
-                  class="profile-icon"
-                />
-                <div class="profile-details">
-                  <p id="profile-name">Akash</p>
-                  <p id="profile-dateOfBirth">Coimbatore</p>
+                <div class="search-profile">
+                    <div class="search-bar">
+                        <i id="search-icon" class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="search..." />
+                    </div>
+                    <div class="event-add-profile">
+                        <div class="event-add-btn" id="event-add-btn">
+                            <button type="button" onclick="addEvent()">+</button>
+                        </div>
+                        <div class="notification-bell" onclick="displayNotification()">
+                            <p id="notification-dot">.</p>
+                            <i id="notification-bell-icon" class="fa-regular fa-bell"></i>
+                        </div>
+                        <div class="notification-display" id="notification-display">
+                            <div class="notification">
+                                <div class="notification-profile">
+                                    <img src="../images/profile.jpg" alt="profile" />
+                                </div>
+                                <div class="notification-content">
+                                    <h3>Koushikk</h3>
+                                    <p class="notification-message">Inviting for his marriage</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile">
+                            <img src="../images/profile.jpg" alt="Profile" class="profile-icon" />
+                            <div class="profile-details">
+                                <p id="profile-name">Akash</p>
+                                <p id="profile-dateOfBirth">Coimbatore</p>
+                            </div>
+                            <div id="profile-edit-icon" class="profile-edit-icon" onclick="displayLogout()">
+                                <i class="fa-solid fa-angle-down"></i>
+                            </div>
+                            <div class="profile-edit-area" id="profile-edit-area">
+                                <button id="logout-btn">
+                                    <a href="../index.html">Log Out</a>
+                                </button>
+                                <button id="profile-edit-btn">
+                                    <a href="#">Edit Profile</a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div
-                  id="profile-edit-icon"
-                  class="profile-edit-icon"
-                  onclick="displayLogout()"
-                >
-                  <i class="fa-solid fa-angle-down"></i>
-                </div>
-                <div class="profile-edit-area" id="profile-edit-area">
-                  <button id="logout-btn">
-                    <a href="../index.html">Log Out</a>
-                  </button>
-                  <button id="profile-edit-btn">
-                    <a href="#">Edit Profile</a>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </header>
-        <menu>
-          <nav>
-            <ul class="menu-list">
-              <li>
-                <a href="../adminIndex/adminIndex.html">
-                  <div class="icon"><i class="fa-solid fa-house"></i></div>
-                  <p id="menu-name">Events List</p>
-                </a>
-              </li>
-              <li>
-                <a href="../adminEvents/events.html">
-                  <div class="icon">
-                    <i class="fa-solid fa-calendar-days"></i>
-                  </div>
-                  <p id="menu-name">Add Events</p>
-                </a>
-              </li>
-              <li>
-                <a href="../adminGuest/adminGuest.html">
-                  <div class="icon">
-                    <i class="fa-solid fa-user-group"></i>
-                  </div>
-                  <p id="menu-name">Guests List</p>
-                </a>
-              </li>
-              <li>
-                <a href="../adminAgenda/agenda.html">
-                  <div class="icon">
-                    <i class="fa-solid fa-location-dot"></i>
-                  </div>
-                  <p id="menu-name">Add Agenda</p>
-                </a>
-              </li>
-              <li>
-                <a href="../adminLoginUsers/loginUsers.html">
-                  <div class="icon" id="icone">
-                    <i class="fa-regular fa-user"></i>
-                  </div>
-                  <p id="menu-name">Users List</p>
-                </a>
-              </li>
-              <li>
-                <a href="./adminBackup.html">
-                  <div class="icon"><i class="fa-solid fa-database"></i></div>
-                  <p id="menu-name">Data Backup</p>
-                </a>
-              </li>
-            </ul>
-          </nav>
-        </menu>
-        <main>
-          <section>
-            <div class="backup-restore-main-container">
-              <div id="backup-heading">
-                <h1>Backup and Restore</h1>
-              </div>
-              <div class="backup-restore-container">
-                <button id="backup-btn">Backup Data</button>
-                <div class="file-input-container">
-                  <label class="file-input-label">
-                    Choose file
-                    <input type="file" class="file-input" id="file-input" />
-                  </label>
-                  <span class="file-name" id="file-name">No file chosen</span>
-                </div>
-                <button id="restore-btn">Restore</button>
-              </div>
-
-              <div class="displaBackUpHistory">
-                <h2>Backup History</h2>
-                <div class="backup-item"></div>
-              </div>
-              <button id="clear-backup-history">Clear Backup History</button>
-              <div class="displayRestoreHistory">
-                <h2>Restore History</h2>
-                <div class="backup-item"></div>
-              </div>
-              
-              <button id="clear-restore-history">Clear Restore History</button>
-            </div>
-          </section>
-        </main>
-      </div>
+            </header>
+            <menu>
+                <nav>
+                    <ul class="menu-list">
+                        <li><a href="../adminIndex/adminIndex.html">
+                            <div class="icon"><i class="fa-solid fa-house"></i></div>
+                            <p id="menu-name">Events List</p></a>
+                        </li>
+                        <li><a href="../adminEvents/events.html">
+                            <div class="icon"><i class="fa-solid fa-calendar-days"></i></div>
+                            <p id="menu-name">Add Events</p></a>
+                        </li>
+                        <li><a href="../adminGuest/adminGuest.html">
+                            <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                            <p id="menu-name">Guests List</p></a>
+                        </li>
+                        <li><a href="../adminAgenda/agenda.html">
+                            <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                            <p id="menu-name">Add Agenda</p></a>
+                        </li>
+                        <li><a href="../adminLoginUsers/loginUsers.html">
+                            <div class="icon" id="icone"><i class="fa-regular fa-user"></i></div>
+                            <p id="menu-name">Users List</p></a>
+                        </li>
+                        <li><a href="./adminBackup.html">
+                            <div class="icon"><i class="fa-solid fa-database"></i></div>
+                            <p id="menu-name">Data Backup</p></a>
+                        </li>
+                    </ul>
+                </nav>
+            </menu>
+            <main>
+                <section>
+                    <div class="backup-restore-main-container">
+                        <div id="backup-heading">
+                            <h1>Backup and Restore</h1>
+                        </div>
+                        <div class="backup-restore-container" >
+                            <button id="backup-btn">Backup Data</button>
+                            <button id="restore-btn">Restore</button>
+                            <div class="file-input-container" id="file-input-container" style="display: none;">
+                                <span id="restore-error-message" style="color: red;"></span>
+                                <label class="file-input-label">
+                                    Choose file
+                                    <input type="file" class="file-input" id="file-input" onfocus="disappearmessage()"/>
+                                </label>
+                                <span class="file-name" id="file-name">No file chosen</span>
+                            </div>
+                        </div>
+                        <span id="restore-success-message"></span>
+                       
+                        <div class="displayBackupHistory">
+                            <h2>Backup History</h2>
+                            <div class="backup-history-items"></div>
+                        </div>
+                        <button id="clear-backup-history">Clear Backup History</button>
+                        <div class="displayRestoreHistory">
+                            <h2>Restore History</h2>
+                            <div class="restore-history-items"></div>
+                        </div>
+                        <button id="clear-restore-history">Clear Restore History</button>
+                    </div>
+                </section>
+            </main>
+        </div>
     </section>
     <script src="./adminBackup.js"></script>
-  </body>
+</body>
 </html>

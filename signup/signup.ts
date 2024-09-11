@@ -147,7 +147,7 @@ function addUser(event: Event): void {
 window.addEventListener('load', () => {
     const allUsersJson: CreateUser[] = JSON.parse(localStorage.getItem("users") || "[]");
     if (allUsersJson.length === 0) {
-        const adminUser = new CreateUser('Admin', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
+        const adminUser = new CreateUser('Akash', 'akashkce123@gmail.com', '2003-10-09', 'Akash@2003', 'admin');
         localStorage.setItem("users", JSON.stringify([adminUser.toPlainObject()]));
     }
 
